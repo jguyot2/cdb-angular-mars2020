@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http'
     providedIn: 'root'
 })
 export class ComputerService {
-    private base_url: string = 'http://10.0.1.220:8080/webapp/';
-    private url_computers: string = this.base_url + "computers/";
+    private baseUrl: string = 'http://10.0.1.220:8080/webapp/';
+    private urlComputers: string = this.base_url + "computers/";
 
     constructor(private http: HttpClient) { }
 
