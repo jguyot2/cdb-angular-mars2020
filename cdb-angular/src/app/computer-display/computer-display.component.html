@@ -1,0 +1,21 @@
+<ul>
+    {{computer.id}}
+      <div>
+        <h5>Name</h5>
+        {{computer.name}}
+      </div>
+    
+      <div>
+        <h5>introduced</h5>
+        {{computer.introduced}}
+      </div>
+      <div>
+        <h5>discontinued</h5>
+        {{computer.discontinued}}
+      </div>
+      <div>
+        <h5>Name</h5>
+        <app-company-display [company]="computer.company">
+        </app-company-display>
+      </div>
+    </ul>
