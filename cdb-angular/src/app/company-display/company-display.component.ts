@@ -11,7 +11,7 @@ export class CompanyDisplayComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
+  } 
 
   @Input()
   company : Company;

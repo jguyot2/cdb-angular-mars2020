@@ -1,9 +1,9 @@
 import {Company} from './company.model';
 
 export class Computer{
-    id?:number;
-    name:string;
-    introduced:Date; 
-    discontinued:Date;
-    manufacturer:Company;    
+    idComputer?:number;
+    computerName:string;
+    introducedDate:Date; 
+    discontinuedDate:Date;
+    companyDTO:Company;    
 }

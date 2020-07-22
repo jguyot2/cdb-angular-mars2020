@@ -7,16 +7,16 @@ import { HttpClient } from '@angular/common/http'
     providedIn: 'root'
 })
 export class ComputerService {
-    private base_url: string = 'http://10.0.1.220:8080/webapp/api/';
-    private url_list: string = this.base_url + "list";
+    private base_url: string = 'http://10.0.1.220:8080/webapp/';
+    private url_computers: string = this.base_url + "computers/";
 
     constructor(private http: HttpClient) { }
 
     getComputerList(): Observable<Computer[]> {
-        return this.http.get<Computer[]>(this.url_list);
+        return this.http.get<Computer[]>(this.url_computers);
     }
  
     addComputer(computer: Computer) {
-        //TODO 
+        
     }
 }
