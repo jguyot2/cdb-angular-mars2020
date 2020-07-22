@@ -6,4 +6,4 @@ export class Computer{
     introducedDate:Date; 
     discontinuedDate:Date;
     companyDTO:Company;    
-}
+} 

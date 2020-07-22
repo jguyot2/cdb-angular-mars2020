@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Computer } from './models/computer.model'
 import { HttpClient } from '@angular/common/http'
-
-@Injectable({
+ 
+@Injectable({ 
     providedIn: 'root'
 })
 export class ComputerService {
