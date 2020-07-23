@@ -1,14 +1,14 @@
 import { Component, OnInit, Input} from '@angular/core';
 import {ComputerService} from '../computer.service';
 import{Computer} from '../models/computer.model';
-import {CompanyDisplayComponent} from '../company-display/company-display.component';
+import {CompanyComponent} from '../company/company.component';
 
 @Component({
-  selector: 'app-computer-display',
-  templateUrl: './computer-display.component.html',
-  styleUrls: ['./computer-display.component.scss']
+  selector: 'app-computer',
+  templateUrl: './computer.component.html',
+  styleUrls: ['./computer.component.scss']
 })
-export class ComputerDisplayComponent implements OnInit {
+export class ComputerComponent implements OnInit {
 
   constructor(private service:ComputerService) { }
  
