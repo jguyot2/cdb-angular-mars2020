@@ -5,7 +5,7 @@ import {Company} from '../models/company.model';
   selector: 'app-company-display',
   templateUrl: './company-display.component.html',
   styleUrls: ['./company-display.component.scss']
-})
+}) 
 export class CompanyDisplayComponent implements OnInit {
 
   constructor() { }

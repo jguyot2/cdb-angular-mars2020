@@ -1,21 +1,14 @@
 <ul>
-    {{computer.idComputer}}
-      <div>
-        <h5>Name</h5>
-        {{computer.computerName}}
-      </div>
-    
-      <div>
-        <h5>introduced</h5>
+  
+   <h1>   {{computer.computerName}} </h1>
+      <div  *ngIf="computer.introducedDate != null"> <h5>introduced</h5>
         {{computer.introducedDate}}
-      </div>
-      <div>
+      </div>  <div  *ngIf="computer.discontinuedDate != null"> <h5>introduced</h5>
+      
         <h5>discontinued</h5>
         {{computer.discontinuedDate}}
-      </div>
-      <div>
-        <h5>Name</h5>
-        <app-company-display [company]="computer.companyDTO">
+        </div>
+        <app-company-display *ngIf="computer.companyDTO != null" [company]="computer.companyDTO">
         </app-company-display>
-      </div>
+      
     </ul>
