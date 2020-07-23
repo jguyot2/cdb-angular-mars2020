@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit()">
+  <div>
+    Name
+    <input type="text" class="form-control" id="name" required [(ngModel)]="createdComputer.computerName" name="name" />
+  </div>
+  <div> Introduced
+    <input type="date" class="form-control" id="description"  [(ngModel)]="createdComputer.introducedDate"
+      name="introducedDate" title="introducedDate" />
+  </div>
+  <div>
+    Discontinued
+    <input type="date" class="form-control" id="description"   [(ngModel)]="createdComputer.discontinuedDate"
+      name="discontinuedDate" title="discontinuedDate" />
+  </div>
+  <div>
+    Company
+    <input type="hidden" class="form-control" name="company" id="company"  [(ngModel)]="createdComputer.companyDTO" />
+  </div>
+  <input type="submit" id="submit" value="Submit" />
+</form>
