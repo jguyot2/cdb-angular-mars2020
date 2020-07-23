@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
+import {MatTableModule} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-computer-list',
@@ -12,6 +16,8 @@ export class ComputerListComponent implements OnInit {
   constructor(private service:ComputerService) { } 
   
   computerList:Computer[];
+  
+  displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
 
   ngOnInit(): void {
     this.service.getComputerList().subscribe(

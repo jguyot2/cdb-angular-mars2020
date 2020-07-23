@@ -5,13 +5,13 @@ import { ComputerListComponent } from './computer-list/computer-list.component';
 
 const routes: Routes = [
   {
-    path: 'computers',
+    path: 'dashboard',
     component: ComputerListComponent,
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'computers',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   }
 

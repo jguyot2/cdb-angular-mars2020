@@ -15,7 +15,7 @@
       </div>
       <div>
         <h5>Name</h5>
-        <app-company [company]="computer.companyDTO">
+        <app-company  *ngIf="hasCompany" [company]="computer.companyDTO" >
         </app-company>
       </div>
     </ul>
