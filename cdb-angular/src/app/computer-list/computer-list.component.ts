@@ -3,11 +3,11 @@ import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
 
 @Component({
-  selector: 'app-computer-list-display',
-  templateUrl: './computer-list-display.component.html',
-  styleUrls: ['./computer-list-display.component.scss']
+  selector: 'app-computer-list',
+  templateUrl: './computer-list.component.html',
+  styleUrls: ['./computer-list.component.scss']
 })
-export class ComputerListDisplayComponent implements OnInit {
+export class ComputerListComponent implements OnInit {
 
   constructor(private service:ComputerService) { } 
   

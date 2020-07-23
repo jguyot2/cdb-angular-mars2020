@@ -3,26 +3,32 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ComputerDisplayComponent } from './computer-display/computer-display.component';
-import { CompanyDisplayComponent } from './company-display/company-display.component';
-import { ComputerListDisplayComponent } from './computer-list-display/computer-list-display.component';
+import { ComputerComponent } from './computer/computer.component';
+import { CompanyComponent } from './company/company.component';
+import { ComputerListComponent } from './computer-list/computer-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
-import {FormsModule} from '@angular/forms'
+import { FormsModule } from '@angular/forms'
+import { HeaderComponent } from './header/header.component';
+import { CustomMaterialModule } from './custom-material/custom-material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
     AppComponent,
-    ComputerDisplayComponent,
-    CompanyDisplayComponent,
-    ComputerListDisplayComponent,
-    ComputerAddComponent
+    ComputerAddComponent,
+    ComputerComponent,
+    CompanyComponent,
+    ComputerListComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CustomMaterialModule,
+    NoopAnimationsModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,13 @@
+<h1> {{computer.computerName}} </h1>
+<div *ngIf="computer.introducedDate">
+  <h5>introduced</h5>
+  {{computer.introducedDate}}
+</div>
+<div *ngIf="computer.discontinuedDate">
+  <h5>discontinued</h5>
+  {{computer.discontinuedDate}}
+</div>
+<div *ngIf="computer.companyDTO">
+  <app-company-display [company]="computer.companyDTO">
+  </app-company-display>
+</div>
