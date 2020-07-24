@@ -1,4 +1,5 @@
 <div class="item">
+    <a routerLink="/computers/add" >Add Computer</a>
     <table mat-table [dataSource]="computerList" class="mat-elevation-z8">
         <!-- Id Column -->
         <ng-container matColumnDef="idComputer">
@@ -28,7 +29,8 @@
         <ng-container matColumnDef="companyDTO">
             <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
             <mat-cell *matCellDef="let computer" > 
-                <div *ngIf="!!computer.companyDTO">{{computer.companyDTO.companyName}}</div>
+                <app-company  *ngIf="!!computer.companyDTO" [company]="computer.companyDTO" >
+                </app-company>
             </mat-cell>
         </ng-container>
     
