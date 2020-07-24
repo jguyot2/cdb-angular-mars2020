@@ -9,7 +9,7 @@ describe('CompanyService', () => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(CompanyService);
   });
-
+ 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
