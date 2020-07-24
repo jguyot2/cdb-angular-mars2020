@@ -17,6 +17,6 @@ export class ComputerService {
     }
  
     addComputer(computer: Computer) {
-        
+        return this.http.post(this.urlComputers, computer);
     }
 }
