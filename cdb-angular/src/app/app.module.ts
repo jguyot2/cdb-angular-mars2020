@@ -11,7 +11,7 @@ import { ComputerAddComponent } from './computer-add/computer-add.component';
 import { FormsModule } from '@angular/forms'
 import { HeaderComponent } from './header/header.component';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,15 +20,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
     ComputerComponent,
     CompanyComponent,
     ComputerListComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     CustomMaterialModule,
-    NoopAnimationsModule 
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
