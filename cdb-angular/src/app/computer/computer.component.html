@@ -7,7 +7,7 @@
   <h5>discontinued</h5>
   {{computer.discontinuedDate}}
 </div>
-<div>
+<div *ngIf="computer.companyDTO">
   <app-company [company]="computer.companyDTO">
   </app-company>
 </div>
