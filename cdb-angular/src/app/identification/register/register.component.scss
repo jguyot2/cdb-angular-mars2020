@@ -1,0 +1,25 @@
+.main {
+margin-left: 30%;
+margin-top: 10%;
+}
+.signup-content {
+    display: flex;
+    padding: 75px 0;
+}
+.signup-form, .signup-image, .signin-form, .signin-image{
+    width: 50%;
+    overflow: hidden;
+    
+}
+.signup-image {
+    margin: 5%;
+    height: auto; 
+    width: auto; 
+    max-width: 300px; 
+    max-height: 300px;
+}
+    
+
+.form-title {
+    margin-bottom: 33px;
+}
