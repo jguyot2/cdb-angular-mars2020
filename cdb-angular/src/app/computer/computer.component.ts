@@ -1,7 +1,6 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, AfterContentInit} from '@angular/core';
 import {ComputerService} from '../computer.service';
 import{Computer} from '../models/computer.model';
-import {CompanyComponent} from '../company/company.component';
 
 @Component({
   selector: 'app-computer',
@@ -17,4 +16,10 @@ export class ComputerComponent implements OnInit {
 
   @Input()
   computer : Computer;
+
+  hasCompany: boolean = false;
+
+  ngAfterContentInit(){
+    this.hasCompany = this.computer.companyDTO != null;
+  }
 }
