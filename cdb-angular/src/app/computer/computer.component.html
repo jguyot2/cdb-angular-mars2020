@@ -4,15 +4,15 @@
         <h5>Name</h5>
         {{computer.computerName}}
       </div>
-    
-      <di *ngIf="computer.introducedDate"v>
+     
+      <div *ngIf="computer.introducedDate">
         <h5>introduced</h5>
         {{computer.introducedDate}}
       </div>
       <div *ngIf="computer.discontinuedDate">
         <h5>discontinued</h5>
         {{computer.discontinuedDate}}
-      </div>
+      </div> 
       <div *ngIf="hasCompany">
         <h5>Name</h5>
         <app-company  [company]="computer.companyDTO" >
