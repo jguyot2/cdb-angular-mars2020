@@ -1,13 +1,21 @@
-<h1> {{computer.computerName}} </h1>
-<div *ngIf="computer.introducedDate">
-  <h5>introduced</h5>
-  {{computer.introducedDate}}
-</div>
-<div *ngIf="computer.discontinuedDate">
-  <h5>discontinued</h5>
-  {{computer.discontinuedDate}}
-</div>
-<div *ngIf="computer.companyDTO">
-  <app-company-display [company]="computer.companyDTO">
-  </app-company-display>
-</div>
+<ul>
+    {{computer.idComputer}}
+      <div>
+        <h5>Name</h5>
+        {{computer.computerName}}
+      </div>
+    
+      <div>
+        <h5>introduced</h5>
+        {{computer.introducedDate}}
+      </div>
+      <div>
+        <h5>discontinued</h5>
+        {{computer.discontinuedDate}}
+      </div>
+      <div>
+        <h5>Name</h5>
+        <app-company  *ngIf="hasCompany" [company]="computer.companyDTO" >
+        </app-company>
+      </div>
+    </ul>
