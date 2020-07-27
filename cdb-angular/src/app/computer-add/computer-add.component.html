@@ -1,20 +1,31 @@
-<form (ngSubmit)="onSubmit()">
-  <div>
-    Name
-    <input type="text" class="form-control" id="name" required [(ngModel)]="createdComputer.computerName" name="name" />
-  </div>
-  <div> Introduced
-    <input type="date" class="form-control" id="description"  [(ngModel)]="createdComputer.introducedDate"
-      name="introducedDate" title="introducedDate" />
-  </div>
-  <div>
-    Discontinued
-    <input type="date" class="form-control" id="description"   [(ngModel)]="createdComputer.discontinuedDate"
-      name="discontinuedDate" title="discontinuedDate" />
-  </div>
-  <div>
-    Company
-    <input type="hidden" class="form-control" name="company" id="company"  [(ngModel)]="createdComputer.companyDTO" />
-  </div>
-  <input type="submit" id="submit" value="Submit" />
-</form>
+<div>
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Computer Name</mat-label>
+      <input name="name" required [(ngModel)]="createdComputer.computerName" matInput />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Introduction date</mat-label>
+      <input name="introduced" type="date" matInput [(ngModel)]="createdComputer.introducedDate" />
+    </mat-form-field> <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Discontinuation date</mat-label>
+      <input name="discontinued" type="date" matInput [(ngModel)]="createdComputer.discontinuedDate" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Company</mat-label>
+      <mat-select name="company" matInput [(ngModel)]="createdComputer.companyDTO">
+        <mat-option>no company</mat-option>
+        <div>
+          <mat-option *ngFor="let company of companies" [value]="company">
+            {{company.companyName}}
+          </mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <input type="submit" id="submit" value="Submit" />
+  </form>
+</div>
