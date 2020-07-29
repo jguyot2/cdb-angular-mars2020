@@ -10,16 +10,19 @@ export class ComputerService {
     // URL du serveur à changer
     private baseUrl: string = 'http://localhost:8080/webapp/';
     private urlComputers: string = this.baseUrl + "computers/";
-
+    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNjAyMDExMjY5LCJpYXQiOjE1OTYwMTEyNjl9.2TYbWqHRgtiYTeJ7gUieGVpGx1HHhE3Na7SbAA1jJp-0yuMko0bPlXcoK42zGYqujdack405oOEzacey6fmzPA"
     constructor(private http: HttpClient) { }
 
     getComputerList(): Observable<Computer[]> {
-        return this.http.get<Computer[]>(this.urlComputers);
+        var header: HttpHeaders = new HttpHeaders().set('Authorization', this.token);
+        console.log(header);
+        return this.http.get<Computer[]>(this.urlComputers, { "headers": header });
     }
 
     addComputer(computer: Computer): Observable<Computer> {
-        const header: HttpHeaders = new HttpHeaders();
-        header.append('Content-Type', 'application/json');
-        return this.http.post<Computer>(this.urlComputers, (computer), { headers: header });
+        var header: HttpHeaders = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', this.token);
+        return this.http.post<Computer>(this.urlComputers, (computer), { "headers": header });
     }
-}
+} 
