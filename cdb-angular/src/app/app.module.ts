@@ -24,13 +24,13 @@ import { BodyComponent } from './body/body.component';
     HeaderComponent,
     BodyComponent
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     CustomMaterialModule,
-    NoopAnimationsModule 
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

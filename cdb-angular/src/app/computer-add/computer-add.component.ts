@@ -1,7 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ComputerService } from '../computer.service';
+import { CompanyService } from '../company.service';
+
 import { Computer } from '../models/computer.model';
+import { Company } from '../models/company.model';
 
 @Component({
   selector: 'app-computer-add',
@@ -10,12 +13,35 @@ import { Computer } from '../models/computer.model';
 })
 export class ComputerAddComponent implements OnInit {
 
-  constructor(private service:ComputerService) {}
+  constructor(private computerService: ComputerService, private companyService: CompanyService) { }
 
   @Input()
-  createdComputer : Computer = new Computer();
+  createdComputer: Computer = new Computer();
 
-  ngOnInit(): void {}
+  companies: Company[];
 
-  onSubmit() { this.service.addComputer(this.createdComputer).subscribe(); }
+
+  ngOnInit(): void {
+    this.companyService.getCompanyList().subscribe(
+      (result: Company[]) => {
+        this.companies = result;
+      },
+      (error) => {
+        console.log(error);
+        this.companies = [];
+      })
+  }
+  control(): boolean {
+    return true;
+  }
+  
+  onSubmit() {
+    this.computerService.addComputer(this.createdComputer).subscribe(
+      (result) => {
+        console.log(result);
+      },
+      (error) => {
+        console.log(error);
+      });
+  }
 }

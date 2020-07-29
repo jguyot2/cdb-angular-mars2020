@@ -29,8 +29,10 @@ export class ComputerService {
     getNumberComputers(): Observable<number> {
         return this.http.get<number>(this.urlComputers + "number", {headers: this.header});
     }
- 
-    addComputer(computer: Computer) {
-        return this.http.post(this.urlComputers, computer);
+
+    addComputer(computer: Computer): Observable<Computer> {
+        const header: HttpHeaders = new HttpHeaders();
+        header.append('Content-Type', 'application/json');
+        return this.http.post<Computer>(this.urlComputers, (computer), { headers: header });
     }
 }
