@@ -13,7 +13,7 @@ export class ComputerService {
     private urlComputers: string = this.baseUrl + "computers/";
 
     header: HttpHeaders = new HttpHeaders()
-    .append('Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTk1ODY5NDk0LCJpYXQiOjE1OTU4NjM0OTR9.X7aUIJs9R8e-KxowKQrB3VBS7_0blVupl3NGxD5dERiSMlMla1dqUXcsgSQIK3IVnLxk2qFzplagL36YJhpH9w');
+    .append('Authorization', '  Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTk2MDY4NTEzLCJpYXQiOjE1OTYwMDg1MTN9.ldaWciGggP8krfk1jkE5oVrCPLpII8bBLw6r_WHFcMXtHGRT_GTyGTXpLEQO0T7ZkHQyDZme5G6q2jkbrfXgIQ');
 
     constructor(private http: HttpClient) { }
 

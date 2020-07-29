@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, AfterContentInit} from '@angular/core';
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
 import { Page } from '../models/page.model';
@@ -15,8 +15,9 @@ export class ComputerListComponent implements OnInit {
   constructor(private service:ComputerService) { } 
 
   page: Page = {currentPage: 1, pageSize: 10};
-  nbPage: number = 1;
-  nbComputers: number = 0;
+  nbPage: number;
+  nbComputers: number;
+  listPages: number[];
 
   computerList:Computer[];
 
@@ -24,10 +25,9 @@ export class ComputerListComponent implements OnInit {
   displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
 
   ngOnInit(): void {
+    this.setNbCompurtersAndPages();
     this.paginatedList(1);
-    this.setNbCompurters();
-    this.nbPage = this.getNbPages(this.page, this.nbComputers);
-    }
+  }
 
     getList(): Computer[] {
       var finalList;
@@ -55,21 +55,25 @@ export class ComputerListComponent implements OnInit {
   }
 
   getNextPage(): void {
-    this.page.currentPage++;
-    this.service.getPaginatedComputerList(this.page).subscribe(
-        (result: Computer[]) => {
-      this.computerList = result;
-        }, 
-        (error) => {
-          console.log(error);
-      this.computerList = [];
-        })
+    if (this.page.currentPage < this.nbPage) {
+      this.page.currentPage++;
+      this.paginatedList(this.page.currentPage);
+    }
   }
 
-  setNbCompurters(): void {
+  getPreviousPage(): void {
+    if (this.page.currentPage > 1) {
+      this.page.currentPage--;
+      this.paginatedList(this.page.currentPage);
+    }
+  }
+
+  setNbCompurtersAndPages(): void {
     this.service.getNumberComputers().subscribe(
         (result: number) => {
-        this.nbComputers = result;
+          this.nbComputers = result;
+          this.nbPage = this.getNbPages(this.page, result);
+          this.listPages = Array.from(Array(this.nbPage), (_, index) => index + 1);
         }, 
         (error) => {
           console.log(error);
