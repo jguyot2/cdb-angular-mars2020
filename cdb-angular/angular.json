@@ -13,6 +13,11 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "locales": {
+          "fr": "src/locale/messages.fr.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -61,6 +66,11 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "fr": {
+              "localize": [
+                "fr"
+              ]
             }
           }
         },
@@ -72,6 +82,9 @@
           "configurations": {
             "production": {
               "browserTarget": "cdb-angular:build:production"
+            },
+            "fr": {
+              "browserTarget": "cdb-angular:build:fr"
             }
           }
         },

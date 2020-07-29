@@ -1,20 +1,20 @@
 <ul>
     {{computer.idComputer}}
       <div>
-        <h5>Name</h5>
+        <h5 i18n>Name</h5>
         {{computer.computerName}}
       </div>
      
       <div *ngIf="computer.introducedDate">
-        <h5>introduced</h5>
+        <h5 i18n>introduced</h5>
         {{computer.introducedDate}}
       </div>
       <div *ngIf="computer.discontinuedDate">
-        <h5>discontinued</h5>
+        <h5 i18n>discontinued</h5>
         {{computer.discontinuedDate}}
       </div> 
       <div *ngIf="hasCompany">
-        <h5>Name</h5>
+        <h5 i18n>Name</h5>
         <app-company  [company]="computer.companyDTO" >
         </app-company>
       </div>

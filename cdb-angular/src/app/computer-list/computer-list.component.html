@@ -9,31 +9,31 @@
     <table mat-table [dataSource]="computerList" class="mat-elevation-z8">
         <!-- Id Column -->
         <ng-container matColumnDef="idComputer">
-        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n> Id </mat-header-cell>
         <mat-cell *matCellDef="let computer"> {{computer.idComputer}} </mat-cell>
         </ng-container>
     
         <!-- Name Column -->
         <ng-container matColumnDef="computerName">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n> Name </mat-header-cell>
         <mat-cell *matCellDef="let computer"> {{computer.computerName}} </mat-cell>
         </ng-container>
     
         <!-- Introduced date Column -->
         <ng-container matColumnDef="introducedDate">
-        <mat-header-cell *matHeaderCellDef> Introduced date </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n> Introduced date </mat-header-cell>
         <mat-cell *matCellDef="let computer"> {{computer.introducedDate}} </mat-cell>
         </ng-container>
     
         <!-- Discontinued date Column -->
         <ng-container matColumnDef="discontinuedDate">
-        <mat-header-cell *matHeaderCellDef> Discontinued date </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef i18n> Discontinued date </mat-header-cell>
         <mat-cell *matCellDef="let computer"> {{computer.discontinuedDate}} </mat-cell>
         </ng-container>
 
         <!-- Company Column -->
         <ng-container matColumnDef="companyDTO">
-            <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef i18n> Company </mat-header-cell>
             <mat-cell *matCellDef="let computer" > 
                 <app-company  *ngIf="!!computer.companyDTO" [company]="computer.companyDTO" >
                 </app-company>
@@ -46,7 +46,7 @@
 
     <div>
         <button *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
-     </div>
+    </div>
 
 </div>
 

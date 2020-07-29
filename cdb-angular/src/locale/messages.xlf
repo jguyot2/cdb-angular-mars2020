@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="cac35aab94c6c21ad7ef5bd7818e2bbc66fe5171" datatype="html">
+        <source>Computer Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-add/computer-add.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8e09de56655c5b14d764d895a572eee4db9cf130" datatype="html">
+        <source>Introduction date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-add/computer-add.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="069c52671f1955ba4d8f02e558509859d2a81bfb" datatype="html">
+        <source>Discontinuation date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-add/computer-add.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6ef0619a37140118b9e640c6cc36ee4e9fb4372a" datatype="html">
+        <source>Company</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-add/computer-add.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cff1428d10d59d14e45edec3c735a27b5482db59" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer/computer.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer/computer.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="49efa49884bed2f5c3939c5508ee70cb9507e3a4" datatype="html">
+        <source>introduced</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer/computer.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c177e145ec43299eac621f3835dab3c6d2e6f1ce" datatype="html">
+        <source>discontinued</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer/computer.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a2e01dc9f287775608e4d25d624df38080ca0a7d" datatype="html">
+        <source> Id </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-list/computer-list.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="20371277706eedf7fd8a3f51633ca5d801cd4fc2" datatype="html">
+        <source> Name </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-list/computer-list.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8c827a09b904882c1297d074b46bd7405264ec12" datatype="html">
+        <source> Introduced date </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-list/computer-list.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6bd8b141d289863643ef3710e8eeebf3df9eb1ad" datatype="html">
+        <source> Discontinued date </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-list/computer-list.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f98b0c7c2cb2a4fa9f8060968b22d4ed7de10029" datatype="html">
+        <source> Company </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/computer-list/computer-list.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
