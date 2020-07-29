@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import {MatToolbarModule} from '@angular/material/toolbar'; 
-import {MatFormFieldModule} from '@angular/material/form-field'; 
+import { MatToolbarModule } from '@angular/material/toolbar'; 
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule} from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-
-import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -14,6 +13,8 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     CommonModule,
     MatToolbarModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -21,6 +22,8 @@ import { MatTableModule } from '@angular/material/table';
   ],
   exports: [ 
     MatToolbarModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
