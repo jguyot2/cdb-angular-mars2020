@@ -25,7 +25,6 @@ export class ComputerListComponent implements OnInit {
   displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
 
   ngOnInit(): void {
-    this.setNbCompurtersAndPages();
     this.paginatedList(1);
   }
 
@@ -52,6 +51,7 @@ export class ComputerListComponent implements OnInit {
           console.log(error);
       this.computerList = [];
         })
+    this.setNbCompurtersAndPages();
   }
 
   getNextPage(): void {
@@ -82,6 +82,19 @@ export class ComputerListComponent implements OnInit {
 
   getNbPages(page: Page, nbComputers: number): number {
     return Math.ceil(nbComputers/page.pageSize);
+  }
+
+  deleteComputer(computer: Computer) {
+    this.service.deleteComputer(computer).subscribe(
+      () => {
+        if (this.computerList.length == 1) {
+          this.page.currentPage --;
+        }
+        this.paginatedList(this.page.currentPage);
+      }, 
+      (error) => {
+        console.log(error);
+      })
   }
 
 }
