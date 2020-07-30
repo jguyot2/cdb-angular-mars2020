@@ -11,11 +11,11 @@ export class ComputerService {
     // URL du serveur à changer
     private baseUrl: string = 'http://localhost:8080/webapp/';
     private urlComputers: string = this.baseUrl + "computers/";
-    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNjAyMDExMjY5LCJpYXQiOjE1OTYwMTEyNjl9.2TYbWqHRgtiYTeJ7gUieGVpGx1HHhE3Na7SbAA1jJp-0yuMko0bPlXcoK42zGYqujdack405oOEzacey6fmzPA";
+    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTk2MDY4NTEzLCJpYXQiOjE1OTYwMDg1MTN9.ldaWciGggP8krfk1jkE5oVrCPLpII8bBLw6r_WHFcMXtHGRT_GTyGTXpLEQO0T7ZkHQyDZme5G6q2jkbrfXgIQ";
 
     header: HttpHeaders = new HttpHeaders()
         .append('Authorization', this.token);
-
+    
     constructor(private http: HttpClient) { }
 
     getComputerList(): Observable<Computer[]> {
