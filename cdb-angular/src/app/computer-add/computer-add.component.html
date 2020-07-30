@@ -1,9 +1,11 @@
 <div>
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" >
     <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input name="name" required [(ngModel)]="createdComputer.computerName" matInput />
-    </mat-form-field>
+      <mat-error *ngIf="nameFormControl.invalid">{{getNameProblemMessage()}}</mat-error>
+      
+     </mat-form-field>
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Introduction date</mat-label>
