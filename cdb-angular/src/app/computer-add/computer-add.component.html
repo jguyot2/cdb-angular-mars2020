@@ -1,21 +1,21 @@
 <div>
   <form (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
-      <mat-label i18n>Computer Name</mat-label>
+      <mat-label i18n="Computer name|computer display">Computer Name</mat-label>
       <input name="name" required [(ngModel)]="createdComputer.computerName" matInput />
     </mat-form-field>
     <br />
     <mat-form-field appearance="fill">
-      <mat-label i18n>Introduction date</mat-label>
+      <mat-label i18n="Introduction date|computer display">Introduction date</mat-label>
       <input name="introduced" type="date" matInput [(ngModel)]="createdComputer.introducedDate" />
     </mat-form-field> <br />
     <mat-form-field appearance="fill">
-      <mat-label i18n>Discontinuation date</mat-label>
+      <mat-label i18n="Discontinuation date|computer display">Discontinuation date</mat-label>
       <input name="discontinued" type="date" matInput [(ngModel)]="createdComputer.discontinuedDate" />
     </mat-form-field>
     <br />
     <mat-form-field appearance="fill">
-      <mat-label i18n>Company</mat-label>
+      <mat-label i18n="Manufacturer">Company</mat-label>
       <mat-select name="company" matInput [(ngModel)]="createdComputer.companyDTO">
         <mat-option>no company</mat-option>
         <div>
