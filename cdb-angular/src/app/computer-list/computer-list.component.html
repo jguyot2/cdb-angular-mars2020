@@ -1,4 +1,11 @@
+<button (click)="paginatedList(1)">First page</button>
+<button (click)="getPreviousPage()">previous page</button>
+<input type="text" id="pageNumber" name="pageNumber" [(ngModel)]="page.currentPage" (keydown.enter)="paginatedList($event.target.value)" />
+<button (click)="getNextPage()">next page</button>
+<button (click)="paginatedList(nbPage)">last page</button>
+
 <div class="item">
+    <a routerLink="/computers/add" >Add Computer</a>
     <table mat-table [dataSource]="computerList" class="mat-elevation-z8">
         <!-- Id Column -->
         <ng-container matColumnDef="idComputer">
@@ -28,13 +35,19 @@
         <ng-container matColumnDef="companyDTO">
             <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
             <mat-cell *matCellDef="let computer" > 
-                <div *ngIf="!!computer.companyDTO">{{computer.companyDTO.companyName}}</div>
+                <app-company  *ngIf="!!computer.companyDTO" [company]="computer.companyDTO" >
+                </app-company>
             </mat-cell>
         </ng-container>
     
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
+
+    <div>
+        <button *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
+     </div>
+
 </div>
 
 <!-- <app-computer 
