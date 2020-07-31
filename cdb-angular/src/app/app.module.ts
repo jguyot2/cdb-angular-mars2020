@@ -19,8 +19,7 @@ import { LoginComponent } from './identification/login/login.component';
 import { RegisterComponent } from './identification/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenPopup } from './popup';
-
-
+import { BodyComponent } from './body/body.component';
 
 @NgModule({
   declarations: [
@@ -34,17 +33,20 @@ import { OpenPopup } from './popup';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    BodyComponent,
+    
   
 
   ],
-  imports: [
-     BrowserModule,
+ 
+  imports: [ 
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     CustomMaterialModule,
-    NoopAnimationsModule,
     BrowserAnimationsModule,
+    NoopAnimationsModule
   ],
   providers: [OpenPopup],
   bootstrap: [AppComponent]

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { ComputerService } from '../computer.service';
+import { CompanyService } from '../company.service';
 import { Computer } from '../models/computer.model';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OpenPopup } from '../popup';
+import { Company } from '../models/company.model';
 
 @Component({
   selector: 'app-computer-add',
@@ -12,16 +12,39 @@ import { OpenPopup } from '../popup';
 })
 export class ComputerAddComponent implements OnInit {
 
-  constructor(private service:ComputerService, private openPopup:OpenPopup) {}
+  constructor(private computerService: ComputerService, private companyService: CompanyService, private openPopup: OpenPopup) { }
 
   @Input()
-  createdComputer : Computer = new Computer();
+  createdComputer: Computer = new Computer();
 
-  ngOnInit(): void {}
+  companies: Company[];
 
-  onSubmit() { this.service.addComputer(this.createdComputer).subscribe(); }
-  
-  onClose(){
+
+  ngOnInit(): void {
+    this.companyService.getCompanyList().subscribe(
+      (result: Company[]) => {
+        this.companies = result;
+      },
+      (error) => {
+        console.log(error);
+        this.companies = [];
+      })
+  }
+  control(): boolean {
+    return true;
+  }
+
+  onSubmit() {
+    this.computerService.addComputer(this.createdComputer).subscribe(
+      (result) => {
+        console.log(result);
+      },
+      (error) => {
+        console.log(error);
+      });
+  }
+
+  onClose() {
     this.openPopup.close();
   }
 }
