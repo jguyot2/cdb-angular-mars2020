@@ -48,7 +48,6 @@ export class ComputerListComponent implements OnInit {
           (result: Computer[]) => {
         this.computerList = result;
         this.listPages = this.getListPages(9);
-        console.log(this.listPages);
           }, 
           (error) => {
             console.log(error);

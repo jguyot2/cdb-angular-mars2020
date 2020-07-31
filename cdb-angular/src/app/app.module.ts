@@ -20,6 +20,7 @@ import { RegisterComponent } from './identification/register/register.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenPopup } from './popup';
 import { BodyComponent } from './body/body.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { BodyComponent } from './body/body.component';
     FormsModule,
     CustomMaterialModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    NgbModule
   ],
   providers: [OpenPopup],
   bootstrap: [AppComponent]
