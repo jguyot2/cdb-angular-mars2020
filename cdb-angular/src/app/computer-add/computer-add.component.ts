@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { ComputerService } from '../computer.service';
 import { CompanyService } from '../company.service';
-
 import { Computer } from '../models/computer.model';
+import { OpenPopup } from '../popup';
 import { Company } from '../models/company.model';
 import { Problems } from '../models/computer.problems';
 
@@ -16,7 +15,7 @@ import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors }
 })
 export class ComputerAddComponent implements OnInit {
 
-  constructor(private computerService: ComputerService, private companyService: CompanyService) { }
+  constructor(private computerService: ComputerService, private companyService: CompanyService, private openPopup: OpenPopup) { }
 
   @Input()
   createdComputer: Computer = new Computer();
@@ -122,5 +121,9 @@ export class ComputerAddComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+  }
+
+  onClose() {
+    this.openPopup.close();
   }
 }

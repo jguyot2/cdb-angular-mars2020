@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ComputerListComponent } from './computer-list/computer-list.component';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
+import { UnderbodyComponent } from './underbody/underbody.component';
 
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    component: ComputerListComponent,
+    component: UnderbodyComponent,
     pathMatch: 'full'
   },
   {

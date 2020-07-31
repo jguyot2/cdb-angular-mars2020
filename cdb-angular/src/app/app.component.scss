@@ -1,3 +1,4 @@
+
 :host {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 14px;
@@ -242,12 +243,6 @@ footer a {
   background-position: -.5em;
 }
 
-.github-star-badge .material-icons {
-  height: 16px;
-  width: 16px;
-  margin-right: 4px;
-}
-
 svg#clouds {
   position: fixed;
   bottom: -160px;
@@ -286,3 +281,9 @@ svg#clouds {
     visibility: hidden;
   }
 }
+
+h1{
+margin-left: 400px;
+text-align: center;
+}
+
