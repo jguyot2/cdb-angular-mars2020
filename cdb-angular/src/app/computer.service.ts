@@ -11,11 +11,10 @@ export class ComputerService {
     // URL du serveur à changer
     private baseUrl: string = 'http://localhost:8080/webapp/';
     private urlComputers: string = this.baseUrl + "computers/";
-    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNjAyMDExMjY5LCJpYXQiOjE1OTYwMTEyNjl9.2TYbWqHRgtiYTeJ7gUieGVpGx1HHhE3Na7SbAA1jJp-0yuMko0bPlXcoK42zGYqujdack405oOEzacey6fmzPA";
-
+    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbnRlc3QiLCJleHAiOjE1OTYyNDQ1MzYsImlhdCI6MTU5NjE4NDUzNn0.xxMwytExline2YSvOWa__NYCdvfxfUt7SgEl9aeBSmP2gx3VjOtF1wZiOPm4-GEeWsKU2Zm-zccNzoMvvZmOSw";
     header: HttpHeaders = new HttpHeaders()
         .append('Authorization', this.token);
-
+    
     constructor(private http: HttpClient) { }
 
     getComputerList(): Observable<Computer[]> {
@@ -23,12 +22,13 @@ export class ComputerService {
     }
 
     getPaginatedComputerList(page: Page): Observable<Computer[]> {
-        console.log(page);
+        const header: HttpHeaders = new HttpHeaders()
+            .set('Authorization', this.token);
         return this.http.get<Computer[]>(this.urlComputers + "page", {
             params: new HttpParams()
                 .append("pageSize", page.pageSize.toString())
                 .append("currentPage", page.currentPage.toString()),
-            headers : this.header
+            headers : header
         });
     }
 
@@ -42,4 +42,28 @@ export class ComputerService {
             .set('Authorization', this.token);
         return this.http.post<Computer>(this.urlComputers, (computer), { headers: header });
     }
+
+    deleteComputer(computer: Computer): Observable<void> {
+        const header: HttpHeaders = new HttpHeaders()
+            .set('Authorization', this.token);
+        return this.http.delete<void>(this.urlComputers + computer.idComputer, { headers: header });
+    }
+
+    searchComputer(search: string, page: Page): Observable<Computer[]> {
+        const header: HttpHeaders = new HttpHeaders()
+        .set('Authorization', this.token);
+        return this.http.get<Computer[]>(this.urlComputers + "search/" + search, {
+            params: new HttpParams()
+                .append("pageSize", page.pageSize.toString())
+                .append("currentPage", page.currentPage.toString()),
+            headers : header
+        });    
+    }
+
+    getNumberSearchComputers(search: string): Observable<number> {
+        const header: HttpHeaders = new HttpHeaders()
+        .set('Authorization', this.token);
+        return this.http.get<number>(this.urlComputers + "search/"+ search +"/number", { headers: this.header });
+    }
+
 } 

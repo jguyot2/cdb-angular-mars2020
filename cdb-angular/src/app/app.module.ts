@@ -22,7 +22,7 @@ import { BodyComponent } from './body/body.component';
     CompanyComponent,
     ComputerListComponent,
     HeaderComponent,
-    BodyComponent
+    BodyComponent,
   ],
   imports: [ 
     BrowserModule,
