@@ -48,4 +48,22 @@ export class ComputerService {
             .set('Authorization', this.token);
         return this.http.delete<void>(this.urlComputers + computer.idComputer, { headers: header });
     }
+
+    searchComputer(search: string, page: Page): Observable<Computer[]> {
+        const header: HttpHeaders = new HttpHeaders()
+        .set('Authorization', this.token);
+        return this.http.get<Computer[]>(this.urlComputers + "search/" + search, {
+            params: new HttpParams()
+                .append("pageSize", page.pageSize.toString())
+                .append("currentPage", page.currentPage.toString()),
+            headers : header
+        });    
+    }
+
+    getNumberSearchComputers(search: string): Observable<number> {
+        const header: HttpHeaders = new HttpHeaders()
+        .set('Authorization', this.token);
+        return this.http.get<number>(this.urlComputers + "search/"+ search +"/number", { headers: this.header });
+    }
+
 } 
