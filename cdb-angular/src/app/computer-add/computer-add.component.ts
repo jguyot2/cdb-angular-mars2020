@@ -7,7 +7,7 @@ import { Computer } from '../models/computer.model';
 import { Company } from '../models/company.model';
 import { Problems } from '../models/computer.problems';
 
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-computer-add',
@@ -25,71 +25,74 @@ export class ComputerAddComponent implements OnInit {
 
   problems: Problems[] = [];
 
-  nameFormControl=new FormControl('', [Validators.required]);
-  
+  lowerThresoldDate = new Date(1970, 1, 1).getTime();
+  upperThresoldDate = new Date(2038, 1, 1).getTime();
 
-  // TODO : i18n de la validation
+  get name() { return this.computerForm.get('name'); }
+  get introduced() { return this.computerForm.get('introduced'); }
+  get discontinued() { return this.computerForm.get('discontinued'); }
 
-  getIntroducedProblemMessage(): string {
-    if (this.problems.includes(Problems.DISCONTINED_BEFORE_INTRODUCED)) {
-      return "The discontinuation date must be set after the introduced date";
-    } else if (this.problems.includes(Problems.INVALID_INTRODUCED_RANGE)) {
-      return "The date must be between 1970 and 2037";
-    } else if (this.problems.includes(Problems.DISCONTINED_SET_WITHOUT_INTRODUCED)) {
-      return "The introduction date must be set if the discontinuation date is set";
-    }
-    return null;
-  }
-  getDiscontinuedProblemMessage(): string {
-    if (this.problems.includes(Problems.INVALID_DISCONTINUED_RANGE)) {
-      return "The date must be between 1970 and 2037";
+  computerForm = new FormGroup({
+    'name': new FormControl(this.createdComputer.computerName || '', [
+      Validators.maxLength(200),
+      Validators.required,
+      (control: AbstractControl) => {
+        const name = control.value;
 
-    }
-  }
-  getNameProblemMessage(): string {
-    if (this.problems.includes(Problems.INVALID_NAME)) {
-      return "The name must not be empty";
-    }
-    return null;
-  }
-
-  updateProblems(): void {
-    const name: string = this.createdComputer.computerName;
-    const introduced: Date = this.createdComputer.introducedDate;
-    const discontinued: Date = this.createdComputer.discontinuedDate;
-    const company: Company = this.createdComputer.companyDTO;
-    this.problems = [];
-
-    if ((!name) || name === "") {
-      this.problems.push(Problems.INVALID_NAME);
-    }
-
-    if (introduced) {
-      if (introduced.getFullYear() < 1970 || introduced.getFullYear() > 2037) {
-        this.problems.push(Problems.INVALID_INTRODUCED_RANGE);
+        if (name.trim() === "")
+          return { 'onlySpaces': true };
+        else
+          return null;
       }
-      if (discontinued) {
-        if (discontinued.getFullYear() < 1970 || discontinued.getFullYear() > 2037) {
-          this.problems.push(Problems.INVALID_DISCONTINUED_RANGE);
-        }
-        if (discontinued < introduced) {
-          this.problems.push(Problems.DISCONTINED_BEFORE_INTRODUCED);
-        }
-      }
-    } else {
-      if (discontinued) {
-        if (discontinued.getFullYear() < 1970 || discontinued.getFullYear() > 2037) {
-          this.problems.push(Problems.INVALID_DISCONTINUED_RANGE);
-        }
-        this.problems.push(Problems.DISCONTINED_SET_WITHOUT_INTRODUCED);
-      }
-    }
-  }
+    ]),
+    'introduced': new FormControl(this.createdComputer.introducedDate, [
+      (control: AbstractControl) => {
+        const introducedStr = control.value;
+        if (!introducedStr || introducedStr === "")
+          return null;
 
-  isValidComputer() {
-    this.updateProblems(); // ?
-    return this.problems.length === 0;
-  }
+        const introduced = new Date(control.value);
+
+        console.log(introduced.getTime());
+        console.log(introduced);
+        if (introduced.getTime() < this.lowerThresoldDate
+          || introduced.getTime() > this.upperThresoldDate) {
+          return { 'outOfRange': true };
+        }
+        return null;
+      }]
+    ),
+    'discontinued': new FormControl(this.createdComputer.discontinuedDate, [
+      (control: AbstractControl) => {
+        const discontinued = control.value;
+        if (!discontinued) return null;
+        // cast date ?
+        if (discontinued < new Date(1970, 1, 1) || discontinued > new Date(2038, 1, 1))
+          return { 'error': { value: control.value } };
+        // TODO
+        return null;
+      }]
+    ),
+    'company': new FormControl(null)
+  }, {
+    validators: [
+      (control: FormGroup): ValidationErrors | null => {
+        const intro = control.get('introduced');
+        const disco = control.get('discontinued');
+
+        // CAST ? 
+        const introDate = intro ? new Date(intro.value) : null;
+        const discoDate = intro ? new Date(disco.value) : null;
+
+        if (intro && !disco) {
+          return { 'onlyDisco': true };
+        } else {
+          return null;
+        }
+      }
+    ]
+  });
+
 
   ngOnInit(): void {
     this.companyService.getCompanyList().subscribe(
@@ -101,12 +104,18 @@ export class ComputerAddComponent implements OnInit {
         this.companies = [];
       })
   }
-  control(): boolean {
-    return true;
-  }
 
   onSubmit() {
-    this.computerService.addComputer(this.createdComputer).subscribe(
+    const computer: Computer = new Computer();
+    computer.computerName = this.computerForm.get('name').value;
+    console.log(computer.computerName);
+    // CAST ? 
+    computer.introducedDate = this.computerForm.get('introduced').value;
+    computer.discontinuedDate = this.computerForm.get('discontinued').value;
+
+    computer.companyDTO = this.computerForm.get('company').value;
+
+    this.computerService.addComputer(computer).subscribe(
       (result) => {
         console.log(result);
       },
