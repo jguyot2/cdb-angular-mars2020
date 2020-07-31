@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
 import { Page } from '../models/page.model';
@@ -21,11 +21,13 @@ export class ComputerListComponent implements OnInit {
 
   computerList:Computer[];
 
+  @Input('ngModel')  
+  search: string;
+
   
   displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
 
   ngOnInit(): void {
-    this.setNbCompurtersAndPages();
     this.paginatedList(1);
   }
 
@@ -43,16 +45,26 @@ export class ComputerListComponent implements OnInit {
     }
 
   paginatedList(pageNumber: number): void {
-      this.page.currentPage = pageNumber;
-      this.service.getPaginatedComputerList(this.page).subscribe(
-          (result: Computer[]) => {
-        this.computerList = result;
-        this.listPages = this.getListPages(9);
-        console.log(this.listPages);
-          }, 
-          (error) => {
-            console.log(error);
-          })
+    this.page.currentPage = pageNumber;
+    if (this.search) {
+      this.searchComputer(pageNumber);
+    } else {
+      this.basicPaginatedList(pageNumber);
+    }
+  }
+
+  basicPaginatedList(pageNumber: number): void {
+    this.service.getPaginatedComputerList(this.page).subscribe(
+        (result: Computer[]) => {
+      this.computerList = result;
+      this.listPages = this.getListPages(9);
+        }, 
+        (error) => {
+          console.log(error);
+      this.computerList = [];
+        })
+    this.setNbCompurtersAndPages();
+
   }
 
   getNextPage(): void {
@@ -80,13 +92,50 @@ export class ComputerListComponent implements OnInit {
         })
   }
 
+  setNbCompurtersAndPagesWithSearch(search: string): void {
+    this.service.getNumberSearchComputers(search).subscribe(
+        (result: number) => {
+          this.nbComputers = result;
+          this.nbPage = this.getNbPages(this.page, result);
+          this.listPages = this.getListPages(9);
+          console.log("curretnpagebise " +this.page.currentPage);
+          console.log(this.listPages);
+          console.log("nbComputers" + result);
+          console.log("nbpagesbis" + this.nbPage);
+        }, 
+        (error) => {
+          console.log(error);
+        })
+  }
+
   getNbPages(page: Page, nbComputers: number): number {
     return Math.ceil(nbComputers/page.pageSize);
   }
 
+  deleteComputer(computer: Computer) {
+    if (this.computerList.includes(computer)) { 
+      this.service.deleteComputer(computer).subscribe(
+        () => {
+          var index = this.computerList.indexOf(computer);
+          this.computerList.splice(index, 1);
+          if (this.computerList.length == 0) {
+            this.page.currentPage --;
+          }
+          this.paginatedList(this.page.currentPage);
+        }, 
+        (error) => {
+        })
+      }
+    }
+
   getListPages(nb: number): number [] {
     var nbSpaceAfterCurrentPage = Math.ceil(nb/2);
     var firstPageToShow;
+    var lastPageToShow;
+    console.log("test");
+    console.log("1" +this.page.currentPage)
+    console.log("2" +nbSpaceAfterCurrentPage)
+    console.log("3" +this.nbPage)
 
     if (this.page.currentPage <= nbSpaceAfterCurrentPage) {
       firstPageToShow = 1;
@@ -95,8 +144,32 @@ export class ComputerListComponent implements OnInit {
     } else {
       firstPageToShow = this.page.currentPage - nb + nbSpaceAfterCurrentPage;
     }
-    var lastPageToShow = firstPageToShow + nb;
+
+    if (this.nbPage < nb){
+      lastPageToShow = firstPageToShow + this.nbPage;
+    } else {
+      lastPageToShow = firstPageToShow + nb;
+    }
+   
     return Array.from(Array(lastPageToShow - firstPageToShow), (_, index) => index + firstPageToShow);
+  }
+
+  searchComputer(pageNumber: number): void {
+    if (this.search) {
+      console.log(this.search);
+      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.service.searchComputer(this.search, this.page).subscribe(
+        (result: Computer[]) => {
+          this.computerList = result;
+          console.log("curretnpage " +this.page.currentPage);
+          this.setNbCompurtersAndPagesWithSearch(this.search);
+
+          console.log("nbComputersaa" + this.nbComputers);
+          console.log("nbpagesbisaa" + this.nbPage);
+        }, 
+        (error) => {
+        })
+    }
   }
 
 }
