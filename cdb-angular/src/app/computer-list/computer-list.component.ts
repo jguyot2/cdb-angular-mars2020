@@ -42,16 +42,22 @@ export class ComputerListComponent implements OnInit {
     }
 
   paginatedList(pageNumber: number): void {
+    console.log("test");
+
     this.page.currentPage = pageNumber;
     this.service.getPaginatedComputerList(this.page).subscribe(
         (result: Computer[]) => {
       this.computerList = result;
+      console.log(result);
+
+      this.listPages = this.getListPages(9);
         }, 
         (error) => {
           console.log(error);
       this.computerList = [];
         })
     this.setNbCompurtersAndPages();
+
   }
 
   getNextPage(): void {
@@ -73,7 +79,6 @@ export class ComputerListComponent implements OnInit {
         (result: number) => {
           this.nbComputers = result;
           this.nbPage = this.getNbPages(this.page, result);
-          this.listPages = Array.from(Array(this.nbPage), (_, index) => index + 1);
         }, 
         (error) => {
           console.log(error);
@@ -85,16 +90,34 @@ export class ComputerListComponent implements OnInit {
   }
 
   deleteComputer(computer: Computer) {
-    this.service.deleteComputer(computer).subscribe(
-      () => {
-        if (this.computerList.length == 1) {
-          this.page.currentPage --;
-        }
-        this.paginatedList(this.page.currentPage);
-      }, 
-      (error) => {
-        console.log(error);
-      })
+    if (this.computerList.includes(computer)) { 
+      this.service.deleteComputer(computer).subscribe(
+        () => {
+          var index = this.computerList.indexOf(computer);
+          this.computerList.splice(index, 1);
+          if (this.computerList.length == 0) {
+            this.page.currentPage --;
+          }
+          this.paginatedList(this.page.currentPage);
+        }, 
+        (error) => {
+        })
+      }
+    }
+
+    getListPages(nb: number): number [] {
+    var nbSpaceAfterCurrentPage = Math.ceil(nb/2);
+    var firstPageToShow;
+
+    if (this.page.currentPage <= nbSpaceAfterCurrentPage) {
+      firstPageToShow = 1;
+    } else if (this.page.currentPage > this.nbPage - nbSpaceAfterCurrentPage) {
+      firstPageToShow = this.nbPage - nb;
+    } else {
+      firstPageToShow = this.page.currentPage - nb + nbSpaceAfterCurrentPage;
+    }
+    var lastPageToShow = firstPageToShow + nb;
+    return Array.from(Array(lastPageToShow - firstPageToShow), (_, index) => index + firstPageToShow);
   }
 
 }

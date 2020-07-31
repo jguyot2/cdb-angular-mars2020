@@ -1,9 +1,3 @@
-<button (click)="paginatedList(1)">First page</button>
-<button (click)="getPreviousPage()">previous page</button>
-<input type="text" id="pageNumber" name="pageNumber" [(ngModel)]="page.currentPage" (keydown.enter)="paginatedList($event.target.value)" />
-<button (click)="getNextPage()">next page</button>
-<button (click)="paginatedList(nbPage)">last page</button>
-
 <div class="item">
     <a routerLink="/computers/add" >Add Computer</a>
     <table mat-table [dataSource]="computerList" class="mat-elevation-z8">
@@ -49,7 +43,13 @@
     </table>
 
     <div>
+        <button (click)="paginatedList(1)">First page</button>
+        <button (click)="getPreviousPage()">previous page</button>
         <button *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
+        <button (click)="getNextPage()">next page</button>
+        <button (click)="paginatedList(nbPage)">last page</button>
+
+        <input type="number" id="pageNumber" name="pageNumber" placeholder="page number" (keydown.enter)="paginatedList($event.target.value)" />
      </div>
 
 </div>
