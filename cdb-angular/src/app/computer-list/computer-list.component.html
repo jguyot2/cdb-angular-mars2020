@@ -1,5 +1,8 @@
 <div class="item">
     <a routerLink="/computers/add" >Add Computer</a>
+
+    <input type="text" id="search" name="search" placeholder="Search name" [(ngModel)]="search" (keydown.enter)="paginatedList(1)" />
+
     <table mat-table [dataSource]="computerList" class="mat-elevation-z8">
         <!-- Id Column -->
         <ng-container matColumnDef="idComputer">
@@ -48,6 +51,7 @@
         <button *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
         <button (click)="getNextPage()">next page</button>
         <button (click)="paginatedList(nbPage)">last page</button>
+        <a [routerLink]="" (click)="paginatedList(3)">Click me</a>
 
         <input type="number" id="pageNumber" name="pageNumber" placeholder="page number" (keydown.enter)="paginatedList($event.target.value)" />
      </div>
