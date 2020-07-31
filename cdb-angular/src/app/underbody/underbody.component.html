@@ -5,10 +5,14 @@
     <mat-label>Search</mat-label>
     <input matInput type="text"/>
   </mat-form-field>
-  </td>
+  <a href="#"><mat-icon id ="searchicon">search</mat-icon></a>
+ 
+  <button id="addcomputericon" mat-icon-button (click)='oopenPopupAdd()'><mat-icon id="addbtn">add_circle_outline</mat-icon></button>
+</td>
 </tr>
   <tr>
-    <th><input type="checkbox"/></th>
+    <th><input class="selectall" type="checkbox"/>
+   <mat-icon id ="deleteicon">delete_forever</mat-icon></th>
     <th data-th="Driver details"><span>Computer name</span></th>
     <th>Introduced</th>
     <th>Discontinued</th>
@@ -17,7 +21,7 @@
   
   <tr>
     <td><input type="checkbox"/></td>
-    <td>Steve</td>
+    <td><a href ="#"  class="modifyicon">Steve  <mat-icon id="id" aria-hidden="false" aria-label="Example home icon">create</mat-icon></a></td>
     <td>Foo</td>
     <td>01/01/1978</td>
     <td>Policyholder</td>
@@ -46,5 +50,61 @@
     <td>01/01/1992</td>
     <td>Daughter</td>
   </tr>
-  
+  <tr>
+    <td><input type="checkbox"/></td>
+    <td>Stella</td>
+    <td>Foo</td>
+    <td>01/01/1992</td>
+    <td>Daughter</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox"/></td>
+    <td>Stella</td>
+    <td>Foo</td>
+    <td>01/01/1992</td>
+    <td>Daughter</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox"/></td>
+    <td>Stella</td>
+    <td>Foo</td>
+    <td>01/01/1992</td>
+    <td>Daughter</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox"/></td>
+    <td>Stella</td>
+    <td>Foo</td>
+    <td>01/01/1992</td>
+    <td>Daughter</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox"/></td>
+    <td>Stella</td>
+    <td>Foo</td>
+    <td>01/01/1992</td>
+    <td>Daughter</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox"/></td>
+    <td>Stella</td>
+    <td>Foo</td>
+    <td>01/01/1992</td>
+    <td>Daughter</td>
+  </tr>
+  <tr>
+  <td id="" colspan="5">
+    <div class="pagination">
+      <a href="#">&laquo;</a>
+      <a href="#">1</a>
+      <a class="active" href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">5</a>
+      <a href="#">6</a>
+      <a href="#">&raquo;</a>
+  </div>
+  </td>
+</tr>
 </table>
+

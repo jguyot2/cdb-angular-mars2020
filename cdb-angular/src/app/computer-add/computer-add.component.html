@@ -1,4 +1,7 @@
+
 <form (ngSubmit)="onSubmit()">
+  <h4 class="modal-title" id="modal-basic-title">Create a Computer</h4>
+
   <div>
     Name
     <input type="text" class="form-control" id="name" required [(ngModel)]="createdComputer.computerName" name="name" />
@@ -17,4 +20,6 @@
     <input type="hidden" class="form-control" name="company" id="company"  [(ngModel)]="createdComputer.companyDTO" />
   </div>
   <input type="submit" id="submit" value="Submit" />
+  <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);" (click)='onClose()'>Cancel</button>
 </form>
+

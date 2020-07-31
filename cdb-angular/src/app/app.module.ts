@@ -18,12 +18,13 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './identification/login/login.component';
 import { RegisterComponent } from './identification/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OpenPopup } from './popup';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
     ComputerAddComponent,
     ComputerComponent,
     CompanyComponent,
@@ -32,11 +33,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UnderbodyComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+  
 
   ],
   imports: [
-    BrowserModule,
+     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -44,7 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NoopAnimationsModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [OpenPopup],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

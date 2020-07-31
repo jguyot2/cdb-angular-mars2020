@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OpenPopup } from '../popup';
 
 @Component({
   selector: 'app-computer-add',
@@ -10,7 +12,7 @@ import { Computer } from '../models/computer.model';
 })
 export class ComputerAddComponent implements OnInit {
 
-  constructor(private service:ComputerService) {}
+  constructor(private service:ComputerService, private openPopup:OpenPopup) {}
 
   @Input()
   createdComputer : Computer = new Computer();
@@ -18,4 +20,8 @@ export class ComputerAddComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() { this.service.addComputer(this.createdComputer).subscribe(); }
+  
+  onClose(){
+    this.openPopup.close();
+  }
 }
