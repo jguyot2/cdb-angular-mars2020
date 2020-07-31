@@ -2,44 +2,70 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Computer } from './models/computer.model'
 import { Page } from './models/page.model'
+import { Urls } from './urls'
+import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
 
 @Injectable({
     providedIn: 'root'
 })
 export class ComputerService {
-    // URL du serveur à changer
-    private baseUrl: string = 'http://localhost:8080/webapp/';
-    private urlComputers: string = this.baseUrl + "computers/";
-    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTk2MDY4NTEzLCJpYXQiOjE1OTYwMDg1MTN9.ldaWciGggP8krfk1jkE5oVrCPLpII8bBLw6r_WHFcMXtHGRT_GTyGTXpLEQO0T7ZkHQyDZme5G6q2jkbrfXgIQ";
-
-    header: HttpHeaders = new HttpHeaders()
-        .append('Authorization', this.token);
     
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private urls : Urls, private auth: AuthenticationService) { }
 
-    getComputerList(): Observable<Computer[]> {
-        return this.http.get<Computer[]>(this.urlComputers, { headers: this.header });
+    getNumberComputers(): Observable<number> {
+        if(this.auth.isLoggedIn()){
+            return this.http.get<number>(
+                this.urls.computersUrl + "number", 
+                { headers:  new HttpHeaders()
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', 'Bearer '+ this.auth.getToken())
+                }
+            );
+        }
     }
 
     getPaginatedComputerList(page: Page): Observable<Computer[]> {
-        console.log(page);
-        return this.http.get<Computer[]>(this.urlComputers + "page", {
+        return this.http.get<Computer[]>(this.urls.computersUrl + "page", {
             params: new HttpParams()
                 .append("pageSize", page.pageSize.toString())
                 .append("currentPage", page.currentPage.toString()),
-            headers : this.header
+            headers : new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer '+ this.auth.getToken())
         });
     }
 
-    getNumberComputers(): Observable<number> {
-        return this.http.get<number>(this.urlComputers + "number", { headers: this.header });
-    }
-
-    addComputer(computer: Computer): Observable<Computer> {
-        const header: HttpHeaders = new HttpHeaders()
-            .set('Content-Type', 'application/json')
-            .set('Authorization', this.token);
-        return this.http.post<Computer>(this.urlComputers, (computer), { headers: header });
+        getComputerList(): Observable<Computer[]> {
+            if(this.auth.isLoggedIn()){
+                return this.http.get<Computer[]>(
+                    this.urls.computersUrl, 
+                    {
+                        headers: new HttpHeaders()
+                            .set('Content-Type', 'application/json')
+                            .set('Authorization', 'Bearer '+ this.auth.getToken())
+                        ,
+                        observe: 'body',
+                        responseType: 'json'
+                    }
+                );
+            }
+        }
+     
+        addComputer(computer: Computer) {
+            if(this.auth.isLoggedInAsAdmin()){
+                return this.http.post(
+                    this.urls.computersUrl,
+                    computer,
+                    {
+                        headers: new HttpHeaders({
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer '+ this.auth.getToken()
+                        }),
+                        observe: 'body',
+                        responseType: 'json'
+                    }
+                );
+            }
     }
 } 

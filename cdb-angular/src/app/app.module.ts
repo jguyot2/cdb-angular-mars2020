@@ -13,6 +13,8 @@ import { HeaderComponent } from './header/header.component';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BodyComponent } from './body/body.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { BodyComponent } from './body/body.component';
     CompanyComponent,
     ComputerListComponent,
     HeaderComponent,
-    BodyComponent
+    BodyComponent,
+    LoginComponent
   ],
   imports: [ 
     BrowserModule,
@@ -30,7 +33,8 @@ import { BodyComponent } from './body/body.component';
     HttpClientModule,
     FormsModule,
     CustomMaterialModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
