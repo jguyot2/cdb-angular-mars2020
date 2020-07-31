@@ -4,7 +4,11 @@
         <!-- Id Column -->
         <ng-container matColumnDef="idComputer">
         <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> {{computer.idComputer}} </mat-cell>
+        <mat-cell *matCellDef="let computer; let i = index"> 
+            <button mat-icon-button (click)="deleteComputer(computer, i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            {{computer.idComputer}} </mat-cell>
         </ng-container>
     
         <!-- Name Column -->

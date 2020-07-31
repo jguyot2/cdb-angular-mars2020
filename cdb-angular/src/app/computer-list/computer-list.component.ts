@@ -25,7 +25,6 @@ export class ComputerListComponent implements OnInit {
   displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
 
   ngOnInit(): void {
-    this.setNbCompurtersAndPages();
     this.paginatedList(1);
   }
 
@@ -43,16 +42,22 @@ export class ComputerListComponent implements OnInit {
     }
 
   paginatedList(pageNumber: number): void {
-      this.page.currentPage = pageNumber;
-      this.service.getPaginatedComputerList(this.page).subscribe(
-          (result: Computer[]) => {
-        this.computerList = result;
-        this.listPages = this.getListPages(9);
-        console.log(this.listPages);
-          }, 
-          (error) => {
-            console.log(error);
-          })
+    console.log("test");
+
+    this.page.currentPage = pageNumber;
+    this.service.getPaginatedComputerList(this.page).subscribe(
+        (result: Computer[]) => {
+      this.computerList = result;
+      console.log(result);
+
+      this.listPages = this.getListPages(9);
+        }, 
+        (error) => {
+          console.log(error);
+      this.computerList = [];
+        })
+    this.setNbCompurtersAndPages();
+
   }
 
   getNextPage(): void {
@@ -84,7 +89,23 @@ export class ComputerListComponent implements OnInit {
     return Math.ceil(nbComputers/page.pageSize);
   }
 
-  getListPages(nb: number): number [] {
+  deleteComputer(computer: Computer) {
+    if (this.computerList.includes(computer)) { 
+      this.service.deleteComputer(computer).subscribe(
+        () => {
+          var index = this.computerList.indexOf(computer);
+          this.computerList.splice(index, 1);
+          if (this.computerList.length == 0) {
+            this.page.currentPage --;
+          }
+          this.paginatedList(this.page.currentPage);
+        }, 
+        (error) => {
+        })
+      }
+    }
+
+    getListPages(nb: number): number [] {
     var nbSpaceAfterCurrentPage = Math.ceil(nb/2);
     var firstPageToShow;
 

@@ -11,8 +11,7 @@ export class ComputerService {
     // URL du serveur à changer
     private baseUrl: string = 'http://localhost:8080/webapp/';
     private urlComputers: string = this.baseUrl + "computers/";
-    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTk2MDY4NTEzLCJpYXQiOjE1OTYwMDg1MTN9.ldaWciGggP8krfk1jkE5oVrCPLpII8bBLw6r_WHFcMXtHGRT_GTyGTXpLEQO0T7ZkHQyDZme5G6q2jkbrfXgIQ";
-
+    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbnRlc3QiLCJleHAiOjE1OTYyNDQ1MzYsImlhdCI6MTU5NjE4NDUzNn0.xxMwytExline2YSvOWa__NYCdvfxfUt7SgEl9aeBSmP2gx3VjOtF1wZiOPm4-GEeWsKU2Zm-zccNzoMvvZmOSw";
     header: HttpHeaders = new HttpHeaders()
         .append('Authorization', this.token);
     
@@ -23,12 +22,13 @@ export class ComputerService {
     }
 
     getPaginatedComputerList(page: Page): Observable<Computer[]> {
-        console.log(page);
+        const header: HttpHeaders = new HttpHeaders()
+            .set('Authorization', this.token);
         return this.http.get<Computer[]>(this.urlComputers + "page", {
             params: new HttpParams()
                 .append("pageSize", page.pageSize.toString())
                 .append("currentPage", page.currentPage.toString()),
-            headers : this.header
+            headers : header
         });
     }
 
@@ -41,5 +41,11 @@ export class ComputerService {
             .set('Content-Type', 'application/json')
             .set('Authorization', this.token);
         return this.http.post<Computer>(this.urlComputers, (computer), { headers: header });
+    }
+
+    deleteComputer(computer: Computer): Observable<void> {
+        const header: HttpHeaders = new HttpHeaders()
+            .set('Authorization', this.token);
+        return this.http.delete<void>(this.urlComputers + computer.idComputer, { headers: header });
     }
 } 
