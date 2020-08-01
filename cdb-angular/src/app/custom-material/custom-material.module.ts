@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatIconModule } from '@angular/material/icon'; 
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSortModule
   ],
   exports: [ 
     MatToolbarModule,
@@ -33,7 +35,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSortModule
   ]
 
 })

@@ -11,7 +11,7 @@ export class ComputerService {
     // URL du serveur à changer
     private baseUrl: string = 'http://localhost:8080/webapp/';
     private urlComputers: string = this.baseUrl + "computers/";
-    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbnRlc3QiLCJleHAiOjE1OTYyNDQ1MzYsImlhdCI6MTU5NjE4NDUzNn0.xxMwytExline2YSvOWa__NYCdvfxfUt7SgEl9aeBSmP2gx3VjOtF1wZiOPm4-GEeWsKU2Zm-zccNzoMvvZmOSw";
+    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTk2MzYzMDEyLCJpYXQiOjE1OTYzMDMwMTJ9.RJTrnqsTm7fE6QVdXLcjgL5wOg5WoqVXpSdvleH2o0QREx8xDAS04Eq6acnANjqmnGx0djqLWtRZHTMQ5pY5vA";
     header: HttpHeaders = new HttpHeaders()
         .append('Authorization', this.token);
     
@@ -64,6 +64,17 @@ export class ComputerService {
         const header: HttpHeaders = new HttpHeaders()
         .set('Authorization', this.token);
         return this.http.get<number>(this.urlComputers + "search/"+ search +"/number", { headers: this.header });
+    }
+
+    orderComputers(orderBy: string, page: Page): Observable<Computer[]> {
+        const header: HttpHeaders = new HttpHeaders()
+        .set('Authorization', this.token);
+        return this.http.get<Computer[]>(this.urlComputers + "orderBy/" + orderBy, {
+            params: new HttpParams()
+                .append("pageSize", page.pageSize.toString())
+                .append("currentPage", page.currentPage.toString()),
+            headers : header
+        });    
     }
 
 } 
