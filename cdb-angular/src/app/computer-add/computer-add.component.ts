@@ -4,6 +4,7 @@ import { CompanyService } from '../company.service';
 import { Computer } from '../models/computer.model';
 import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
 
 @Component({
   selector: 'app-computer-add',
@@ -20,8 +21,8 @@ export class ComputerAddComponent implements OnInit {
   companies: Company[];
 
 
-  lowerThresoldDate:number = new Date(1970, 1, 1).getTime();
-  upperThresoldDate:number = new Date(2038, 1, 1).getTime();
+  lowerThresoldDate: number = new Date(1970, 1, 1).getTime();
+  upperThresoldDate: number = new Date(2038, 1, 1).getTime();
 
   get name() { return this.computerForm.get('name'); }
   get introduced() { return this.computerForm.get('introduced'); }
@@ -59,12 +60,15 @@ export class ComputerAddComponent implements OnInit {
     ),
     'discontinued': new FormControl(this.createdComputer.discontinuedDate, [
       (control: AbstractControl) => {
-        const discontinued = control.value;
-        if (!discontinued) return null;
+        const strDiscontinued = control.value;
+        if (!strDiscontinued)
+         return null;
 
-        // cast date ?
-        if (discontinued < new Date(1970, 1, 1) || discontinued > new Date(2038, 1, 1))
-          return { 'outOfRange': { value: control.value } };
+        const discontinued = new Date(strDiscontinued);
+        
+        if (discontinued.getTime() < this.lowerThresoldDate
+          || discontinued.getTime() > this.upperThresoldDate)
+          return { 'outOfRange': true };
         // TODO
         return null;
       }]
@@ -105,6 +109,8 @@ export class ComputerAddComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.computerForm.invalid) // Affichage de message ? 
+      return;
     const computer: Computer = new Computer();
     computer.computerName = this.computerForm.get('name').value;
     console.log(computer.computerName);
@@ -113,7 +119,6 @@ export class ComputerAddComponent implements OnInit {
     computer.discontinuedDate = this.computerForm.get('discontinued').value;
 
     computer.companyDTO = this.computerForm.get('company').value;
-    // TODO : envoi message si le truc est pas bien 
     this.computerService.addComputer(computer).subscribe(
       (result) => {
         console.log(result);

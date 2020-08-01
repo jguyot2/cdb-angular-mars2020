@@ -1,5 +1,5 @@
 <div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="computerForm" class="form-control">
+  <form [formGroup]="computerForm" class="form-control" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
@@ -22,10 +22,10 @@
       </div>
       <div *ngIf="computerForm.errors && (introduced.touched || discontinued.touched)" class="alert alert-danger">
         <mat-error *ngIf="computerForm.errors?.discoBeforeIntro">
-          The discontinuation date must be set after the introduction date 
+          The discontinuation date must be set after the introduction date
         </mat-error>
         <mat-error *ngIf="computerForm.errors?.discoWithoutIntro">
-          The discontinuation date cannot be set without the introduction date 
+          The discontinuation date cannot be set without the introduction date
         </mat-error>
       </div>
     </mat-form-field>
@@ -53,8 +53,16 @@
       </mat-select>
     </mat-form-field>
     <br />
-    <input type="submit" id="submit" value="Submit" />
-    <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);"
-      (click)='onClose()'>Cancel</button>
+    <div>
+      <div *ngIf="computerForm.valid">
+        <button mat-button color="primary" type="submit"> Submit </button>
+      </div>  
+       <div *ngIf="computerForm.invalid valid">
+        <button mat-button color="primary" disabled type="submit"> Submit </button>
+      </div>
+
+      <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);" (click)='onClose()'
+        [routerLink]="['/dashboard']"> Cancel</button>
+    </div>
   </form>
 </div>
