@@ -20,6 +20,14 @@
           The date must be set between 1970 and 2037
         </div>
       </div>
+      <div *ngIf="computerForm.errors && (introduced.touched || discontinued.touched)" class="alert alert-danger">
+        <div *ngIf="computerForm.errors?.discoBeforeIntro">
+          The discontinuation date must be set after the introduction date 
+        </div>
+        <div *ngIf="computerForm.errors?.discoWithoutIntro">
+          The discontinuation date cannot be set without the introduction date 
+        </div>
+      </div>
     </mat-form-field>
     <br />
 
@@ -46,6 +54,7 @@
     </mat-form-field>
     <br />
     <input type="submit" id="submit" value="Submit" />
-    <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);" (click)='onClose()'>Cancel</button>
+    <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);"
+      (click)='onClose()'>Cancel</button>
   </form>
 </div>

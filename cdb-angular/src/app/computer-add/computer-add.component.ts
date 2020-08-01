@@ -20,8 +20,8 @@ export class ComputerAddComponent implements OnInit {
   companies: Company[];
 
 
-  lowerThresoldDate = new Date(1970, 1, 1).getTime();
-  upperThresoldDate = new Date(2038, 1, 1).getTime();
+  lowerThresoldDate:number = new Date(1970, 1, 1).getTime();
+  upperThresoldDate:number = new Date(2038, 1, 1).getTime();
 
   get name() { return this.computerForm.get('name'); }
   get introduced() { return this.computerForm.get('introduced'); }
@@ -61,9 +61,10 @@ export class ComputerAddComponent implements OnInit {
       (control: AbstractControl) => {
         const discontinued = control.value;
         if (!discontinued) return null;
+
         // cast date ?
         if (discontinued < new Date(1970, 1, 1) || discontinued > new Date(2038, 1, 1))
-          return { 'error': { value: control.value } };
+          return { 'outOfRange': { value: control.value } };
         // TODO
         return null;
       }]
@@ -71,18 +72,22 @@ export class ComputerAddComponent implements OnInit {
     'company': new FormControl(null)
   }, {
     validators: [
+      // Vérification de la cohérence des dates entre elles 
       (control: FormGroup): ValidationErrors | null => {
         const intro = control.get('introduced');
         const disco = control.get('discontinued');
 
         // CAST ? 
-        const introDate = intro ? new Date(intro.value) : null;
-        const discoDate = intro ? new Date(disco.value) : null;
+        const introDate: Date = intro.value ? new Date(intro.value) : null;
+        const discoDate: Date = disco.value ? new Date(disco.value) : null;
 
-        if (intro && !disco) {
-          return { 'onlyDisco': true };
+        if (introDate) {
+          if (discoDate) {
+            return introDate.getTime() < discoDate.getTime() ? null :
+              { discoBeforeIntro: true };
+          }
         } else {
-          return null;
+          return discoDate ? { discoWithoutIntro: true } : null;
         }
       }
     ]
@@ -98,13 +103,13 @@ export class ComputerAddComponent implements OnInit {
         console.log(error);
         this.companies = [];
       })
-  } 
+  }
 
   onSubmit() {
     const computer: Computer = new Computer();
     computer.computerName = this.computerForm.get('name').value;
     console.log(computer.computerName);
-    
+
     computer.introducedDate = this.computerForm.get('introduced').value;
     computer.discontinuedDate = this.computerForm.get('discontinued').value;
 
