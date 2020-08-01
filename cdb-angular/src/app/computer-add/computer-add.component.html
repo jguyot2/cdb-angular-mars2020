@@ -7,7 +7,7 @@
         <div *ngIf="name.errors.maxlength" class="ng-invalid" i18n>
           Name must be at most 200 characters long.
         </div>
-        <div *ngIf="name.errors.required || name.errors.onlySpaces" i18n>Name must not be empty</div>
+        <mat-error *ngIf="name.errors.required || name.errors.onlySpaces" i18n>Name must not be empty</mat-error>
       </div>
     </mat-form-field>
 
@@ -16,17 +16,17 @@
       <mat-label>Introduction date</mat-label>
       <input name="introduced" type="date" matInput formControlName="introduced" />
       <div *ngIf="introduced.errors && introduced.touched" class="alert alert-danger">
-        <div *ngIf="introduced.errors.outOfRange" class="ng-invalid" i18n>
+        <mat-error *ngIf="introduced.errors.outOfRange" class="ng-invalid" i18n>
           The date must be set between 1970 and 2037
-        </div>
+        </mat-error>
       </div>
       <div *ngIf="computerForm.errors && (introduced.touched || discontinued.touched)" class="alert alert-danger">
-        <div *ngIf="computerForm.errors?.discoBeforeIntro">
+        <mat-error *ngIf="computerForm.errors?.discoBeforeIntro">
           The discontinuation date must be set after the introduction date 
-        </div>
-        <div *ngIf="computerForm.errors?.discoWithoutIntro">
+        </mat-error>
+        <mat-error *ngIf="computerForm.errors?.discoWithoutIntro">
           The discontinuation date cannot be set without the introduction date 
-        </div>
+        </mat-error>
       </div>
     </mat-form-field>
     <br />
@@ -35,16 +35,16 @@
       <mat-label>Discontinuation date</mat-label>
       <input name="discontinued" type="date" matInput formControlName="discontinued" />
       <div *ngIf="discontinued.errors && discontinued.touched" class="alert alert-danger">
-        <div *ngIf="discontinued.errors.outOfRange" class="ng-invalid" i18n>
+        <mat-error *ngIf="discontinued.errors.outOfRange" class="ng-invalid" i18n>
           The date must be set between 1970 and 2037
-        </div>
+        </mat-error>
       </div>
     </mat-form-field>
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Company</mat-label>
       <mat-select name="company" matInput formControlName="company">
-        <mat-option [value]="null">No company</mat-option>
+        <mat-option [value]="null">no company</mat-option>
         <div>
           <mat-option *ngFor="let c of companies" [value]="c">
             {{c.companyName}}

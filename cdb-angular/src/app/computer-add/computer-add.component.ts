@@ -95,16 +95,11 @@ export class ComputerAddComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log("vvvvvvvvvvv");
     this.companyService.getCompanyList().subscribe(
       (result: Company[]) => {
-        console.log(result);
-        console.log("pppp");
         this.companies = result;
       },
       (error) => {
-        console.log(error);
-        console.log("pouet");
         this.companies = [];
       })
   }
