@@ -95,12 +95,16 @@ export class ComputerAddComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log("vvvvvvvvvvv");
     this.companyService.getCompanyList().subscribe(
       (result: Company[]) => {
+        console.log(result);
+        console.log("pppp");
         this.companies = result;
       },
       (error) => {
         console.log(error);
+        console.log("pouet");
         this.companies = [];
       })
   }
@@ -114,7 +118,7 @@ export class ComputerAddComponent implements OnInit {
     computer.discontinuedDate = this.computerForm.get('discontinued').value;
 
     computer.companyDTO = this.computerForm.get('company').value;
-
+    // TODO : envoi message si le truc est pas bien 
     this.computerService.addComputer(computer).subscribe(
       (result) => {
         console.log(result);

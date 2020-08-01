@@ -44,10 +44,10 @@
     <mat-form-field appearance="fill">
       <mat-label>Company</mat-label>
       <mat-select name="company" matInput formControlName="company">
-        <mat-option [value]="null">no company</mat-option>
+        <mat-option [value]="null">No company</mat-option>
         <div>
-          <mat-option *ngFor="let company of companies" [value]="company">
-            {{company.companyName}}
+          <mat-option *ngFor="let c of companies" [value]="c">
+            {{c.companyName}}
           </mat-option>
         </div>
       </mat-select>
