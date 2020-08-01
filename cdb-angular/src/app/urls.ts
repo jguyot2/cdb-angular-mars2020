@@ -8,5 +8,5 @@ export class Urls {
     baseUrl: string = 'http://localhost:8080/webapp/';
     authUrl: string = this.baseUrl + 'authenticate/';
     computersUrl: string = this.baseUrl + 'computers/';
-
+    companiesUrl: string = this.baseUrl + 'companies/'
 }
