@@ -29,7 +29,7 @@ export class ComputerListComponent implements OnInit {
   search: string;
 
   order: string;
-  sorted: boolean;
+  sorted: boolean = false;
   
   displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
 
@@ -54,7 +54,11 @@ export class ComputerListComponent implements OnInit {
 
   paginatedList(pageNumber: number): void {
     this.page.currentPage = pageNumber;
-    if (this.search) {
+    console.log("search :" +this.search);
+    console.log("sorted :" +this.sorted);
+    if (this.search && this.sorted) {
+      this.orderAndSearchComputers(pageNumber);
+    } else if (this.search) {
       this.searchComputer(pageNumber);
     } else if (this.sorted) {
       this.orderComputers(pageNumber);
@@ -183,6 +187,21 @@ export class ComputerListComponent implements OnInit {
     }
   }
 
+  orderAndSearchComputers(pageNumber: number): void {
+    if (this.search && this.order && this.isValidOrder()) {
+      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.service.orderAndSearchComputers(this.search, this.order, this.page).subscribe(
+        (result: Computer[]) => {
+          this.computerList = result;
+          this.setNbCompurtersAndPagesWithSearch(this.search);
+        }, 
+        (error) => {
+        })
+    } else {
+      this.paginatedList(pageNumber);
+    }
+  }
+
   isValidOrder(): boolean {
     const ordersList: string[] = ["computerAsc", "computerDesc", "companyAsc", "companyDesc",
     "introducedAsc", "introducedDesc", "discontinuedAsc", "discontinuedDesc"];
@@ -191,8 +210,13 @@ export class ComputerListComponent implements OnInit {
 
   dataSort(sort: Sort): void {
     this.sorted = sort.direction ? true : false;
+    console.log("sorted or not: "+ this.sorted);
     this.order = sort.active.split(/(?=[A-Z])/)[0] + this.capitalize(sort.direction);
-    this.orderComputers(1);
+    if (this.search){
+      this.orderAndSearchComputers(1);
+    } else {
+      this.orderComputers(1);
+    }
   }
   
   capitalize(word: string): string {

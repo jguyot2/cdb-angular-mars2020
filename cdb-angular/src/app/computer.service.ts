@@ -77,4 +77,15 @@ export class ComputerService {
         });    
     }
 
+    orderAndSearchComputers(orderBy: string, search: string, page: Page): Observable<Computer[]> {
+        const header: HttpHeaders = new HttpHeaders()
+        .set('Authorization', this.token);
+        return this.http.get<Computer[]>(this.urlComputers + "searchOrder/" + orderBy + "/" + search, {
+            params: new HttpParams()
+                .append("pageSize", page.pageSize.toString())
+                .append("currentPage", page.currentPage.toString()),
+            headers : header
+        });    
+    }
+
 } 
