@@ -10,41 +10,43 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
     providedIn: 'root'
 })
 export class ComputerService {
-    constructor(private http: HttpClient, private urls : Urls, private auth: AuthenticationService) { }
+
+    constructor(private http: HttpClient, private urls: Urls, private auth: AuthenticationService) { }
 
     getNumberComputers(): Observable<number> {
-        if(this.auth.isLoggedIn()){
+        if (this.auth.isLoggedIn()) {
             return this.http.get<number>(
-                this.urls.computersUrl + "number", 
-                { headers:  new HttpHeaders()
-                    .set('Content-Type', 'application/json')
-                    .set('Authorization', 'Bearer '+ this.auth.getToken())
+                this.urls.computersUrl + "number",
+                {
+                    headers: new HttpHeaders()
+                        .set('Content-Type', 'application/json')
+                        .set('Authorization', 'Bearer ' + this.auth.getToken())
                 }
             );
         }
     }
 
     getPaginatedComputerList(page: Page): Observable<Computer[]> {
-        if(this.auth.isLoggedIn()){
+        if (this.auth.isLoggedIn()) {
             return this.http.get<Computer[]>(this.urls.computersUrl + "page", {
                 params: new HttpParams()
                     .append("pageSize", page.pageSize.toString())
                     .append("currentPage", page.currentPage.toString()),
-                headers : new HttpHeaders()
-                .set('Content-Type', 'application/json')
-                .set('Authorization', 'Bearer '+ this.auth.getToken())
+                headers: new HttpHeaders()
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', 'Bearer ' + this.auth.getToken())
             });
         }
     }
 
     getComputerList(): Observable<Computer[]> {
-        if(this.auth.isLoggedIn()){
+        if (this.auth.isLoggedIn()) {
             return this.http.get<Computer[]>(
-                this.urls.computersUrl, 
+                this.urls.computersUrl,
                 {
                     headers: new HttpHeaders()
                         .set('Content-Type', 'application/json')
-                        .set('Authorization', 'Bearer '+ this.auth.getToken())
+                        .set('Authorization', 'Bearer ' + this.auth.getToken())
                     ,
                     observe: 'body',
                     responseType: 'json'
@@ -52,16 +54,16 @@ export class ComputerService {
             );
         }
     }
-    
+
     addComputer(computer: Computer) {
-        if(this.auth.isLoggedInAsAdmin()){
+        if (this.auth.isLoggedInAsAdmin()) {
             return this.http.post(
                 this.urls.computersUrl,
                 computer,
                 {
                     headers: new HttpHeaders({
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer '+ this.auth.getToken()
+                        'Authorization': 'Bearer ' + this.auth.getToken()
                     }),
                     observe: 'body',
                     responseType: 'json'
@@ -71,64 +73,80 @@ export class ComputerService {
     }
 
     deleteComputer(computer: Computer): Observable<void> {
-        if(this.auth.isLoggedInAsAdmin()){
+        if (this.auth.isLoggedInAsAdmin()) {
             return this.http.delete<void>(
-                this.urls.computersUrl + computer.idComputer, { 
-                    headers: new HttpHeaders({
-                        'Authorization': 'Bearer '+ this.auth.getToken()
-                    }),
-                }
+                this.urls.computersUrl + computer.idComputer, {
+                headers: new HttpHeaders({
+                    'Authorization': 'Bearer ' + this.auth.getToken()
+                }),
+            }
             );
         }
     }
 
     searchComputer(search: string, page: Page): Observable<Computer[]> {
-        if(this.auth.isLoggedIn()){
+        if (this.auth.isLoggedIn()) {
             return this.http.get<Computer[]>(this.urls.computersUrl + "search/" + search, {
                 params: new HttpParams()
                     .append("pageSize", page.pageSize.toString())
                     .append("currentPage", page.currentPage.toString()),
-                headers : new HttpHeaders({
-                    'Authorization': 'Bearer '+ this.auth.getToken()
-                }),
-            });
-        }    
-    }
-
-    getNumberSearchComputers(search: string): Observable<number> {
-        if(this.auth.isLoggedIn()){
-            return this.http.get<number>(this.urls.computersUrl + "search/"+ search +"/number", {
                 headers: new HttpHeaders({
-                    'Authorization': 'Bearer '+ this.auth.getToken()
+                    'Authorization': 'Bearer ' + this.auth.getToken()
                 }),
             });
         }
     }
 
-    orderComputers(orderBy: string, page: Page): Observable<Computer[]> {
-        if(this.auth.isLoggedIn()){
-            return this.http.get<Computer[]>(this.urls.computersUrl + "orderBy/" + orderBy, {
-                params: new HttpParams()
-                    .append("pageSize", page.pageSize.toString())
-                    .append("currentPage", page.currentPage.toString()),
-                headers : new HttpHeaders({
-                    'Authorization': 'Bearer '+ this.auth.getToken()
+    getNumberSearchComputers(search: string): Observable<number> {
+        if (this.auth.isLoggedIn()) {
+            return this.http.get<number>(this.urls.computersUrl + "search/" + search + "/number", {
+                headers: new HttpHeaders({
+                    'Authorization': 'Bearer ' + this.auth.getToken()
                 }),
-            });   
-        } 
+            });
+        }
+    }
+
+    editComputer(newComputer: Computer) {
+        console.log("editiing");
+        console.log(newComputer);
+        if (this.auth.isLoggedIn()) {
+            return this.http.put(this.urls.computersUrl,
+                newComputer,
+                {
+                    headers: new HttpHeaders({
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.auth.getToken()
+                    }),
+                    observe: 'body',
+                    responseType: 'json'
+                });
+        }
+
     }
 
     orderAndSearchComputers(orderBy: string, search: string, page: Page): Observable<Computer[]> {
-        if(this.auth.isLoggedIn()){
+        if (this.auth.isLoggedIn()) {
             return this.http.get<Computer[]>(this.urls.computersUrl + "searchOrder/" + orderBy + "/" + search, {
                 params: new HttpParams()
                     .append("pageSize", page.pageSize.toString())
                     .append("currentPage", page.currentPage.toString()),
-                headers : new HttpHeaders({
-                    'Authorization': 'Bearer '+ this.auth.getToken()
+                headers: new HttpHeaders({
+                    'Authorization': 'Bearer ' + this.auth.getToken()
                 }),
-            });    
-        }        
+            });
+        }
     }
-
-} 
+    orderComputers(orderBy: string, page: Page): Observable<Computer[]> {
+        if (this.auth.isLoggedIn()) {
+            return this.http.get<Computer[]>(this.urls.computersUrl + "orderBy/" + orderBy, {
+                params: new HttpParams()
+                    .append("pageSize", page.pageSize.toString())
+                    .append("currentPage", page.currentPage.toString()),
+                headers: new HttpHeaders({
+                    'Authorization': 'Bearer ' + this.auth.getToken()
+                }),
+            });
+        }
+    } 
+}
