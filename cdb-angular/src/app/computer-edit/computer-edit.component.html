@@ -1,0 +1,70 @@
+<div>
+  <form [formGroup]="computerForm" class="form-control" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input id="id" class="form-control" name="id" type="hidden" required matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Computer Name</mat-label>
+      <input id="name" class="form-control" formControlName="name" required matInput />
+      <div *ngIf="name.errors && name.touched" class="alert alert-danger">
+        <div *ngIf="name.errors.maxlength" class="ng-invalid" i18n>
+          Name must be at most 200 characters long.
+        </div>
+        <mat-error *ngIf="name.errors.required || name.errors.onlySpaces" i18n>Name must not be empty</mat-error>
+      </div>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Introduction date</mat-label>
+      <input name="introduced" type="date" matInput formControlName="introduced" />
+      <div *ngIf="introduced.errors && introduced.touched" class="alert alert-danger">
+        <mat-error *ngIf="introduced.errors.outOfRange" class="ng-invalid" i18n>
+          The date must be set between 1970 and 2037
+        </mat-error>
+      </div>
+      <div *ngIf="computerForm.errors && (introduced.touched || discontinued.touched)" class="alert alert-danger">
+        <mat-error *ngIf="computerForm.errors?.discoBeforeIntro">
+          The discontinuation date must be set after the introduction date
+        </mat-error>
+        <mat-error *ngIf="computerForm.errors?.discoWithoutIntro">
+          The discontinuation date cannot be set without the introduction date
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <br />
+
+    <mat-form-field appearance="fill">
+      <mat-label>Discontinuation date</mat-label>
+      <input name="discontinued" type="date" matInput formControlName="discontinued" />
+      <div *ngIf="discontinued.errors && discontinued.touched" class="alert alert-danger">
+        <mat-error *ngIf="discontinued.errors.outOfRange" class="ng-invalid" i18n>
+          The date must be set between 1970 and 2037
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Company</mat-label>
+      <mat-select name="company" matInput formControlName="company">
+        <mat-option [value]="null">no company</mat-option>
+        <div>
+          <mat-option *ngFor="let c of companies" [value]="c">
+            {{c.companyName}}
+          </mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <div>
+      <div *ngIf="computerForm.valid">
+        <button mat-button color="primary" type="submit"> Submit </button>
+      </div>
+      <div *ngIf="computerForm.invalid valid">
+        <button mat-button color="primary" disabled type="submit"> Submit </button>
+      </div>
+
+      <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);" (click)='onClose()'
+        [routerLink]="['/dashboard']"> Cancel</button>
+    </div>
+  </form>
+</div>
