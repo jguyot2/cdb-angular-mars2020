@@ -177,6 +177,7 @@ export class ComputerListComponent implements OnInit {
   openEditForm(computer: Computer): void {
     console.log("opening edit form...");
     const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer } });
+    console.log(computer);
     
   }
 
