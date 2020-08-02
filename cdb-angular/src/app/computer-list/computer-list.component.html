@@ -48,13 +48,16 @@
     <div>
         <button (click)="paginatedList(1)">First page</button>
         <button (click)="getPreviousPage()">previous page</button>
-        <button *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
+        <button [ngClass]="pageNumber === page.currentPage ? 'currentPage' : ''" *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
         <button (click)="getNextPage()">next page</button>
         <button (click)="paginatedList(nbPage)">last page</button>
         <a [routerLink]="" (click)="paginatedList(3)">Click me</a>
 
         <input type="number" id="pageNumber" name="pageNumber" placeholder="page number" (keydown.enter)="paginatedList($event.target.value)" />
-     </div>
+        <select [(ngModel)]="page.pageSize" (change)="paginatedList(1)">
+            <option *ngFor="let opt of listPageSize" [value]="opt" [selected]="opt == page.pageSize">{{opt}}</option>
+        </select>
+    </div>
 
 </div>
 

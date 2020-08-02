@@ -20,6 +20,7 @@ export class ComputerListComponent implements OnInit {
   nbPage: number;
   nbComputers: number;
   listPages: number[];
+  listPageSize: number[] = [10, 20, 50, 100];
 
   computerList:Computer[];
   dataSource: MatTableDataSource<Computer>;
@@ -54,8 +55,6 @@ export class ComputerListComponent implements OnInit {
 
   paginatedList(pageNumber: number): void {
     this.page.currentPage = pageNumber;
-    console.log("search :" +this.search);
-    console.log("sorted :" +this.sorted);
     if (this.search && this.sorted) {
       this.orderAndSearchComputers(pageNumber);
     } else if (this.search) {
@@ -151,9 +150,10 @@ export class ComputerListComponent implements OnInit {
     }
 
     if (this.nbPage < nb){
+      firstPageToShow = 1;
       lastPageToShow = firstPageToShow + this.nbPage;
     } else {
-      lastPageToShow = firstPageToShow + nb;
+      lastPageToShow = firstPageToShow + nb + 1;
     }
    
     return Array.from(Array(lastPageToShow - firstPageToShow), (_, index) => index + firstPageToShow);
@@ -161,7 +161,7 @@ export class ComputerListComponent implements OnInit {
 
   searchComputer(pageNumber: number): void {
     if (this.search) {
-      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.page.currentPage = pageNumber;
       this.service.searchComputer(this.search, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
@@ -174,7 +174,7 @@ export class ComputerListComponent implements OnInit {
 
   orderComputers(pageNumber: number): void {
     if (this.order && this.isValidOrder()) {
-      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.page.currentPage = pageNumber;
       this.service.orderComputers(this.order, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
@@ -189,7 +189,7 @@ export class ComputerListComponent implements OnInit {
 
   orderAndSearchComputers(pageNumber: number): void {
     if (this.search && this.order && this.isValidOrder()) {
-      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.page.currentPage = pageNumber;
       this.service.orderAndSearchComputers(this.search, this.order, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
@@ -210,7 +210,6 @@ export class ComputerListComponent implements OnInit {
 
   dataSort(sort: Sort): void {
     this.sorted = sort.direction ? true : false;
-    console.log("sorted or not: "+ this.sorted);
     this.order = sort.active.split(/(?=[A-Z])/)[0] + this.capitalize(sort.direction);
     if (this.search){
       this.orderAndSearchComputers(1);
