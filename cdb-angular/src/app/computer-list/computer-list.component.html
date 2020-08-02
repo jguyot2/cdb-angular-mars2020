@@ -4,7 +4,7 @@
     <input type="text" id="search" name="search" placeholder="Search name" [(ngModel)]="search"
         (keydown.enter)="paginatedList(1)" />
 
-    <table mat-table [dataSource]="computerList" class="mat-elevation-z8">
+    <table mat-table [dataSource]="computerList" matSort (matSortChange)="dataSort($event)" class="mat-elevation-z8">
         <!-- Id Column -->
         <ng-container matColumnDef="idComputer">
             <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>

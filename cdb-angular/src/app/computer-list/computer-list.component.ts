@@ -5,6 +5,10 @@ import { Page } from '../models/page.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
 
+import {MatSort, Sort} from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 
 @Component({
   selector: 'app-computer-list',
@@ -20,16 +24,22 @@ export class ComputerListComponent implements OnInit {
   nbComputers: number;
   listPages: number[];
 
-  computerList: Computer[];
+  computerList:Computer[];
+  dataSource: MatTableDataSource<Computer>;
+
 
   @Input('ngModel')
   search: string;
 
-
+  order: string;
+  sorted: boolean = false;
+  
   displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
+
 
   ngOnInit(): void {
     this.paginatedList(1);
+
   }
 
   getList(): Computer[] {
@@ -47,12 +57,17 @@ export class ComputerListComponent implements OnInit {
 
   paginatedList(pageNumber: number): void {
     this.page.currentPage = pageNumber;
-    if (this.search) {
+    console.log("search :" +this.search);
+    console.log("sorted :" +this.sorted);
+    if (this.search && this.sorted) {
+      this.orderAndSearchComputers(pageNumber);
+    } else if (this.search) {
       this.searchComputer(pageNumber);
+    } else if (this.sorted) {
+      this.orderComputers(pageNumber);
     } else {
       this.basicPaginatedList(pageNumber);
-    }
-  }
+    }  }
 
   basicPaginatedList(pageNumber: number): void {
     this.service.getPaginatedComputerList(this.page).subscribe(
@@ -95,18 +110,14 @@ export class ComputerListComponent implements OnInit {
 
   setNbCompurtersAndPagesWithSearch(search: string): void {
     this.service.getNumberSearchComputers(search).subscribe(
-      (result: number) => {
-        this.nbComputers = result;
-        this.nbPage = this.getNbPages(this.page, result);
-        this.listPages = this.getListPages(9);
-        console.log("curretnpagebise " + this.page.currentPage);
-        console.log(this.listPages);
-        console.log("nbComputers" + result);
-        console.log("nbpagesbis" + this.nbPage);
-      },
-      (error) => {
-        console.log(error);
-      })
+        (result: number) => {
+          this.nbComputers = result;
+          this.nbPage = this.getNbPages(this.page, result);
+          this.listPages = this.getListPages(9);
+        }, 
+        (error) => {
+          console.log(error);
+        })
   }
 
   getNbPages(page: Page, nbComputers: number): number {
@@ -133,10 +144,6 @@ export class ComputerListComponent implements OnInit {
     var nbSpaceAfterCurrentPage = Math.ceil(nb / 2);
     var firstPageToShow;
     var lastPageToShow;
-    console.log("test");
-    console.log("1" + this.page.currentPage)
-    console.log("2" + nbSpaceAfterCurrentPage)
-    console.log("3" + this.nbPage)
 
     if (this.page.currentPage <= nbSpaceAfterCurrentPage) {
       firstPageToShow = 1;
@@ -157,19 +164,44 @@ export class ComputerListComponent implements OnInit {
 
   searchComputer(pageNumber: number): void {
     if (this.search) {
-      console.log(this.search);
-      this.page = { currentPage: pageNumber, pageSize: 10 };
+      this.page = {currentPage: pageNumber, pageSize: 10};
       this.service.searchComputer(this.search, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
-          console.log("curretnpage " + this.page.currentPage);
           this.setNbCompurtersAndPagesWithSearch(this.search);
-
-          console.log("nbComputersaa" + this.nbComputers);
-          console.log("nbpagesbisaa" + this.nbPage);
-        },
+        }, 
         (error) => {
         })
+    }
+  }
+
+  orderComputers(pageNumber: number): void {
+    if (this.order && this.isValidOrder()) {
+      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.service.orderComputers(this.order, this.page).subscribe(
+        (result: Computer[]) => {
+          this.computerList = result;
+          this.setNbCompurtersAndPages();
+        }, 
+        (error) => {
+        })
+    } else {
+      this.paginatedList(pageNumber);
+    }
+  }
+
+  orderAndSearchComputers(pageNumber: number): void {
+    if (this.search && this.order && this.isValidOrder()) {
+      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.service.orderAndSearchComputers(this.search, this.order, this.page).subscribe(
+        (result: Computer[]) => {
+          this.computerList = result;
+          this.setNbCompurtersAndPagesWithSearch(this.search);
+        }, 
+        (error) => {
+        })
+    } else {
+      this.paginatedList(pageNumber);
     }
   }
 
@@ -181,8 +213,29 @@ export class ComputerListComponent implements OnInit {
     
   }
 
-}
 
+  isValidOrder(): boolean {
+    const ordersList: string[] = ["computerAsc", "computerDesc", "companyAsc", "companyDesc",
+    "introducedAsc", "introducedDesc", "discontinuedAsc", "discontinuedDesc"];
+    return ordersList.includes(this.order);
+  }
+
+  dataSort(sort: Sort): void {
+    this.sorted = sort.direction ? true : false;
+    console.log("sorted or not: "+ this.sorted);
+    this.order = sort.active.split(/(?=[A-Z])/)[0] + this.capitalize(sort.direction);
+    if (this.search){
+      this.orderAndSearchComputers(1);
+    } else {
+      this.orderComputers(1);
+    }
+  }
+  
+  capitalize(word: string): string {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+}  
 export interface ComputerData {
   computer : Computer;
 }
