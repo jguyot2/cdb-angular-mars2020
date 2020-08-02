@@ -7,6 +7,7 @@ import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors }
 import { AppRoutingModule } from '../app-routing.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ComputerListComponent, ComputerData } from '../computer-list/computer-list.component';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-computer-edit',
@@ -138,5 +139,7 @@ export class ComputerEditComponent implements OnInit {
         console.log(error);
       });
       this.dialogRef.close();
+      console.log("test");
+
   }
 }

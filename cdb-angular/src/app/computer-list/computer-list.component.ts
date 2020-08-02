@@ -210,6 +210,9 @@ export class ComputerListComponent implements OnInit {
     console.log("opening edit form...");
     const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer } });
     console.log(computer);
+    this.dialog.afterAllClosed.subscribe (
+      ()=>{this.paginatedList(this.page.currentPage)}
+    )
     
   }
 
