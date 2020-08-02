@@ -5,6 +5,7 @@ import { Computer } from '../models/computer.model';
 import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-computer-add',
@@ -13,7 +14,7 @@ import { AppRoutingModule } from '../app-routing.module';
 })
 export class ComputerAddComponent implements OnInit {
 
-  constructor(private computerService: ComputerService, private companyService: CompanyService) { }
+  constructor(private router: Router, private computerService: ComputerService, private companyService: CompanyService) { }
 
   @Input()
   createdComputer: Computer = new Computer();
@@ -46,11 +47,8 @@ export class ComputerAddComponent implements OnInit {
         const introducedStr = control.value;
         if (!introducedStr || introducedStr === "")
           return null;
-
         const introduced = new Date(control.value);
 
-        console.log(introduced.getTime());
-        console.log(introduced);
         if (introduced.getTime() < this.lowerThresoldDate
           || introduced.getTime() > this.upperThresoldDate) {
           return { 'outOfRange': true };
@@ -62,14 +60,14 @@ export class ComputerAddComponent implements OnInit {
       (control: AbstractControl) => {
         const strDiscontinued = control.value;
         if (!strDiscontinued)
-         return null;
+          return null;
 
         const discontinued = new Date(strDiscontinued);
-        
+
         if (discontinued.getTime() < this.lowerThresoldDate
           || discontinued.getTime() > this.upperThresoldDate)
           return { 'outOfRange': true };
-        // TODO
+
         return null;
       }]
     ),
@@ -81,7 +79,7 @@ export class ComputerAddComponent implements OnInit {
         const intro = control.get('introduced');
         const disco = control.get('discontinued');
 
-        // CAST ? 
+
         const introDate: Date = intro.value ? new Date(intro.value) : null;
         const discoDate: Date = disco.value ? new Date(disco.value) : null;
 
@@ -126,8 +124,8 @@ export class ComputerAddComponent implements OnInit {
       (error) => {
         console.log(error);
       });
+    this.router.navigate(['/dashboard']);
+
   }
 
-  onClose() {
-  }
 }
