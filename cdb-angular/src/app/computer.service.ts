@@ -10,7 +10,6 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
     providedIn: 'root'
 })
 export class ComputerService {
-    
     constructor(private http: HttpClient, private urls : Urls, private auth: AuthenticationService) { }
 
     getNumberComputers(): Observable<number> {
@@ -104,6 +103,32 @@ export class ComputerService {
                 }),
             });
         }
+    }
+
+    orderComputers(orderBy: string, page: Page): Observable<Computer[]> {
+        if(this.auth.isLoggedIn()){
+            return this.http.get<Computer[]>(this.urls.computersUrl + "orderBy/" + orderBy, {
+                params: new HttpParams()
+                    .append("pageSize", page.pageSize.toString())
+                    .append("currentPage", page.currentPage.toString()),
+                headers : new HttpHeaders({
+                    'Authorization': 'Bearer '+ this.auth.getToken()
+                }),
+            });   
+        } 
+    }
+
+    orderAndSearchComputers(orderBy: string, search: string, page: Page): Observable<Computer[]> {
+        if(this.auth.isLoggedIn()){
+            return this.http.get<Computer[]>(this.urls.computersUrl + "searchOrder/" + orderBy + "/" + search, {
+                params: new HttpParams()
+                    .append("pageSize", page.pageSize.toString())
+                    .append("currentPage", page.currentPage.toString()),
+                headers : new HttpHeaders({
+                    'Authorization': 'Bearer '+ this.auth.getToken()
+                }),
+            });    
+        }        
     }
 
 } 
