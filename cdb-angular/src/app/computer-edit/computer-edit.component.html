@@ -1,8 +1,7 @@
 <div>
+  <h1> Edit Computer </h1>
   <form [formGroup]="computerForm" class="form-control" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <input id="id" class="form-control" name="id" type="hidden" required matInput />
-    </mat-form-field>
+
     <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
@@ -58,13 +57,17 @@
     <div>
       <div *ngIf="computerForm.valid">
         <button mat-button color="primary" type="submit"> Submit </button>
+        <button mat-dialog-close mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);"
+          (click)='onClose()'>
+          Cancel</button>
       </div>
-      <div *ngIf="computerForm.invalid valid">
+      <div *ngIf="computerForm.invalid ">
         <button mat-button color="primary" disabled type="submit"> Submit </button>
+        <button mat-dialog-close mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);"
+          (click)='onClose()'>
+          Cancel</button>
       </div>
 
-      <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);" (click)='onClose()'
-        [routerLink]="['/dashboard']"> Cancel</button>
     </div>
   </form>
 </div>

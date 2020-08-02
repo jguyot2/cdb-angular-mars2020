@@ -1,8 +1,9 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
 import { Page } from '../models/page.model';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
 
 
 @Component({
@@ -12,37 +13,37 @@ import { Page } from '../models/page.model';
 })
 export class ComputerListComponent implements OnInit {
 
-  constructor(private service:ComputerService) { } 
+  constructor(private service: ComputerService, public dialog: MatDialog) { }
 
-  page: Page = {currentPage: 1, pageSize: 10};
+  page: Page = { currentPage: 1, pageSize: 10 };
   nbPage: number;
   nbComputers: number;
   listPages: number[];
 
-  computerList:Computer[];
+  computerList: Computer[];
 
-  @Input('ngModel')  
+  @Input('ngModel')
   search: string;
 
-  
+
   displayedColumns: string[] = ['idComputer', 'computerName', 'introducedDate', 'discontinuedDate', 'companyDTO'];
 
   ngOnInit(): void {
     this.paginatedList(1);
   }
 
-    getList(): Computer[] {
-      var finalList;
-      this.service.getPaginatedComputerList(this.page).subscribe(
-          (result: Computer[]) => {
-            finalList = result;
-          }, 
-          (error) => {
-            console.log(error);
-            finalList = [];
-          })
-          return finalList;
-    }
+  getList(): Computer[] {
+    var finalList;
+    this.service.getPaginatedComputerList(this.page).subscribe(
+      (result: Computer[]) => {
+        finalList = result;
+      },
+      (error) => {
+        console.log(error);
+        finalList = [];
+      })
+    return finalList;
+  }
 
   paginatedList(pageNumber: number): void {
     this.page.currentPage = pageNumber;
@@ -55,14 +56,14 @@ export class ComputerListComponent implements OnInit {
 
   basicPaginatedList(pageNumber: number): void {
     this.service.getPaginatedComputerList(this.page).subscribe(
-        (result: Computer[]) => {
-      this.computerList = result;
-      this.listPages = this.getListPages(9);
-        }, 
-        (error) => {
-          console.log(error);
-      this.computerList = [];
-        })
+      (result: Computer[]) => {
+        this.computerList = result;
+        this.listPages = this.getListPages(9);
+      },
+      (error) => {
+        console.log(error);
+        this.computerList = [];
+      })
     this.setNbCompurtersAndPages();
 
   }
@@ -83,59 +84,59 @@ export class ComputerListComponent implements OnInit {
 
   setNbCompurtersAndPages(): void {
     this.service.getNumberComputers().subscribe(
-        (result: number) => {
-          this.nbComputers = result;
-          this.nbPage = this.getNbPages(this.page, result);
-        }, 
-        (error) => {
-          console.log(error);
-        })
+      (result: number) => {
+        this.nbComputers = result;
+        this.nbPage = this.getNbPages(this.page, result);
+      },
+      (error) => {
+        console.log(error);
+      })
   }
 
   setNbCompurtersAndPagesWithSearch(search: string): void {
     this.service.getNumberSearchComputers(search).subscribe(
-        (result: number) => {
-          this.nbComputers = result;
-          this.nbPage = this.getNbPages(this.page, result);
-          this.listPages = this.getListPages(9);
-          console.log("curretnpagebise " +this.page.currentPage);
-          console.log(this.listPages);
-          console.log("nbComputers" + result);
-          console.log("nbpagesbis" + this.nbPage);
-        }, 
-        (error) => {
-          console.log(error);
-        })
+      (result: number) => {
+        this.nbComputers = result;
+        this.nbPage = this.getNbPages(this.page, result);
+        this.listPages = this.getListPages(9);
+        console.log("curretnpagebise " + this.page.currentPage);
+        console.log(this.listPages);
+        console.log("nbComputers" + result);
+        console.log("nbpagesbis" + this.nbPage);
+      },
+      (error) => {
+        console.log(error);
+      })
   }
 
   getNbPages(page: Page, nbComputers: number): number {
-    return Math.ceil(nbComputers/page.pageSize);
+    return Math.ceil(nbComputers / page.pageSize);
   }
 
   deleteComputer(computer: Computer) {
-    if (this.computerList.includes(computer)) { 
+    if (this.computerList.includes(computer)) {
       this.service.deleteComputer(computer).subscribe(
         () => {
           var index = this.computerList.indexOf(computer);
           this.computerList.splice(index, 1);
           if (this.computerList.length == 0) {
-            this.page.currentPage --;
+            this.page.currentPage--;
           }
           this.paginatedList(this.page.currentPage);
-        }, 
+        },
         (error) => {
         })
-      }
     }
+  }
 
-  getListPages(nb: number): number [] {
-    var nbSpaceAfterCurrentPage = Math.ceil(nb/2);
+  getListPages(nb: number): number[] {
+    var nbSpaceAfterCurrentPage = Math.ceil(nb / 2);
     var firstPageToShow;
     var lastPageToShow;
     console.log("test");
-    console.log("1" +this.page.currentPage)
-    console.log("2" +nbSpaceAfterCurrentPage)
-    console.log("3" +this.nbPage)
+    console.log("1" + this.page.currentPage)
+    console.log("2" + nbSpaceAfterCurrentPage)
+    console.log("3" + this.nbPage)
 
     if (this.page.currentPage <= nbSpaceAfterCurrentPage) {
       firstPageToShow = 1;
@@ -145,31 +146,42 @@ export class ComputerListComponent implements OnInit {
       firstPageToShow = this.page.currentPage - nb + nbSpaceAfterCurrentPage;
     }
 
-    if (this.nbPage < nb){
+    if (this.nbPage < nb) {
       lastPageToShow = firstPageToShow + this.nbPage;
     } else {
       lastPageToShow = firstPageToShow + nb;
     }
-   
+
     return Array.from(Array(lastPageToShow - firstPageToShow), (_, index) => index + firstPageToShow);
   }
 
   searchComputer(pageNumber: number): void {
     if (this.search) {
       console.log(this.search);
-      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.page = { currentPage: pageNumber, pageSize: 10 };
       this.service.searchComputer(this.search, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
-          console.log("curretnpage " +this.page.currentPage);
+          console.log("curretnpage " + this.page.currentPage);
           this.setNbCompurtersAndPagesWithSearch(this.search);
 
           console.log("nbComputersaa" + this.nbComputers);
           console.log("nbpagesbisaa" + this.nbPage);
-        }, 
+        },
         (error) => {
         })
     }
   }
 
+  editedComputer: Computer;
+  openEditForm(computer: Computer): void {
+    console.log("opening edit form...");
+    const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer } });
+    
+  }
+
+}
+
+export interface ComputerData {
+  computer : Computer;
 }

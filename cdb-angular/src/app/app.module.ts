@@ -14,6 +14,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ComputerEditComponent } from './computer-edit/computer-edit.component';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -24,18 +26,27 @@ import { ReactiveFormsModule } from '@angular/forms';
     ComputerListComponent,
     HeaderComponent,
     BodyComponent,
-    LoginComponent
+    LoginComponent,
+    ComputerEditComponent
   ],
-  imports: [ 
+  imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     CustomMaterialModule,
     NoopAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
+
   ],
-  providers: [],
+  entryComponents: [ComputerListComponent, ComputerEditComponent],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,46 +1,50 @@
 <div class="item">
-    <a routerLink="/computers/add" >Add Computer</a>
+    <a routerLink="/computers/add">Add Computer</a>
 
-    <input type="text" id="search" name="search" placeholder="Search name" [(ngModel)]="search" (keydown.enter)="paginatedList(1)" />
+    <input type="text" id="search" name="search" placeholder="Search name" [(ngModel)]="search"
+        (keydown.enter)="paginatedList(1)" />
 
     <table mat-table [dataSource]="computerList" class="mat-elevation-z8">
         <!-- Id Column -->
         <ng-container matColumnDef="idComputer">
-        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-        <mat-cell *matCellDef="let computer; let i = index"> 
-            <button mat-icon-button (click)="deleteComputer(computer, i)">
-                <mat-icon>delete</mat-icon>
-            </button>
-            {{computer.idComputer}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let computer; let i = index">
+                <button mat-icon-button (click)="deleteComputer(computer, i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button (click)="openEditForm(computer)">
+                    Edit
+                </button>
+                {{computer.idComputer}} </mat-cell>
         </ng-container>
-    
+
         <!-- Name Column -->
         <ng-container matColumnDef="computerName">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> {{computer.computerName}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let computer"> {{computer.computerName}} </mat-cell>
         </ng-container>
-    
+
         <!-- Introduced date Column -->
         <ng-container matColumnDef="introducedDate">
-        <mat-header-cell *matHeaderCellDef> Introduced date </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> {{computer.introducedDate}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> Introduced date </mat-header-cell>
+            <mat-cell *matCellDef="let computer"> {{computer.introducedDate}} </mat-cell>
         </ng-container>
-    
+
         <!-- Discontinued date Column -->
         <ng-container matColumnDef="discontinuedDate">
-        <mat-header-cell *matHeaderCellDef> Discontinued date </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> {{computer.discontinuedDate}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> Discontinued date </mat-header-cell>
+            <mat-cell *matCellDef="let computer"> {{computer.discontinuedDate}} </mat-cell>
         </ng-container>
 
         <!-- Company Column -->
         <ng-container matColumnDef="companyDTO">
             <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
-            <mat-cell *matCellDef="let computer" > 
-                <app-company  *ngIf="!!computer.companyDTO" [company]="computer.companyDTO" >
+            <mat-cell *matCellDef="let computer">
+                <app-company *ngIf="!!computer.companyDTO" [company]="computer.companyDTO">
                 </app-company>
             </mat-cell>
         </ng-container>
-    
+
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
@@ -53,8 +57,9 @@
         <button (click)="paginatedList(nbPage)">last page</button>
         <a [routerLink]="" (click)="paginatedList(3)">Click me</a>
 
-        <input type="number" id="pageNumber" name="pageNumber" placeholder="page number" (keydown.enter)="paginatedList($event.target.value)" />
-     </div>
+        <input type="number" id="pageNumber" name="pageNumber" placeholder="page number"
+            (keydown.enter)="paginatedList($event.target.value)" />
+    </div>
 
 </div>
 
