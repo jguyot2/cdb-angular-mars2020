@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AuthenticationService } from '../authentication.service'
+import { AuthenticationService } from '../auth/authentication.service'
 import { Observable } from 'rxjs';
 import { Authentication } from '../models/authentication.model';
 
