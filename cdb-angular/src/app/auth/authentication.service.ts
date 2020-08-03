@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Authentication } from './models/authentication.model';
-import { Urls } from './urls';
+import { Credentials } from '../models/credentials.model'
+import { Authentication } from '../models/authentication.model';
+import { Urls } from '../urls';
 import { isLoweredSymbol } from '@angular/compiler';
 
 @Injectable({ 
@@ -11,14 +12,14 @@ import { isLoweredSymbol } from '@angular/compiler';
 })
 export class AuthenticationService{
 
-    constructor(private http: HttpClient, private urls : Urls) {}
+    constructor(private http: HttpClient) {}
 
-    private authenticate(username : string, passsword : string) : Observable<Authentication> {
+    private authenticate(credentials:Credentials) : Observable<Authentication> {
 
         return this.http.post<Authentication>(
-            this.urls.authUrl,
+            Urls.authUrl,
             JSON.stringify({
-                username:username, password:passsword
+                username:credentials.username, password:credentials.password
             }),
             {
                 headers: new HttpHeaders({
@@ -30,18 +31,18 @@ export class AuthenticationService{
         );
     }
 
-    private handleError(error : HttpErrorResponse){
+    private handleError(error : HttpErrorResponse):string{
         if (error.error instanceof ErrorEvent) {
-            return throwError('An error occured: '+ error.error.message)
+            return 'An error occured: '+ error.error.message
         } else {
-            return throwError('An error has occured: code ' + error.status + ', body '+error.error)
+            return 'An error has occured: code ' + error.status + ', body '+error.error
         }
     }
 
-    public login(username : string, passsword : string){
-        this.authenticate(username, passsword).pipe(take(1)).subscribe({
-            next : (auth:Authentication) => {this.setSession(auth, username); console.log("success")},
-            error : err => this.handleError(err).subscribe()
+    public login(credentials:Credentials,onSuccess: Function, onError: Function): void{
+        this.authenticate(credentials).pipe(take(1)).subscribe({
+            next : (auth:Authentication) => {this.setSession(auth, credentials.username); onSuccess()},
+            error : err =>  onError(err)
         })
     }
 
@@ -68,12 +69,11 @@ export class AuthenticationService{
     }
 
     public isLoggedIn() : boolean {
-        return localStorage.getItem('jwt') !== undefined;
+        return localStorage.getItem('jwt') !== null && localStorage.getItem('jwt') !== undefined;
     }
 
     logout() {
         localStorage.removeItem('jwt');
         localStorage.removeItem('role');
     }
-
 }

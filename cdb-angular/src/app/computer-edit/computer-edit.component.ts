@@ -43,7 +43,9 @@ export class ComputerEditComponent implements OnInit {
   ngOnInit(): void {
     this.companyService.getCompanyList().subscribe(
       (result: Company[]) => {
-        this.companies = result;
+        this.companies = result.filter((company) => {
+          return (!this.editedComputer.companyDTO) || (company.idCompany !== this.editedComputer.companyDTO.idCompany);
+        });
       },
       (error) => {
         this.companies = [];
@@ -124,7 +126,6 @@ export class ComputerEditComponent implements OnInit {
       return;
     const computer: Computer = new Computer();
     computer.computerName = this.computerForm.get('name').value;
-    console.log(computer.computerName);
 
     computer.introducedDate = this.computerForm.get('introduced').value;
     computer.discontinuedDate = this.computerForm.get('discontinued').value;
@@ -137,7 +138,7 @@ export class ComputerEditComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-      this.dialogRef.close();
-      console.log("test");
+    this.dialogRef.close();
+    console.log("test");
   }
 }

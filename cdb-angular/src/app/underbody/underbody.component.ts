@@ -10,6 +10,7 @@ import { ComputerEditComponent } from '../computer-edit/computer-edit.component'
 import {MatSort, Sort} from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthenticationService } from '../auth/authentication.service';
 
 
 
@@ -40,7 +41,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class UnderbodyComponent implements OnInit {
   
-  constructor(private service: ComputerService, private openPopup:OpenPopup, public dialog: MatDialog) { }
+  constructor(private service: ComputerService, private openPopup:OpenPopup, public dialog: MatDialog, private auth: AuthenticationService) { }
 
   page: Page = { currentPage: 1, pageSize: 10 };
   nbPage: number;
@@ -51,6 +52,7 @@ export class UnderbodyComponent implements OnInit {
   dataSource: MatTableDataSource<Computer>;
   cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
 
+  adminRole: boolean = false;
 
   @Input('ngModel')
   search: string;
@@ -63,7 +65,7 @@ export class UnderbodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginatedList(1);
-
+    this.adminRole = this.auth.isLoggedInAsAdmin();
   }
   openPopupAdd(){
     const dialogRef = this.dialog.open(ComputerAddComponent, {data : null,backdropClass: 'light-blue-backdrop'});

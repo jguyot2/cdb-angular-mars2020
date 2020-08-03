@@ -44,7 +44,11 @@
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Company</mat-label>
-      <mat-select name="company" matInput formControlName="company">
+      
+      <mat-select name="company" matInput formControlName="company" placeholder="editedComputer.com">
+        <mat-option *ngIf="editedComputer.companyDTO" [value]=editedComputer.companyDTO>
+          {{editedComputer.companyDTO.companyName}} 
+        </mat-option>
         <mat-option [value]="null">no company</mat-option>
         <div>
           <mat-option *ngFor="let c of companies" [value]="c">

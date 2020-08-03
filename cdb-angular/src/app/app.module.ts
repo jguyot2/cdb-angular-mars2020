@@ -19,6 +19,7 @@ import { OpenPopup } from './popup';
 import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
 import { ComputerEditComponent } from './computer-edit/computer-edit.component';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
@@ -35,6 +36,8 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
     FooterComponent,
     LoginComponent,
     BodyComponent,
+    LoginComponent,
+    RegisterComponent,
     ComputerEditComponent,
    
     
