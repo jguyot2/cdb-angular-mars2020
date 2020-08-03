@@ -1,6 +1,7 @@
 <div>
+  <h1> Edit Computer </h1>
   <form [formGroup]="computerForm" class="form-control" (ngSubmit)="onSubmit()">
-    <h4 class="modal-title" id="modal-basic-title">Add Computer</h4>
+
     <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
@@ -11,7 +12,6 @@
         <mat-error *ngIf="name.errors.required || name.errors.onlySpaces" i18n>Name must not be empty</mat-error>
       </div>
     </mat-form-field>
-
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Introduction date</mat-label>
@@ -56,13 +56,18 @@
     <br />
     <div>
       <div *ngIf="computerForm.valid">
-        <button mat-button class ="submitBtn" type="submit"> Submit </button>
-        <button mat-button class ="cancelBtn"(click)='onClose()' [routerLink]="['/dashboard']"> Cancel</button>
-      </div>  
-       <div *ngIf="computerForm.invalid">
-        <button mat-button  class ="submitBtn" disabled type="submit"> Submit </button>
-        <button mat-button class ="cancelBtn" (click)='onClose()' [routerLink]="['/dashboard']"> Cancel</button>
+        <button mat-button color="primary" type="submit"> Submit </button>
+        <button mat-dialog-close mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);"
+          (click)='onClose()'>
+          Cancel</button>
       </div>
+      <div *ngIf="computerForm.invalid ">
+        <button mat-button color="primary" disabled type="submit"> Submit </button>
+        <button mat-dialog-close mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);"
+          (click)='onClose()'>
+          Cancel</button>
+      </div>
+
     </div>
   </form>
 </div>

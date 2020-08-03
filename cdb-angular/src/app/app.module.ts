@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -9,17 +8,19 @@ import { CompanyComponent } from './company/company.component';
 import { ComputerListComponent } from './computer-list/computer-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { UnderbodyComponent } from './underbody/underbody.component';
 import { FooterComponent } from './footer/footer.component';
-import { LoginComponent } from './identification/login/login.component';
-import { RegisterComponent } from './identification/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenPopup } from './popup';
 import { BodyComponent } from './body/body.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ComputerEditComponent } from './computer-edit/computer-edit.component';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -33,23 +34,43 @@ import { BodyComponent } from './body/body.component';
     UnderbodyComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent,
     BodyComponent,
+    ComputerEditComponent,
+   
+    
     
   
 
   ],
- 
-  imports: [ 
+
+  imports: [
+
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     CustomMaterialModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    ReactiveFormsModule,
+    MatDialogModule
   ],
+
   providers: [OpenPopup],
+// =======
+//     NoopAnimationsModule,
+//     ReactiveFormsModule,
+//     MatDialogModule
+
+//   ],
+//   entryComponents: [ComputerListComponent, ComputerEditComponent],
+//   providers: [
+//     {
+//       provide: MatDialogRef,
+//       useValue: {}
+//     },
+//   ],
+// >>>>>>> 8a5dcf0ea8fb80a7bfcae2b9f63d7063b7c35d93
   bootstrap: [AppComponent]
 })
 export class AppModule { }

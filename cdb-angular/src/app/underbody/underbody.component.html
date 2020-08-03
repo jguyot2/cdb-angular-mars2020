@@ -3,7 +3,8 @@
         <div class="boxSearch">
             <mat-form-field class="form-field">
             <mat-label>Search</mat-label>
-            <input matInput type="text"/>
+            <input matInput type="text" [(ngModel)]="search"
+            (keydown.enter)="paginatedList(1)"/>
             </mat-form-field>
             <a href="#"><mat-icon id ="searchIcon">search</mat-icon></a>
         </div>
@@ -12,27 +13,22 @@
             <mat-icon id="addBtn">add_circle_outline</mat-icon>
             </button> 
         </div> 
-
     </div>
     <div id="tableDiv">
-    <table mat-table [dataSource]="computerList" class="responsTable">
+    <table mat-table [dataSource]="computerList" matSort (matSortChange)="dataSort($event)" class="responsTable">
         <!-- CheckBox Column -->
-        <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()"
-                            [aria-label]="checkboxLabel()">
-              </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
-                            [checked]="selection.isSelected(row)"
-                            [aria-label]="checkboxLabel(row)">
-              </mat-checkbox>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="idComputer"><input type="number" id="pageNumber" name="pageNumber" placeholder="page number"
+            (keydown.enter)="paginatedList($event.target.value)" />
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let computer; let i = index">
+                <button mat-icon-button (click)="deleteComputer(computer, i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button (click)="openEditForm(computer)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                {{computer.idComputer}} </mat-cell>
+        </ng-container>
         <!-- Name Column -->
         <ng-container matColumnDef="computerName">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -75,6 +71,10 @@
       <button (click)="getNextPage()">&#62;</button>
       <button (click)="paginatedList(nbPage)">&#62;&#62;</button>
    </div>
-   <div id="rowNb">sfdtg</div>
+   <div id="rowNb">
+    <select [(ngModel)]="page.pageSize" (change)="paginatedList(1)">
+        <option *ngFor="let opt of listPageSize" [value]="opt" [selected]="opt == page.pageSize">{{opt}}</option>
+    </select>
+    </div>
 
 </div>
