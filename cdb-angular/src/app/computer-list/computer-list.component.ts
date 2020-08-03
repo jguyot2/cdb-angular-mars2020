@@ -8,6 +8,7 @@ import { OpenPopup } from '../popup';
 import {MatSort, Sort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ComputerAddComponent } from '../computer-add/computer-add.component';
+import { AuthenticationService } from '../auth/authentication.service';
 
 
 
@@ -18,7 +19,7 @@ import { ComputerAddComponent } from '../computer-add/computer-add.component';
 })
 export class ComputerListComponent implements OnInit {
 
-  constructor(private service: ComputerService, private openPopup:OpenPopup, public dialog: MatDialog) { }
+  constructor(private service: ComputerService, private openPopup:OpenPopup, public dialog: MatDialog, private auth: AuthenticationService) { }
 
   page: Page = { currentPage: 1, pageSize: 10 };
   nbPage: number;
@@ -28,6 +29,8 @@ export class ComputerListComponent implements OnInit {
 
   computerList:Computer[];
   dataSource: MatTableDataSource<Computer>;
+
+  adminRole = false;
 
 
   @Input('ngModel')
@@ -41,7 +44,10 @@ export class ComputerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginatedList(1);
+    console.log("role admin");
 
+    //this.adminRole = this.auth.isLoggedInAsAdmin();
+    console.log("role admin :" +this.adminRole);
   }
   oopenPopupAdd(){
     this.openPopup.opene(ComputerAddComponent, {size:'sm',centered: true,windowClass: 'dark-modal',backdropClass: 'light-blue-backdrop' })
@@ -60,6 +66,12 @@ export class ComputerListComponent implements OnInit {
   }
 
   paginatedList(pageNumber: number): void {
+    console.log("role admin");
+
+    // this.adminRole = this.auth.isLoggedInAsAdmin();
+    // console.log("role admin :" +this.adminRole);
+
+
     this.page.currentPage = pageNumber;
     if (this.search && this.sorted) {
       this.orderAndSearchComputers(pageNumber);

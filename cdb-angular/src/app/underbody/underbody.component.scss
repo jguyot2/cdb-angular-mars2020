@@ -160,6 +160,12 @@ z-index: 2;
   position: relative;
   top: -51px;
 }
+
+.disabled {
+  pointer-events: none;
+  color: black; 
+  text-decoration: none;
+}
 .mat-form-field.mat-focused .mat-form-field-label{
   color: white;
 }
