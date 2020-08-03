@@ -1,6 +1,6 @@
 <div> 
   <h4 class="modal-title" id="modal-basic-title">Add Computer</h4>
-  <form [formGroup]="computerForm" class="form-control" (ngSubmit)="onSubmit()">
+  <form [formGroup]="computerForm" (ngSubmit)="onSubmit()">
        <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
@@ -56,12 +56,14 @@
     <br />
     <div>
       <div *ngIf="computerForm.valid">
-        <button mat-button class ="submitBtn" type="submit"> Submit </button>
-        <button mat-button class ="cancelBtn"(click)='onClose()' [routerLink]="['/dashboard']"> Cancel</button>
-      </div>  
-       <div *ngIf="computerForm.invalid">
-        <button mat-button  class ="submitBtn" disabled type="submit"> Submit </button>
-        <button mat-button class ="cancelBtn" (click)='onClose()' [routerLink]="['/dashboard']"> Cancel</button>
+        <button mat-button class="submitBtn" type="submit"> Submit </button>
+        <button mat-dialog-close class="cancelBtn" mat-button>
+          Cancel</button>
+      </div>
+      <div *ngIf="computerForm.invalid">
+        <button mat-button class="submitBtn" disabled type="submit"> Submit </button>
+        <button mat-dialog-close class="cancelBtn" mat-button>
+          Cancel</button>
       </div>
     </div>
   </form>
