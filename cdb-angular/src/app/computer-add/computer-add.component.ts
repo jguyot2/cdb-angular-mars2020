@@ -37,73 +37,7 @@ export class ComputerAddComponent implements OnInit {
   get name() { return this.computerForm.get('name'); }
   get introduced() { return this.computerForm.get('introduced'); }
   get discontinued() { return this.computerForm.get('discontinued'); }
-
-  computerForm = new FormGroup({
-    'name': new FormControl(this.createdComputer.computerName || '', [
-      Validators.maxLength(200),
-      Validators.required,
-      (control: AbstractControl) => {
-        const name = control.value;
-
-        if (name.trim() === "")
-          return { 'onlySpaces': true };
-        else
-          return null;
-      }
-    ]),
-    'introduced': new FormControl(this.createdComputer.introducedDate, [
-      (control: AbstractControl) => {
-        const introducedStr = control.value;
-        if (!introducedStr || introducedStr === "")
-          return null;
-        const introduced = new Date(control.value);
-
-        if (introduced.getTime() < this.lowerThresoldDate
-          || introduced.getTime() > this.upperThresoldDate) {
-          return { 'outOfRange': true };
-        }
-        return null;
-      }]
-    ),
-    'discontinued': new FormControl(this.createdComputer.discontinuedDate, [
-      (control: AbstractControl) => {
-        const strDiscontinued = control.value;
-        if (!strDiscontinued)
-          return null;
-
-        const discontinued = new Date(strDiscontinued);
-
-        if (discontinued.getTime() < this.lowerThresoldDate
-          || discontinued.getTime() > this.upperThresoldDate)
-          return { 'outOfRange': true };
-
-        return null;
-      }]
-    ),
-    'company': new FormControl(null)
-  }, {
-    validators: [
-      // Vérification de la cohérence des dates entre elles 
-      (control: FormGroup): ValidationErrors | null => {
-        const intro = control.get('introduced');
-        const disco = control.get('discontinued');
-
-
-        const introDate: Date = intro.value ? new Date(intro.value) : null;
-        const discoDate: Date = disco.value ? new Date(disco.value) : null;
-
-        if (introDate) {
-          if (discoDate) {
-            return introDate.getTime() < discoDate.getTime() ? null :
-              { discoBeforeIntro: true };
-          }
-        } else {
-          return discoDate ? { discoWithoutIntro: true } : null;
-        }
-      }
-    ]
-  });
-
+  computerForm = null;
 
   ngOnInit(): void {
     this.companyService.getCompanyList().subscribe(
@@ -112,7 +46,73 @@ export class ComputerAddComponent implements OnInit {
       },
       (error) => {
         this.companies = [];
-      })
+      });
+    this.computerForm = new FormGroup({
+      'name': new FormControl(this.createdComputer.computerName || '', [
+        Validators.maxLength(200),
+        Validators.required,
+        (control: AbstractControl) => {
+          const name = control.value;
+
+          if (name.trim() === "")
+            return { 'onlySpaces': true };
+          else
+            return null;
+        }
+      ]),
+      'introduced': new FormControl(this.createdComputer.introducedDate, [
+        (control: AbstractControl) => {
+          const introducedStr = control.value;
+          if (!introducedStr || introducedStr === "")
+            return null;
+          const introduced = new Date(control.value);
+
+          if (introduced.getTime() < this.lowerThresoldDate
+            || introduced.getTime() > this.upperThresoldDate) {
+            return { 'outOfRange': true };
+          }
+          return null;
+        }]
+      ),
+      'discontinued': new FormControl(this.createdComputer.discontinuedDate, [
+        (control: AbstractControl) => {
+          const strDiscontinued = control.value;
+          if (!strDiscontinued)
+            return null;
+
+          const discontinued = new Date(strDiscontinued);
+
+          if (discontinued.getTime() < this.lowerThresoldDate
+            || discontinued.getTime() > this.upperThresoldDate)
+            return { 'outOfRange': true };
+
+          return null;
+        }]
+      ),
+      'company': new FormControl(null)
+    }, {
+      validators: [
+        // Vérification de la cohérence des dates entre elles 
+        (control: FormGroup): ValidationErrors | null => {
+          const intro = control.get('introduced');
+          const disco = control.get('discontinued');
+
+
+          const introDate: Date = intro.value ? new Date(intro.value) : null;
+          const discoDate: Date = disco.value ? new Date(disco.value) : null;
+
+          if (introDate) {
+            if (discoDate) {
+              return introDate.getTime() < discoDate.getTime() ? null :
+                { discoBeforeIntro: true };
+            }
+          } else {
+            return discoDate ? { discoWithoutIntro: true } : null;
+          }
+        }
+      ]
+    });
+
   }
   onSubmit() {
     if (this.computerForm.invalid) // Affichage de message ? 
