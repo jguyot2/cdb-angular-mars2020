@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
 import {MatSort, Sort} from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 
