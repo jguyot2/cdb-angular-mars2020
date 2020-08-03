@@ -54,13 +54,13 @@
       </mat-select>
     </mat-form-field>
     <br />
-    <div *ngIf="computerForm.valid">
+    <div>
       <div *ngIf="computerForm.valid">
         <button mat-button color="primary" type="submit"> Submit </button>
         <button mat-dialog-close mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);">
           Cancel</button>
       </div>
-      <div *ngIf="computerForm.invalid ">
+      <div *ngIf="computerForm.invalid">
         <button mat-button color="primary" disabled type="submit"> Submit </button>
         <button mat-dialog-close mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);">
           Cancel</button>
