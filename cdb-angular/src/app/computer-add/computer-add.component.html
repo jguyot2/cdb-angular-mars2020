@@ -1,7 +1,7 @@
-<div>
+<div> 
+  <h4 class="modal-title" id="modal-basic-title">Add Computer</h4>
   <form [formGroup]="computerForm" class="form-control" (ngSubmit)="onSubmit()">
-    <h4 class="modal-title" id="modal-basic-title">Add Computer</h4>
-    <mat-form-field appearance="fill">
+       <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
       <div *ngIf="name.errors && name.touched" class="alert alert-danger">
@@ -44,7 +44,7 @@
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Company</mat-label>
-      <mat-select name="company" matInput formControlName="company">
+      <mat-select class="dropdown" name="company" matInput formControlName="company" >
         <mat-option [value]="null">no company</mat-option>
         <div>
           <mat-option *ngFor="let c of companies" [value]="c">

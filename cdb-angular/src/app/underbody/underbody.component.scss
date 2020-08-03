@@ -55,7 +55,7 @@
   border:  1px solid #000000;
   top: -50px;
   height: auto;
-  width:50%;
+  width:70%;
   margin: 0 auto;
   padding:5px;
   justify-content: center;
@@ -155,8 +155,11 @@ z-index: 2;
   margin:0 auto;
   border: 1px solid #000000;
   border-radius: 0 0 10px 10px;
-  width:5%;
+  width:4%;
   text-align: center;
   position: relative;
   top: -51px;
+}
+.mat-form-field.mat-focused .mat-form-field-label{
+  color: white;
 }
