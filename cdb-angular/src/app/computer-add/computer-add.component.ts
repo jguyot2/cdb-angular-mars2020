@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ComputerService } from '../computer.service';
 import { CompanyService } from '../company.service';
 import { Computer } from '../models/computer.model';
+import { OpenPopup } from '../popup';
 import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ComputerAddComponent implements OnInit {
 
-  constructor(private router: Router, private computerService: ComputerService, private companyService: CompanyService) { }
+  constructor(private computerService: ComputerService,private router: Router, private companyService: CompanyService, private openPopup: OpenPopup) { }
 
   @Input()
   createdComputer: Computer = new Computer();
@@ -105,7 +106,6 @@ export class ComputerAddComponent implements OnInit {
         this.companies = [];
       })
   }
-
   onSubmit() {
     if (this.computerForm.invalid) // Affichage de message ? 
       return;
@@ -128,4 +128,7 @@ export class ComputerAddComponent implements OnInit {
 
   }
 
+  onClose() {
+    this.openPopup.close();
+  }
 }

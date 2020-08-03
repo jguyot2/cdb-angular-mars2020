@@ -1,23 +1,48 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,Input } from '@angular/core';
+import { OpenPopup } from '../popup';
+import { ComputerAddComponent } from '../computer-add/computer-add.component';
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
 import { Page } from '../models/page.model';
-import { MatDialog } from '@angular/material/dialog';
-import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
-import { OpenPopup } from '../popup';
-import {MatSort, Sort} from '@angular/material/sort';
+import {SelectionModel} from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComputerAddComponent } from '../computer-add/computer-add.component';
+import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
+import {MatSort, Sort} from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @Component({
-  selector: 'app-computer-list',
-  templateUrl: './computer-list.component.html',
-  styleUrls: ['./computer-list.component.scss']
-})
-export class ComputerListComponent implements OnInit {
+  selector: 'app-underbody',
+  templateUrl: './underbody.component.html',
+  styleUrls: ['./underbody.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  styles: [`
+    .dark-modal .modal-content {
+      background-color: #066999;
+      color: white;
+      border: 1px solid white;
+      padding: 15px 15px; 
+      box-shadow: 10px 10px 10px #066999;
+      align-items:center;
 
+    }
+    .dark-modal .close {
+      color: white;
+    }
+    .light-blue-backdrop {
+      background-color: #5cb3fd;
+      
+    }
+    .mat-form-field-appearance-fill .mat-form-field-flex{
+      background-color: #add8e6;
+      padding:1px
+  }
+  `]
+})
+export class UnderbodyComponent implements OnInit {
+  
   constructor(private service: ComputerService, private openPopup:OpenPopup, public dialog: MatDialog) { }
 
   page: Page = { currentPage: 1, pageSize: 10 };
@@ -25,7 +50,6 @@ export class ComputerListComponent implements OnInit {
   nbComputers: number;
   listPages: number[];
   listPageSize: number[] = [10, 20, 50, 100];
-
   computerList:Computer[];
   dataSource: MatTableDataSource<Computer>;
 
@@ -54,7 +78,8 @@ export class ComputerListComponent implements OnInit {
         finalList = result;
       },
       (error) => {
-        console.log(error);        
+        console.log(error);
+        finalList = [];
       })
     return finalList;
   }
@@ -216,7 +241,6 @@ export class ComputerListComponent implements OnInit {
     this.dialog.afterAllClosed.subscribe (
       ()=>{this.paginatedList(this.page.currentPage)}
     )
-    
   }
 
 
@@ -244,3 +268,4 @@ export class ComputerListComponent implements OnInit {
 export interface ComputerData {
   computer : Computer;
 }
+ 
