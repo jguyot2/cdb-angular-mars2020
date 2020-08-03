@@ -4,6 +4,7 @@ import { ComputerListComponent } from './computer-list/computer-list.component';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
 import { UnderbodyComponent } from './underbody/underbody.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AdminGuardService } from './auth/admin-guard.service';
 
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
     pathMatch: 'full'
   },
   {
