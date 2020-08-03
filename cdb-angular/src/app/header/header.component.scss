@@ -4,17 +4,16 @@
   color: white;
   display: flex;
   justify-content: space-evenly;
+  padding-top: 25px;
 }
 h1 a{ 
-    font-size: 300%;
+    font-size: 250%;
     text-decoration: none;
     color: inherit;
-    
-}
-h3{
-    text-align: right;
-    margin-right: 15px;
-}
+font-family:Georgia, 'Times New Roman', Times, serif ;
+text-shadow: whitesmoke 1px 3px 5px;}
+h1{ padding-top: 70px;}
+
 
 h1:hover{
   display: block;
@@ -30,7 +29,7 @@ h1:hover{
 }
 #img2{
   position: absolute;
-  top: -50px;
+  top: 0;
   left: 0;
   right: 0;
   color: white;
@@ -39,3 +38,6 @@ h1:hover{
   height: auto;
   line-height: 0px;
 }
+.login{ float: right;}
+a{ 
+  outline: 0;}

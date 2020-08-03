@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenPopup } from './popup';
 import { BodyComponent } from './body/body.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

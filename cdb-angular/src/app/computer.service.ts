@@ -9,9 +9,9 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
 })
 export class ComputerService {
     // URL du serveur à changer
-    private baseUrl: string = 'http://10.0.1.220:8080/webapp/';
+    private baseUrl: string = 'http://localhost:8080/webapp/';
     private urlComputers: string = this.baseUrl + "computers/";
-    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTk2MDY4NTEzLCJpYXQiOjE1OTYwMDg1MTN9.ldaWciGggP8krfk1jkE5oVrCPLpII8bBLw6r_WHFcMXtHGRT_GTyGTXpLEQO0T7ZkHQyDZme5G6q2jkbrfXgIQ";
+    private token: string = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aXR1cyIsImV4cCI6MjE5NjI4MzQ3OSwiaWF0IjoxNTk2MjgzNDc5fQ.GfJkVU7a42CajbK_LV8yrxXpPmbHz17kXmAD6IuRo0Xx9UBiR8qp1MCdPySzZgEJHWa-yd_MqB8p3MG5efg0Uw";
 
     header: HttpHeaders = new HttpHeaders()
         .append('Authorization', this.token);

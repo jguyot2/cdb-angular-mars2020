@@ -1,5 +1,7 @@
 <div>
   <form (ngSubmit)="onSubmit()">
+    <h4 class="modal-title" id="modal-basic-title">Add Computer</h4>
+
     <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input name="name" required [(ngModel)]="createdComputer.computerName" matInput />
@@ -26,7 +28,7 @@
       </mat-select>
     </mat-form-field>
     <br />
-    <input type="submit" id="submit" value="Submit" />
-    <button mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);" (click)='onClose()'>Cancel</button>
+    <input  class ="submitBtn" type="submit" id="submit" value="Submit" />
+    <button  class ="cancelBtn" (click)='onClose()'>Cancel</button>
   </form>
 </div>

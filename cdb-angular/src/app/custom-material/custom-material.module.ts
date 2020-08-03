@@ -10,6 +10,7 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule} from '@angular/material/select';
 
 
+
 @NgModule({
   declarations: [],
   imports: [
@@ -19,7 +20,7 @@ import { MatSelectModule} from '@angular/material/select';
     MatIconModule,
     MatPaginatorModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
   ],
   exports: [
     MatToolbarModule,

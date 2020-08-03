@@ -2,7 +2,8 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
-     background: white;
+     background-image: url("/assets/banner.png");
+     background-repeat: no-repeat;
 }
 
 /* Importing Bootstrap SCSS file. */

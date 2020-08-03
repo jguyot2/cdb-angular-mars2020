@@ -1,110 +1,80 @@
-<table class="responstable">
-<tr>
-  <td id="nice" colspan="5">
-    <mat-form-field class="form-field">
-    <mat-label>Search</mat-label>
-    <input matInput type="text"/>
-  </mat-form-field>
-  <a href="#"><mat-icon id ="searchicon">search</mat-icon></a>
- 
-  <button id="addcomputericon" mat-icon-button (click)='oopenPopupAdd()'><mat-icon id="addbtn">add_circle_outline</mat-icon></button>
-</td>
-</tr>
-  <tr>
-    <th><input class="selectall" type="checkbox"/>
-   <mat-icon id ="deleteicon">delete_forever</mat-icon></th>
-    <th data-th="Driver details"><span>Computer name</span></th>
-    <th>Introduced</th>
-    <th>Discontinued</th>
-    <th>Company</th>
-  </tr>
-  
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td><a href ="#"  class="modifyicon">Steve  <mat-icon id="id" aria-hidden="false" aria-label="Example home icon">create</mat-icon></a></td>
-    <td>Foo</td>
-    <td>01/01/1978</td>
-    <td>Policyholder</td>
-  </tr>
-  
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Steffie</td>
-    <td>Foo</td>
-    <td>01/01/1978</td>
-    <td>Spouse</td>
-  </tr>
-  
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stan</td>
-    <td>Foo</td>
-    <td>01/01/1994</td>
-    <td>Son</td>
-  </tr>
-  
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stella</td>
-    <td>Foo</td>
-    <td>01/01/1992</td>
-    <td>Daughter</td>
-  </tr>
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stella</td>
-    <td>Foo</td>
-    <td>01/01/1992</td>
-    <td>Daughter</td>
-  </tr>
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stella</td>
-    <td>Foo</td>
-    <td>01/01/1992</td>
-    <td>Daughter</td>
-  </tr>
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stella</td>
-    <td>Foo</td>
-    <td>01/01/1992</td>
-    <td>Daughter</td>
-  </tr>
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stella</td>
-    <td>Foo</td>
-    <td>01/01/1992</td>
-    <td>Daughter</td>
-  </tr>
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stella</td>
-    <td>Foo</td>
-    <td>01/01/1992</td>
-    <td>Daughter</td>
-  </tr>
-  <tr>
-    <td><input type="checkbox"/></td>
-    <td>Stella</td>
-    <td>Foo</td>
-    <td>01/01/1992</td>
-    <td>Daughter</td>
-  </tr>
-  <tr>
-  <td id="" colspan="5">
-    <div class="pagination">
-      <a href="#">&laquo;</a>
-      <a href="#">1</a>
-      <a class="active" href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a href="#">6</a>
-      <a href="#">&raquo;</a>
-  </div>
-  </td>
-</tr>
-</table>
+<div>
+    <div id ="tableHeader">
+        <div class="boxSearch">
+            <mat-form-field class="form-field">
+            <mat-label>Search</mat-label>
+            <input matInput type="text"/>
+            </mat-form-field>
+            <a href="#"><mat-icon id ="searchIcon">search</mat-icon></a>
+        </div>
+        <div class="boxAdd"> 
+            <button id="addIcon" mat-icon-button (click)='oopenPopupAdd()'>
+            <mat-icon id="addBtn">add_circle_outline</mat-icon>
+            </button> 
+        </div> 
 
+    </div>
+    <div id="tableDiv">
+    <table mat-table [dataSource]="computerList" class="responsTable">
+        <!-- CheckBox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="computerName">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let computer"> <a href ="#"  class="modifyicon">{{computer.computerName}}  <mat-icon id="id">create</mat-icon></a></mat-cell>
+        </ng-container>
+    
+        <!-- Introduced date Column -->
+        <ng-container matColumnDef="introducedDate">
+        <mat-header-cell *matHeaderCellDef> Introduced date </mat-header-cell>
+        <mat-cell *matCellDef="let computer"> {{computer.introducedDate}} </mat-cell>
+        </ng-container>
+    
+        <!-- Discontinued date Column -->
+        <ng-container matColumnDef="discontinuedDate">
+        <mat-header-cell *matHeaderCellDef> Discontinued date </mat-header-cell>
+        <mat-cell *matCellDef="let computer"> {{computer.discontinuedDate}} </mat-cell>
+        </ng-container>
+  
+        <!-- Company Column -->
+        <ng-container matColumnDef="companyDTO">
+            <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+            <mat-cell *matCellDef="let computer" > 
+                <app-company  *ngIf="!!computer.companyDTO" [company]="computer.companyDTO" >
+                </app-company>
+            </mat-cell>
+        </ng-container>
+        
+         <mat-header-row id="tableHead" *matHeaderRowDef="displayedColumns"></mat-header-row>
+        
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+</div>
+ 
+
+  <div class="pagination">
+
+      <button (click)="paginatedList(1)">&#60;&#60;</button>
+      <button (click)="getPreviousPage()">&#60;</button>
+      <button [ngClass]="pageNumber == page.currentPage ? 'butt': ''" *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
+      <button (click)="getNextPage()">&#62;</button>
+      <button (click)="paginatedList(nbPage)">&#62;&#62;</button>
+   </div>
+   <div id="rowNb">sfdtg</div>
+
+</div>
