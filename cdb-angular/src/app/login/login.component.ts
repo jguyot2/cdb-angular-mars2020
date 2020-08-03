@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
-import { AuthenticationService } from '../authentication.service'
+import { AuthenticationService } from '../auth/authentication.service'
 import { Observable, Subscription } from 'rxjs';
 import { Authentication } from '../models/authentication.model';
 import { Router } from '@angular/router';

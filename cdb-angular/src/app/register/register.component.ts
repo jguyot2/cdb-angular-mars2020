@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { RegisterService } from '../register.service'
+import { RegisterService } from '../auth/register.service'
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import {CrossFieldErrorMatcher} from '../CrossFieldErrorMatcher'

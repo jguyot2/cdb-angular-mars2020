@@ -1,24 +1,46 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,Input } from '@angular/core';
+import { OpenPopup } from '../popup';
+import { ComputerAddComponent } from '../computer-add/computer-add.component';
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
 import { Page } from '../models/page.model';
-import { MatDialog } from '@angular/material/dialog';
-import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
-import { OpenPopup } from '../popup';
-import {MatSort, Sort} from '@angular/material/sort';
+import {SelectionModel} from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComputerAddComponent } from '../computer-add/computer-add.component';
+import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
+import {MatSort, Sort} from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from '../auth/authentication.service';
 
 
 
 @Component({
-  selector: 'app-computer-list',
-  templateUrl: './computer-list.component.html',
-  styleUrls: ['./computer-list.component.scss']
-})
-export class ComputerListComponent implements OnInit {
+  selector: 'app-underbody',
+  templateUrl: './underbody.component.html',
+  styleUrls: ['./underbody.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  styles: [`
+    .dark-modal .modal-content {
+      background-color: #066999;
+      color: white;
+      border: 1px solid white;
+      padding: 15px 15px; 
+      box-shadow: 10px 10px 10px #066999;
+      align-items:center;
 
+    }
+    .dark-modal .close {
+      color: white;
+    }
+   
+    .mat-form-field-appearance-fill .mat-form-field-flex{
+      background-color: #add8e6;
+      padding:1px
+  }
+  `]
+})
+export class UnderbodyComponent implements OnInit {
+  
   constructor(private service: ComputerService, private openPopup:OpenPopup, public dialog: MatDialog, private auth: AuthenticationService) { }
 
   page: Page = { currentPage: 1, pageSize: 10 };
@@ -26,12 +48,11 @@ export class ComputerListComponent implements OnInit {
   nbComputers: number;
   listPages: number[];
   listPageSize: number[] = [10, 20, 50, 100];
-
   computerList:Computer[];
   dataSource: MatTableDataSource<Computer>;
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
 
-  adminRole = false;
-
+  adminRole: boolean = false;
 
   @Input('ngModel')
   search: string;
@@ -44,13 +65,23 @@ export class ComputerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginatedList(1);
-    console.log("role admin");
-
-    //this.adminRole = this.auth.isLoggedInAsAdmin();
-    console.log("role admin :" +this.adminRole);
+    this.adminRole = this.auth.isLoggedInAsAdmin();
   }
-  oopenPopupAdd(){
-    this.openPopup.opene(ComputerAddComponent, {size:'sm',centered: true,windowClass: 'dark-modal',backdropClass: 'light-blue-backdrop' })
+  openPopupAdd(){
+    const dialogRef = this.dialog.open(ComputerAddComponent, {data : null,backdropClass: 'light-blue-backdrop'});
+    this.dialog.afterAllClosed.subscribe (
+      ()=>{this.paginatedList(this.page.currentPage)}
+    );
+  }
+
+  editedComputer: Computer;
+  openEditForm(computer: Computer): void {
+    console.log("opening edit form...");
+    const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer },backdropClass: 'light-blue-backdrop' });
+    console.log(computer);
+    this.dialog.afterAllClosed.subscribe (
+      ()=>{this.paginatedList(this.page.currentPage)}
+    )
   }
 
   getList(): Computer[] {
@@ -60,18 +91,13 @@ export class ComputerListComponent implements OnInit {
         finalList = result;
       },
       (error) => {
-        console.log(error);        
+        console.log(error);
+        finalList = [];
       })
     return finalList;
   }
 
   paginatedList(pageNumber: number): void {
-    console.log("role admin");
-
-    // this.adminRole = this.auth.isLoggedInAsAdmin();
-    // console.log("role admin :" +this.adminRole);
-
-
     this.page.currentPage = pageNumber;
     if (this.search && this.sorted) {
       this.orderAndSearchComputers(pageNumber);
@@ -220,16 +246,6 @@ export class ComputerListComponent implements OnInit {
     }
   }
 
-  editedComputer: Computer;
-  openEditForm(computer: Computer): void {
-    console.log("opening edit form...");
-    const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer } });
-    console.log(computer);
-    this.dialog.afterAllClosed.subscribe (
-      ()=>{this.paginatedList(this.page.currentPage)}
-    )
-    
-  }
 
 
   isValidOrder(): boolean {
@@ -256,3 +272,4 @@ export class ComputerListComponent implements OnInit {
 export interface ComputerData {
   computer : Computer;
 }
+ 

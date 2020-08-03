@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Computer } from './models/computer.model'
 import { Page } from './models/page.model'
 import { Urls } from './urls'
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './auth/authentication.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
 
 @Injectable({
@@ -14,7 +14,7 @@ export class ComputerService {
     constructor(private http: HttpClient, private auth: AuthenticationService) { }
 
     getNumberComputers(): Observable<number> {
-        if(this.auth.isLoggedIn()){
+        if (this.auth.isLoggedIn()) {
             return this.http.get<number>(
                 Urls.numberUrl, 
                 { headers:  new HttpHeaders()
@@ -31,21 +31,21 @@ export class ComputerService {
                 params: new HttpParams()
                     .append("pageSize", page.pageSize.toString())
                     .append("currentPage", page.currentPage.toString()),
-                headers : new HttpHeaders()
-                .set('Content-Type', 'application/json')
-                .set('Authorization', 'Bearer '+ this.auth.getToken())
+                headers: new HttpHeaders()
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', 'Bearer ' + this.auth.getToken())
             });
         }
     }
 
     getComputerList(): Observable<Computer[]> {
-        if(this.auth.isLoggedIn()){
+        if (this.auth.isLoggedIn()) {
             return this.http.get<Computer[]>(
                 Urls.computersUrl, 
                 {
                     headers: new HttpHeaders()
                         .set('Content-Type', 'application/json')
-                        .set('Authorization', 'Bearer '+ this.auth.getToken())
+                        .set('Authorization', 'Bearer ' + this.auth.getToken())
                     ,
                     observe: 'body',
                     responseType: 'json'
@@ -53,16 +53,16 @@ export class ComputerService {
             );
         }
     }
-    
+
     addComputer(computer: Computer) {
-        if(this.auth.isLoggedInAsAdmin()){
+        if (this.auth.isLoggedInAsAdmin()) {
             return this.http.post(
                 Urls.computersUrl,
                 computer,
                 {
                     headers: new HttpHeaders({
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer '+ this.auth.getToken()
+                        'Authorization': 'Bearer ' + this.auth.getToken()
                     }),
                     observe: 'body',
                     responseType: 'json'
@@ -72,7 +72,7 @@ export class ComputerService {
     }
 
     deleteComputer(computer: Computer): Observable<void> {
-        if(this.auth.isLoggedInAsAdmin()){
+        if (this.auth.isLoggedInAsAdmin()) {
             return this.http.delete<void>(
                 Urls.computersUrl + computer.idComputer, { 
                     headers: new HttpHeaders({
@@ -89,21 +89,63 @@ export class ComputerService {
                 params: new HttpParams()
                     .append("pageSize", page.pageSize.toString())
                     .append("currentPage", page.currentPage.toString()),
-                headers : new HttpHeaders({
-                    'Authorization': 'Bearer '+ this.auth.getToken()
+                headers: new HttpHeaders({
+                    'Authorization': 'Bearer ' + this.auth.getToken()
                 }),
             });
-        }    
+        }
     }
 
     getNumberSearchComputers(search: string): Observable<number> {
         if(this.auth.isLoggedIn()){
             return this.http.get<number>(Urls.computersUrl + "search/"+ search +"/number", {
                 headers: new HttpHeaders({
-                    'Authorization': 'Bearer '+ this.auth.getToken()
+                    'Authorization': 'Bearer ' + this.auth.getToken()
                 }),
             });
         }
     }
 
-} 
+    editComputer(newComputer: Computer) {
+        console.log("editiing");
+        console.log(newComputer);
+        if (this.auth.isLoggedIn()) {
+            return this.http.put(Urls.computersUrl,
+                newComputer,
+                {
+                    headers: new HttpHeaders({
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.auth.getToken()
+                    }),
+                    observe: 'body',
+                    responseType: 'json'
+                });
+        }
+
+    }
+
+    orderAndSearchComputers(orderBy: string, search: string, page: Page): Observable<Computer[]> {
+        if (this.auth.isLoggedIn()) {
+            return this.http.get<Computer[]>(Urls.computersUrl + "searchOrder/" + orderBy + "/" + search, {
+                params: new HttpParams()
+                    .append("pageSize", page.pageSize.toString())
+                    .append("currentPage", page.currentPage.toString()),
+                headers: new HttpHeaders({
+                    'Authorization': 'Bearer ' + this.auth.getToken()
+                }),
+            });
+        }
+    }
+    orderComputers(orderBy: string, page: Page): Observable<Computer[]> {
+        if (this.auth.isLoggedIn()) {
+            return this.http.get<Computer[]>(Urls.computersUrl + "orderBy/" + orderBy, {
+                params: new HttpParams()
+                    .append("pageSize", page.pageSize.toString())
+                    .append("currentPage", page.currentPage.toString()),
+                headers: new HttpHeaders({
+                    'Authorization': 'Bearer ' + this.auth.getToken()
+                }),
+            });
+        }
+    } 
+}

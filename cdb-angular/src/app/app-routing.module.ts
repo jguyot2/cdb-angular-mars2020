@@ -2,20 +2,25 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ComputerListComponent } from './computer-list/computer-list.component';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
+import { UnderbodyComponent } from './underbody/underbody.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuardService } from './auth/auth-guard.service';
+import { AdminGuardService } from './auth/admin-guard.service';
 
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    component: ComputerListComponent,
-    pathMatch: 'full'
+    component: UnderbodyComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuardService] 
   },
   {
     path: 'computers/add',
     component: ComputerAddComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuardService],
   },
   {
     path: 'login',

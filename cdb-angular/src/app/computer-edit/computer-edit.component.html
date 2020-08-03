@@ -1,7 +1,8 @@
-<div> 
-  <h4 class="modal-title" id="modal-basic-title">Add Computer</h4>
+<div>
+  <h1 class="modal-title"> Edit Computer </h1>
+
   <form [formGroup]="computerForm" (ngSubmit)="onSubmit()">
-       <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
       <div *ngIf="name.errors && name.touched" class="alert alert-danger">
@@ -11,7 +12,6 @@
         <mat-error *ngIf="name.errors.required || name.errors.onlySpaces" i18n>Name must not be empty</mat-error>
       </div>
     </mat-form-field>
-
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Introduction date</mat-label>
@@ -44,7 +44,7 @@
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Company</mat-label>
-      <mat-select class="dropdown" name="company" matInput formControlName="company" >
+      <mat-select name="company" matInput formControlName="company">
         <mat-option [value]="null">no company</mat-option>
         <div>
           <mat-option *ngFor="let c of companies" [value]="c">
@@ -57,13 +57,11 @@
     <div>
       <div *ngIf="computerForm.valid">
         <button mat-button class="submitBtn" type="submit"> Submit </button>
-        <button mat-dialog-close class="cancelBtn" mat-button>
-          Cancel</button>
+        <button mat-dialog-close mat-button  class="cancelBtn">Cancel</button>
       </div>
-      <div *ngIf="computerForm.invalid">
+      <div *ngIf="computerForm.invalid "> 
         <button mat-button class="submitBtn" disabled type="submit"> Submit </button>
-        <button mat-dialog-close class="cancelBtn" mat-button>
-          Cancel</button>
+        <button mat-dialog-close mat-button class="cancelBtn">Cancel</button>
       </div>
     </div>
   </form>

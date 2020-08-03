@@ -1,36 +1,36 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ComputerService } from '../computer.service';
 import { CompanyService } from '../company.service';
 import { Computer } from '../models/computer.model';
-import { OpenPopup } from '../popup';
 import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
-import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
-import { ComputerListComponent } from '../computer-list/computer-list.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ComputerListComponent, ComputerData } from '../computer-list/computer-list.component';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-computer-add',
-  templateUrl: './computer-add.component.html',
-  styleUrls: ['./computer-add.component.scss']
+  selector: 'app-computer-edit',
+  templateUrl: './computer-edit.component.html',
+  styleUrls: ['./computer-edit.component.scss']
 })
-export class ComputerAddComponent implements OnInit {
+export class ComputerEditComponent implements OnInit {
 
   constructor(private computerService: ComputerService,
     private companyService: CompanyService,
     public dialogRef: MatDialogRef<ComputerListComponent>,
-    private router: Router) {
+    @Inject(MAT_DIALOG_DATA) public data: ComputerData) {
+    this.editedComputer = data.computer;
   }
-  @Input()
-  createdComputer: Computer = new Computer();
-
-  companies: Company[];
-
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  editedComputer: Computer = new Computer();
+
+  companies: Company[];
+
   lowerThresoldDate: number = new Date(1970, 1, 1).getTime();
   upperThresoldDate: number = new Date(2038, 1, 1).getTime();
 
@@ -38,6 +38,7 @@ export class ComputerAddComponent implements OnInit {
   get introduced() { return this.computerForm.get('introduced'); }
   get discontinued() { return this.computerForm.get('discontinued'); }
   computerForm = null;
+
 
   ngOnInit(): void {
     this.companyService.getCompanyList().subscribe(
@@ -48,7 +49,7 @@ export class ComputerAddComponent implements OnInit {
         this.companies = [];
       });
     this.computerForm = new FormGroup({
-      'name': new FormControl(this.createdComputer.computerName || '', [
+      'name': new FormControl(this.editedComputer.computerName, [
         Validators.maxLength(200),
         Validators.required,
         (control: AbstractControl) => {
@@ -60,13 +61,17 @@ export class ComputerAddComponent implements OnInit {
             return null;
         }
       ]),
-      'introduced': new FormControl(this.createdComputer.introducedDate, [
+      'id': new FormControl(this.editedComputer.idComputer),
+      'introduced': new FormControl(this.editedComputer.introducedDate, [
         (control: AbstractControl) => {
           const introducedStr = control.value;
           if (!introducedStr || introducedStr === "")
             return null;
+
           const introduced = new Date(control.value);
 
+          console.log(introduced.getTime());
+          console.log(introduced);
           if (introduced.getTime() < this.lowerThresoldDate
             || introduced.getTime() > this.upperThresoldDate) {
             return { 'outOfRange': true };
@@ -74,7 +79,7 @@ export class ComputerAddComponent implements OnInit {
           return null;
         }]
       ),
-      'discontinued': new FormControl(this.createdComputer.discontinuedDate, [
+      'discontinued': new FormControl(this.editedComputer.discontinuedDate, [
         (control: AbstractControl) => {
           const strDiscontinued = control.value;
           if (!strDiscontinued)
@@ -85,11 +90,11 @@ export class ComputerAddComponent implements OnInit {
           if (discontinued.getTime() < this.lowerThresoldDate
             || discontinued.getTime() > this.upperThresoldDate)
             return { 'outOfRange': true };
-
+          // TODO
           return null;
         }]
       ),
-      'company': new FormControl(null)
+      'company': new FormControl(this.editedComputer.companyDTO),
     }, {
       validators: [
         // Vérification de la cohérence des dates entre elles 
@@ -97,7 +102,7 @@ export class ComputerAddComponent implements OnInit {
           const intro = control.get('introduced');
           const disco = control.get('discontinued');
 
-
+          // CAST ? 
           const introDate: Date = intro.value ? new Date(intro.value) : null;
           const discoDate: Date = disco.value ? new Date(disco.value) : null;
 
@@ -112,8 +117,8 @@ export class ComputerAddComponent implements OnInit {
         }
       ]
     });
-
   }
+
   onSubmit() {
     if (this.computerForm.invalid) // Affichage de message ? 
       return;
@@ -123,16 +128,16 @@ export class ComputerAddComponent implements OnInit {
 
     computer.introducedDate = this.computerForm.get('introduced').value;
     computer.discontinuedDate = this.computerForm.get('discontinued').value;
-
+    computer.idComputer = this.computerForm.get('id').value;
     computer.companyDTO = this.computerForm.get('company').value;
-    this.computerService.addComputer(computer).subscribe(
+    this.computerService.editComputer(computer).subscribe(
       (result) => {
         console.log(result);
       },
       (error) => {
         console.log(error);
       });
-
-    this.dialogRef.close();
+      this.dialogRef.close();
+      console.log("test");
   }
 }

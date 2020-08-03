@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Authentication } from './models/authentication.model';
-import { Urls } from './urls';
-import { Credentials } from './models/credentials.model'
+import { Credentials } from '../models/credentials.model'
+import { Authentication } from '../models/authentication.model';
+import { Urls } from '../urls';
+import { isLoweredSymbol } from '@angular/compiler';
 
 @Injectable({ 
     providedIn: 'root'
