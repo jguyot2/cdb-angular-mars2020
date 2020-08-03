@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Authentication } from './models/authentication.model';
-import { Urls } from './urls';
+import { Authentication } from '../models/authentication.model';
+import { Urls } from '../urls';
 import { isLoweredSymbol } from '@angular/compiler';
 
 @Injectable({ 
@@ -68,7 +68,7 @@ export class AuthenticationService{
     }
 
     public isLoggedIn() : boolean {
-        return localStorage.getItem('jwt') !== undefined;
+        return localStorage.getItem('jwt') !== undefined && localStorage.getItem('jwt') !== null;
     }
 
     logout() {

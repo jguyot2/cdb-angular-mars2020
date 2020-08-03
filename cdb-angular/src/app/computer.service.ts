@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Computer } from './models/computer.model'
 import { Page } from './models/page.model'
 import { Urls } from './urls'
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './auth/authentication.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
 
 @Injectable({
