@@ -40,7 +40,6 @@ export class ComputerEditComponent implements OnInit {
   computerForm = null;
 
 
-
   ngOnInit(): void {
     this.companyService.getCompanyList().subscribe(
       (result: Company[]) => {
@@ -140,6 +139,5 @@ export class ComputerEditComponent implements OnInit {
       });
       this.dialogRef.close();
       console.log("test");
-
   }
 }

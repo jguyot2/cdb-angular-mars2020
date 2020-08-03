@@ -31,10 +31,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     .dark-modal .close {
       color: white;
     }
-    .light-blue-backdrop {
-      background-color: #5cb3fd;
-      
-    }
+   
     .mat-form-field-appearance-fill .mat-form-field-flex{
       background-color: #add8e6;
       padding:1px
@@ -52,6 +49,7 @@ export class UnderbodyComponent implements OnInit {
   listPageSize: number[] = [10, 20, 50, 100];
   computerList:Computer[];
   dataSource: MatTableDataSource<Computer>;
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
 
 
   @Input('ngModel')
@@ -67,8 +65,21 @@ export class UnderbodyComponent implements OnInit {
     this.paginatedList(1);
 
   }
-  oopenPopupAdd(){
-    this.openPopup.opene(ComputerAddComponent, {size:'sm',centered: true,windowClass: 'dark-modal',backdropClass: 'light-blue-backdrop' })
+  openPopupAdd(){
+    const dialogRef = this.dialog.open(ComputerAddComponent, {data : null,backdropClass: 'light-blue-backdrop'});
+    this.dialog.afterAllClosed.subscribe (
+      ()=>{this.paginatedList(this.page.currentPage)}
+    );
+  }
+
+  editedComputer: Computer;
+  openEditForm(computer: Computer): void {
+    console.log("opening edit form...");
+    const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer },backdropClass: 'light-blue-backdrop' });
+    console.log(computer);
+    this.dialog.afterAllClosed.subscribe (
+      ()=>{this.paginatedList(this.page.currentPage)}
+    )
   }
 
   getList(): Computer[] {
@@ -233,15 +244,6 @@ export class UnderbodyComponent implements OnInit {
     }
   }
 
-  editedComputer: Computer;
-  openEditForm(computer: Computer): void {
-    console.log("opening edit form...");
-    const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer } });
-    console.log(computer);
-    this.dialog.afterAllClosed.subscribe (
-      ()=>{this.paginatedList(this.page.currentPage)}
-    )
-  }
 
 
   isValidOrder(): boolean {
