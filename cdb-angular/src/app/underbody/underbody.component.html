@@ -6,10 +6,11 @@
             <input matInput type="text" [(ngModel)]="search"
             (keydown.enter)="paginatedList(1)"/>
             </mat-form-field>
-            <a href="#"><mat-icon id ="searchIcon">search</mat-icon></a>
+            <a [routerLink]="" (click)="paginatedList(1)"><mat-icon id ="searchIcon">search</mat-icon></a>
         </div>
+
         <div *ngIf="adminRole" class="boxAdd"> 
-            <button id="addIcon" mat-icon-button (click)='oopenPopupAdd()'>
+            <button id="addIcon" mat-icon-button (click)='openPopupAdd()'>
             <mat-icon id="addBtn">add_circle_outline</mat-icon>
             </button> 
         </div> 
@@ -19,20 +20,16 @@
         <!-- CheckBox Column -->
         <ng-container matColumnDef="idComputer"><input type="number" id="pageNumber" name="pageNumber" placeholder="page number"
             (keydown.enter)="paginatedList($event.target.value)" />
-            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let computer; let i = index">
                 <button *ngIf="adminRole" mat-icon-button (click)="deleteComputer(computer, i)">
                     <mat-icon>delete</mat-icon>
-                </button>
-                <button *ngIf="adminRole" mat-icon-button (click)="openEditForm(computer)">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                {{computer.idComputer}} </mat-cell>
+                </button> </mat-cell>
         </ng-container>
         <!-- Name Column -->
         <ng-container matColumnDef="computerName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> <a href ="#" [ngClass]="adminRole ? 'modifyicon' : 'disabled'">{{computer.computerName}}  <mat-icon id="id">create</mat-icon></a></mat-cell>
+        <mat-cell *matCellDef="let computer"> <a [routerLink]="" (click)="openEditForm(computer)" [ngClass]="adminRole ? 'modifyicon' : 'disabled'">{{computer.computerName}}  <mat-icon id="id">create</mat-icon></a></mat-cell>
         </ng-container>
     
         <!-- Introduced date Column -->
