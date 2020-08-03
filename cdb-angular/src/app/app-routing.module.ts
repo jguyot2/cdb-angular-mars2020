@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ComputerListComponent } from './computer-list/computer-list.component';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
     pathMatch: 'full'
   },
   {

@@ -14,6 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ComputerListComponent,
     HeaderComponent,
     BodyComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [ 
     BrowserModule,
