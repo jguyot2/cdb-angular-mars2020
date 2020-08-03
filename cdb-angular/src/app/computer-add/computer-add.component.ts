@@ -7,6 +7,8 @@ import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ComputerListComponent } from '../computer-list/computer-list.component';
 
 @Component({
   selector: 'app-computer-add',
@@ -15,14 +17,20 @@ import { Router } from '@angular/router';
 })
 export class ComputerAddComponent implements OnInit {
 
-  constructor(private computerService: ComputerService,private router: Router, private companyService: CompanyService, private openPopup: OpenPopup) { }
-
+  constructor(private computerService: ComputerService,
+    private companyService: CompanyService,
+    public dialogRef: MatDialogRef<ComputerListComponent>,
+    private router: Router) {
+  }
   @Input()
   createdComputer: Computer = new Computer();
 
   companies: Company[];
 
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
   lowerThresoldDate: number = new Date(1970, 1, 1).getTime();
   upperThresoldDate: number = new Date(2038, 1, 1).getTime();
 
@@ -124,11 +132,7 @@ export class ComputerAddComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-    this.router.navigate(['/dashboard']);
 
-  }
-
-  onClose() {
-    this.openPopup.close();
+    this.dialogRef.close();
   }
 }

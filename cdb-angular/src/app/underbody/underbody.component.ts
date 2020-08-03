@@ -67,8 +67,21 @@ export class UnderbodyComponent implements OnInit {
     this.paginatedList(1);
 
   }
-  oopenPopupAdd(){
-    this.openPopup.opene(ComputerAddComponent, {size:'sm',centered: true,windowClass: 'dark-modal',backdropClass: 'light-blue-backdrop' })
+  openPopupAdd(){
+    const dialogRef = this.dialog.open(ComputerAddComponent, {data : null});
+    this.dialog.afterAllClosed.subscribe (
+      ()=>{this.paginatedList(this.page.currentPage)}
+    );
+  }
+
+  editedComputer: Computer;
+  openEditForm(computer: Computer): void {
+    console.log("opening edit form...");
+    const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer } });
+    console.log(computer);
+    this.dialog.afterAllClosed.subscribe (
+      ()=>{this.paginatedList(this.page.currentPage)}
+    )
   }
 
   getList(): Computer[] {
@@ -233,15 +246,6 @@ export class UnderbodyComponent implements OnInit {
     }
   }
 
-  editedComputer: Computer;
-  openEditForm(computer: Computer): void {
-    console.log("opening edit form...");
-    const dialogRef = this.dialog.open(ComputerEditComponent, { data: { computer: computer } });
-    console.log(computer);
-    this.dialog.afterAllClosed.subscribe (
-      ()=>{this.paginatedList(this.page.currentPage)}
-    )
-  }
 
 
   isValidOrder(): boolean {

@@ -1,7 +1,7 @@
 <div>
   <h1> Edit Computer </h1>
+  
   <form [formGroup]="computerForm" class="form-control" (ngSubmit)="onSubmit()">
-
     <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
@@ -61,7 +61,7 @@
           (click)='onClose()'>
           Cancel</button>
       </div>
-      <div *ngIf="computerForm.invalid ">
+      <div *ngIf="computerForm.invalid "> 
         <button mat-button color="primary" disabled type="submit"> Submit </button>
         <button mat-dialog-close mat-button style="float: right;color:white;background-color: rgb(107, 107, 241);"
           (click)='onClose()'>
