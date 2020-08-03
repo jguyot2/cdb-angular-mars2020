@@ -85,8 +85,6 @@ export class UnderbodyComponent implements OnInit {
 
   paginatedList(pageNumber: number): void {
     this.page.currentPage = pageNumber;
-    console.log("search :" +this.search);
-    console.log("sorted :" +this.sorted);
     if (this.search && this.sorted) {
       this.orderAndSearchComputers(pageNumber);
     } else if (this.search) {
@@ -181,10 +179,11 @@ export class UnderbodyComponent implements OnInit {
       firstPageToShow = this.page.currentPage - nb + nbSpaceAfterCurrentPage;
     }
 
-    if (this.nbPage < nb) {
+    if (this.nbPage < nb){
+      firstPageToShow = 1;
       lastPageToShow = firstPageToShow + this.nbPage;
     } else {
-      lastPageToShow = firstPageToShow + nb;
+      lastPageToShow = firstPageToShow + nb + 1;
     }
 
     return Array.from(Array(lastPageToShow - firstPageToShow), (_, index) => index + firstPageToShow);
@@ -192,7 +191,7 @@ export class UnderbodyComponent implements OnInit {
 
   searchComputer(pageNumber: number): void {
     if (this.search) {
-      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.page.currentPage = pageNumber;
       this.service.searchComputer(this.search, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
@@ -205,7 +204,7 @@ export class UnderbodyComponent implements OnInit {
 
   orderComputers(pageNumber: number): void {
     if (this.order && this.isValidOrder()) {
-      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.page.currentPage = pageNumber;
       this.service.orderComputers(this.order, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
@@ -220,7 +219,7 @@ export class UnderbodyComponent implements OnInit {
 
   orderAndSearchComputers(pageNumber: number): void {
     if (this.search && this.order && this.isValidOrder()) {
-      this.page = {currentPage: pageNumber, pageSize: 10};
+      this.page.currentPage = pageNumber;
       this.service.orderAndSearchComputers(this.search, this.order, this.page).subscribe(
         (result: Computer[]) => {
           this.computerList = result;
@@ -241,7 +240,6 @@ export class UnderbodyComponent implements OnInit {
     this.dialog.afterAllClosed.subscribe (
       ()=>{this.paginatedList(this.page.currentPage)}
     )
-    
   }
 
 
@@ -253,7 +251,6 @@ export class UnderbodyComponent implements OnInit {
 
   dataSort(sort: Sort): void {
     this.sorted = sort.direction ? true : false;
-    console.log("sorted or not: "+ this.sorted);
     this.order = sort.active.split(/(?=[A-Z])/)[0] + this.capitalize(sort.direction);
     if (this.search){
       this.orderAndSearchComputers(1);
@@ -270,3 +267,4 @@ export class UnderbodyComponent implements OnInit {
 export interface ComputerData {
   computer : Computer;
 }
+ 

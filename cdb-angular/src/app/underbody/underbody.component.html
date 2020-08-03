@@ -31,25 +31,25 @@
         </ng-container>
         <!-- Name Column -->
         <ng-container matColumnDef="computerName">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
         <mat-cell *matCellDef="let computer"> <a href ="#"  class="modifyicon">{{computer.computerName}}  <mat-icon id="id">create</mat-icon></a></mat-cell>
         </ng-container>
     
         <!-- Introduced date Column -->
         <ng-container matColumnDef="introducedDate">
-        <mat-header-cell *matHeaderCellDef> Introduced date </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Introduced date </mat-header-cell>
         <mat-cell *matCellDef="let computer"> {{computer.introducedDate}} </mat-cell>
         </ng-container>
     
         <!-- Discontinued date Column -->
         <ng-container matColumnDef="discontinuedDate">
-        <mat-header-cell *matHeaderCellDef> Discontinued date </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Discontinued date </mat-header-cell>
         <mat-cell *matCellDef="let computer"> {{computer.discontinuedDate}} </mat-cell>
         </ng-container>
   
         <!-- Company Column -->
         <ng-container matColumnDef="companyDTO">
-            <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
             <mat-cell *matCellDef="let computer" > 
                 <app-company  *ngIf="!!computer.companyDTO" [company]="computer.companyDTO" >
                 </app-company>
