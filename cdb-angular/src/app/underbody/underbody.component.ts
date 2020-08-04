@@ -233,6 +233,8 @@ export class UnderbodyComponent implements OnInit {
         (result: Computer[]) => {
           this.computerList = result;
           this.setNbCompurtersAndPages();
+          this.listPages = this.getListPages(9);
+
         }, 
         (error) => {
         })
