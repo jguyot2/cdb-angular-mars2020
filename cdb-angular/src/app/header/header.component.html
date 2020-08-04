@@ -1,8 +1,8 @@
     <div class="toolbar" role="banner">
       <img id="img1" alt="CDB Logo" src="assets/logow.png"/>  
       <h1><a href="#" >Computer DataBase</a></h1>
-        <div class="logoutBox" ><p>Welcome {{getUsername()}}</p>
-          <button mat-raised-button class="logout" (click)="logout()">Logout </button> 
+        <div class="logoutBox" *ngIf="!hidden"><p>Welcome {{getUsername()}}</p>
+          <button *ngIf="!hidden" mat-raised-button class="logout" (click)="logout()">Logout </button> 
         </div>
       
 
