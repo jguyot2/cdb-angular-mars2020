@@ -4,7 +4,7 @@
        <mat-form-field appearance="fill">
       <mat-label>Computer Name</mat-label>
       <input id="name" class="form-control" formControlName="name" required matInput />
-      <div *ngIf="name.errors && name.touched" class="alert alert-danger">
+      <div *ngIf="name.errors && name.dirty" class="alert alert-danger">
         <div *ngIf="name.errors.maxlength" class="ng-invalid" i18n>
           Name must be at most 200 characters long.
         </div>
@@ -57,12 +57,12 @@
     <div>
       <div *ngIf="computerForm.valid">
         <button mat-button class="submitBtn" type="submit"> Submit </button>
-        <button mat-dialog-close class="cancelBtn" mat-button>
+        <button mat-dialog-close class="cancelBtn" (click)="close()" mat-button>
           Cancel</button>
       </div>
       <div *ngIf="computerForm.invalid">
         <button mat-button class="submitBtn" disabled type="submit"> Submit </button>
-        <button mat-dialog-close class="cancelBtn" mat-button>
+        <button mat-dialog-close (click)="close()" class="cancelBtn" mat-button>
           Cancel</button>
       </div>
     </div>

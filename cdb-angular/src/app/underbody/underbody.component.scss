@@ -137,8 +137,6 @@ z-index: 2;
 
 #rowNb{
   margin:0 auto;
-  border: 1px solid #000000;
-  border-radius: 0 0 10px 10px;
   width:4%;
   text-align: center;
   position: relative;
@@ -150,6 +148,7 @@ z-index: 2;
   color: black; 
   text-decoration: none;
 }
+
 .mat-form-field.mat-focused .mat-form-field-label{
   color: white;
 }
@@ -175,4 +174,13 @@ z-index: 2;
 
 .mat-dialog-container{
   background-color: #066999
+}
+
+#resetBtn{
+  color: white;
+  background-color: #055279;
+  margin-top: 5px;
+}
+.deleteBtn{
+  margin-left: 10px;
 }
