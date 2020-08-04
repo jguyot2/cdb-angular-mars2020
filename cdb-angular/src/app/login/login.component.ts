@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   })
 
   ngOnInit(): void {
+    console.log('login')
     this.usernameSubscription = this.username.valueChanges.subscribe(x => this.hidden.setValue(''))
     this.passwordSubscription = this.password.valueChanges.subscribe(x => this.hidden.setValue(''))
   }
