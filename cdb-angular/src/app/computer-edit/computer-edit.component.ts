@@ -6,8 +6,9 @@ import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ComputerListComponent, ComputerData } from '../computer-list/computer-list.component';
 import { RouterLink, Router } from '@angular/router';
+import { UnderbodyComponent } from '../underbody/underbody.component';
+import{ComputerData} from '../models/computerdata.model'
 
 @Component({
   selector: 'app-computer-edit',
@@ -18,7 +19,8 @@ export class ComputerEditComponent implements OnInit {
 
   constructor(private computerService: ComputerService,
     private companyService: CompanyService,
-    public dialogRef: MatDialogRef<ComputerListComponent>,
+    public dialogRef: MatDialogRef<UnderbodyComponent>,
+    
     @Inject(MAT_DIALOG_DATA) public data: ComputerData) {
     this.editedComputer = data.computer;
   }

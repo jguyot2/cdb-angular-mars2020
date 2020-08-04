@@ -1,12 +1,9 @@
-<mat-card class="example-form">
+<mat-card class="card">
     <mat-card-content>
         <mat-card-title>Sign up</mat-card-title>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
             <input type="hidden" formControlName="hidden"/>
-            <div *ngIf="hidden.hasError('registererror')">
-                Username already exists
-            </div>
-            <div *ngIf="">
+            <div class="error" *ngIf="hidden.hasError('registererror')">
                 Username already exists
             </div>
             <mat-form-field class="example-full-width">
@@ -28,7 +25,8 @@
                 <mat-error *ngIf="formGroup.hasError('matcherror')">Passwords do not match</mat-error>
             </mat-form-field>
             <br/>
-            <button mat-raised-button color='primary' type="submit" [disabled]="!formGroup.valid">Register</button>
+            <button mat-raised-button class="registerBtn" type="submit" [disabled]="!formGroup.valid">Register</button>
+            <p>Already a user ? <a [routerLink]="['/login']">Log in </a></p>
         </form>
     </mat-card-content>
 </mat-card>
