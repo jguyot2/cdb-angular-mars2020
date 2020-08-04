@@ -1,8 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ComputerService } from '../computer.service';
-import { CompanyService } from '../company.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ComputerListComponent, ComputerData } from '../computer-list/computer-list.component';
 
 @Component({
   selector: 'app-computer-delete-dialog',
