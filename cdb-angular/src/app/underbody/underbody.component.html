@@ -22,7 +22,7 @@
             (keydown.enter)="paginatedList($event.target.value)" />
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let computer; let i = index">
-                <button *ngIf="adminRole" mat-icon-button (click)="deleteComputer(computer, i)">
+                <button *ngIf="adminRole" mat-icon-button (click)="openDeleteDialog(computer)">
                     <mat-icon>delete</mat-icon>
                 </button> </mat-cell>
         </ng-container>

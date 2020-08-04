@@ -1,16 +1,14 @@
 import { Component, OnInit,ViewEncapsulation,Input } from '@angular/core';
-import { OpenPopup } from '../popup';
 import { ComputerAddComponent } from '../computer-add/computer-add.component';
 import { ComputerService } from '../computer.service';
 import { Computer } from '../models/computer.model';
 import { Page } from '../models/page.model';
-import {SelectionModel} from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { ComputerEditComponent } from '../computer-edit/computer-edit.component';
-import {MatSort, Sort} from '@angular/material/sort';
+import {Sort} from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from '../auth/authentication.service';
+import { ComputerDeleteDialogComponent } from '../computer-delete-dialog/computer-delete-dialog.component';
 
 
 
@@ -41,7 +39,7 @@ import { AuthenticationService } from '../auth/authentication.service';
 })
 export class UnderbodyComponent implements OnInit {
   
-  constructor(private service: ComputerService, private openPopup:OpenPopup, public dialog: MatDialog, private auth: AuthenticationService) { }
+  constructor(private service: ComputerService, public dialog: MatDialog, private auth: AuthenticationService) { }
 
   page: Page = { currentPage: 1, pageSize: 10 };
   nbPage: number;
@@ -164,6 +162,18 @@ export class UnderbodyComponent implements OnInit {
     return Math.ceil(nbComputers / page.pageSize);
   }
 
+  openDeleteDialog(computer: Computer) {
+    const id = this.dialog.open(ComputerDeleteDialogComponent).id;
+
+    this.dialog.getDialogById(id).afterClosed().subscribe (
+      result => {
+      if (result) {
+        this.deleteComputer(computer);
+      }
+    }
+    )
+  }
+
   deleteComputer(computer: Computer) {
     if (this.computerList.includes(computer)) {
       this.service.deleteComputer(computer).subscribe(
@@ -269,7 +279,3 @@ export class UnderbodyComponent implements OnInit {
   }
 
 }  
-export interface ComputerData {
-  computer : Computer;
-}
- 

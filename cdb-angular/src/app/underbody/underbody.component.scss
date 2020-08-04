@@ -1,24 +1,8 @@
-
-@media screen and (min-width: 960px) {
-  .mat-header-cell{ 
-    font-size: 10px;
-    }
-    
-    .mat-table {
-      border: 0;
-      vertical-align: middle
-    }
-  
-    .mat-table caption {
-      font-size: 1em;
-    }
-}
 .responsTable {
     margin:0;
     width: 100%;
     overflow: hidden;  
     z-index: 1;
-    //border: #000000 solid 1px;
     border-radius: 30px 30px 5px 5px;
     background-color: whitesmoke;
   }

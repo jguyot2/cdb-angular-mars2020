@@ -6,8 +6,9 @@ import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ComputerListComponent, ComputerData } from '../computer-list/computer-list.component';
 import { RouterLink, Router } from '@angular/router';
+import { UnderbodyComponent } from '../underbody/underbody.component';
+import{ComputerData} from '../models/computerdata.model'
 
 @Component({
   selector: 'app-computer-edit',
@@ -18,7 +19,8 @@ export class ComputerEditComponent implements OnInit {
 
   constructor(private computerService: ComputerService,
     private companyService: CompanyService,
-    public dialogRef: MatDialogRef<ComputerListComponent>,
+    public dialogRef: MatDialogRef<UnderbodyComponent>,
+    
     @Inject(MAT_DIALOG_DATA) public data: ComputerData) {
     this.editedComputer = data.computer;
   }
@@ -43,7 +45,9 @@ export class ComputerEditComponent implements OnInit {
   ngOnInit(): void {
     this.companyService.getCompanyList().subscribe(
       (result: Company[]) => {
-        this.companies = result;
+        this.companies = result.filter((company) => {
+          return (!this.editedComputer.companyDTO) || (company.idCompany !== this.editedComputer.companyDTO.idCompany);
+        });
       },
       (error) => {
         this.companies = [];
@@ -124,7 +128,6 @@ export class ComputerEditComponent implements OnInit {
       return;
     const computer: Computer = new Computer();
     computer.computerName = this.computerForm.get('name').value;
-    console.log(computer.computerName);
 
     computer.introducedDate = this.computerForm.get('introduced').value;
     computer.discontinuedDate = this.computerForm.get('discontinued').value;
@@ -137,7 +140,7 @@ export class ComputerEditComponent implements OnInit {
       (error) => {
         console.log(error);
       });
-      this.dialogRef.close();
-      console.log("test");
+    this.dialogRef.close();
+    console.log("test");
   }
 }
