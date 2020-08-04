@@ -2,13 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ComputerService } from '../computer.service';
 import { CompanyService } from '../company.service';
 import { Computer } from '../models/computer.model';
-import { OpenPopup } from '../popup';
 import { Company } from '../models/company.model';
 import { FormControl, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
-import { AppRoutingModule } from '../app-routing.module';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ComputerListComponent } from '../computer-list/computer-list.component';
+import { UnderbodyComponent } from '../underbody/underbody.component';
 
 @Component({
   selector: 'app-computer-add',
@@ -19,7 +17,7 @@ export class ComputerAddComponent implements OnInit {
 
   constructor(private computerService: ComputerService,
     private companyService: CompanyService,
-    public dialogRef: MatDialogRef<ComputerListComponent>,
+    public dialogRef: MatDialogRef<UnderbodyComponent>,
     private router: Router) {
   }
   @Input()

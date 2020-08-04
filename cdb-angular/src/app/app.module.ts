@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 
 import { ComputerComponent } from './computer/computer.component';
 import { CompanyComponent } from './company/company.component';
-import { ComputerListComponent } from './computer-list/computer-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +14,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { UnderbodyComponent } from './underbody/underbody.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { OpenPopup } from './popup';
 import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +28,6 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
     ComputerAddComponent,
     ComputerComponent,
     CompanyComponent,
-    ComputerListComponent,
     HeaderComponent,
     UnderbodyComponent,
     FooterComponent,
@@ -59,21 +56,8 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
     MatDialogModule
   ],
 
-  providers: [OpenPopup],
-// =======
-//     NoopAnimationsModule,
-//     ReactiveFormsModule,
-//     MatDialogModule
+  providers: [],
 
-//   ],
-//   entryComponents: [ComputerListComponent, ComputerEditComponent],
-//   providers: [
-//     {
-//       provide: MatDialogRef,
-//       useValue: {}
-//     },
-//   ],
-// >>>>>>> 8a5dcf0ea8fb80a7bfcae2b9f63d7063b7c35d93
   bootstrap: [AppComponent]
 })
 export class AppModule { }

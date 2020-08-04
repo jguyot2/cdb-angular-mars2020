@@ -49,7 +49,7 @@ export class AuthenticationService{
     private setSession(authResult : Authentication, username: string) {
         localStorage.setItem('jwt', authResult.jwt);
         localStorage.setItem('role', authResult.role);
-        localStorage.getItem('username');
+        localStorage.setItem('username', username);
     }
 
     private getRole() : string{
@@ -75,5 +75,6 @@ export class AuthenticationService{
     logout() {
         localStorage.removeItem('jwt');
         localStorage.removeItem('role');
+        localStorage.removeItem('username');
     }
 }

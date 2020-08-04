@@ -1,9 +1,21 @@
-// .example-form {
-//     min-width: 150px;
-//     max-width: 500px;
-//     width: 100%;
-//   }
-  
-//   .example-full-width {
-//     width: 100%;
-//   }
+.card{
+    width: 300px;
+    margin: 100px auto;
+    border-radius: 5px;
+    text-align: center;
+
+}
+.mat-card-title{
+    text-align: center;
+    color: #066999;
+}
+
+.loginBtn{
+    background-color: #066999;
+    color: white;
+}
+
+.error{
+    color: red;
+    padding: 8px;
+}
