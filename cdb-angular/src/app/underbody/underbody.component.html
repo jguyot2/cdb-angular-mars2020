@@ -20,7 +20,7 @@
         <!-- CheckBox Column -->
         <ng-container matColumnDef="idComputer"><input type="number" id="pageNumber" name="pageNumber" placeholder="page number"
             (keydown.enter)="paginatedList($event.target.value)" />
-            <mat-header-cell *matHeaderCellDef><div><button mat-button id="resetBtn">Reset</button></div></mat-header-cell>
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell class ="deleteBtn" *matCellDef="let computer; let i = index">
                 <button *ngIf="adminRole" mat-icon-button (click)="openDeleteDialog(computer)">
                     <mat-icon>delete</mat-icon>
