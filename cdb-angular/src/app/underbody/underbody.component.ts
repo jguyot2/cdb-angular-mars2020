@@ -11,6 +11,7 @@ import {MatSort, Sort} from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from '../auth/authentication.service';
+import { ComputerDeleteDialogComponent } from '../computer-delete-dialog/computer-delete-dialog.component';
 
 
 
@@ -162,6 +163,18 @@ export class UnderbodyComponent implements OnInit {
 
   getNbPages(page: Page, nbComputers: number): number {
     return Math.ceil(nbComputers / page.pageSize);
+  }
+
+  openDeleteDialog(computer: Computer) {
+    const id = this.dialog.open(ComputerDeleteDialogComponent).id;
+
+    this.dialog.getDialogById(id).afterClosed().subscribe (
+      result => {
+      if (result) {
+        this.deleteComputer(computer);
+      }
+    }
+    )
   }
 
   deleteComputer(computer: Computer) {

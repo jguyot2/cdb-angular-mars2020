@@ -22,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { ComputerEditComponent } from './computer-edit/computer-edit.component';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { ComputerDeleteDialogComponent } from './computer-delete-dialog/computer-delete-dialog.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
     LoginComponent,
     RegisterComponent,
     ComputerEditComponent,
+    ComputerDeleteDialogComponent,
    
     
     
