@@ -8,7 +8,7 @@
             </mat-form-field>
             <a [routerLink]="" (click)="paginatedList(1)"><mat-icon id ="searchIcon">search</mat-icon></a>
         </div>
-
+        
         <div *ngIf="adminRole" class="boxAdd"> 
             <button id="addIcon" mat-icon-button (click)='openPopupAdd()'>
             <mat-icon id="addBtn">add_circle_outline</mat-icon>
@@ -21,7 +21,7 @@
         <ng-container matColumnDef="idComputer"><input type="number" id="pageNumber" name="pageNumber" placeholder="page number"
             (keydown.enter)="paginatedList($event.target.value)" />
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let computer; let i = index">
+            <mat-cell class ="deleteBtn" *matCellDef="let computer; let i = index">
                 <button *ngIf="adminRole" mat-icon-button (click)="openDeleteDialog(computer)">
                     <mat-icon>delete</mat-icon>
                 </button> </mat-cell>

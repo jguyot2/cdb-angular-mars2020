@@ -3,9 +3,10 @@
   align-items: center;
   color: white;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   padding-top: 25px;
 }
+
 h1 a{ 
     font-size: 250%;
     text-decoration: none;
@@ -27,17 +28,13 @@ h1:hover{
     margin-top: 1%;
 
 }
-#img2{
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  color: white;
-  z-index: -100;
-  width: 100%;
-  height: auto;
-  line-height: 0px;
-}
+
 .logout{ 
   float: right;
+  color: white;
+  background-color: #055279;
+  border: 1px solid white;
+}
+.logoutBox{
+  margin-right: 120px;;
 }
