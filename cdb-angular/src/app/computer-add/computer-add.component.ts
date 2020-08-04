@@ -133,4 +133,8 @@ export class ComputerAddComponent implements OnInit {
 
     this.dialogRef.close();
   }
+
+  close(){
+    this.dialogRef.close();
+  }
 }
