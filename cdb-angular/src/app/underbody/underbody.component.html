@@ -5,6 +5,10 @@
             <mat-label>Search</mat-label>
             <input matInput type="text" [(ngModel)]="search"
             (keydown.enter)="paginatedList(1)"/>
+
+            <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="refreshPage();"> <mat-icon>close</mat-icon> </button>
+
+
             </mat-form-field>
             <a [routerLink]="" (click)="paginatedList(1)"><mat-icon id ="searchIcon">search</mat-icon></a>
         </div>
