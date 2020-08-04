@@ -97,27 +97,32 @@ export class UnderbodyComponent implements OnInit {
 
   paginatedList(pageNumber: number): void {
     this.page.currentPage = pageNumber;
+
     if (this.search && this.sorted) {
       this.orderAndSearchComputers(pageNumber);
+
     } else if (this.search) {
       this.searchComputer(pageNumber);
+
     } else if (this.sorted) {
       this.orderComputers(pageNumber);
+
     } else {
       this.basicPaginatedList(pageNumber);
-    }  }
+    }  
+  }
 
   basicPaginatedList(pageNumber: number): void {
     this.service.getPaginatedComputerList(this.page).subscribe(
       (result: Computer[]) => {
         this.computerList = result;
+        this.setNbCompurtersAndPages();
         this.listPages = this.getListPages(9);
       },
       (error) => {
         console.log(error);
         this.computerList = [];
       })
-    this.setNbCompurtersAndPages();
 
   }
 
@@ -140,6 +145,7 @@ export class UnderbodyComponent implements OnInit {
       (result: number) => {
         this.nbComputers = result;
         this.nbPage = this.getNbPages(this.page, result);
+        this.listPages = this.getListPages(9);
       },
       (error) => {
         console.log(error);
@@ -220,6 +226,7 @@ export class UnderbodyComponent implements OnInit {
         (result: Computer[]) => {
           this.computerList = result;
           this.setNbCompurtersAndPagesWithSearch(this.search);
+          this.listPages = this.getListPages(9);
         }, 
         (error) => {
         })
@@ -234,7 +241,6 @@ export class UnderbodyComponent implements OnInit {
           this.computerList = result;
           this.setNbCompurtersAndPages();
           this.listPages = this.getListPages(9);
-
         }, 
         (error) => {
         })
@@ -278,6 +284,13 @@ export class UnderbodyComponent implements OnInit {
   
   capitalize(word: string): string {
     return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  refreshPage() {
+    this.page = { currentPage: 1, pageSize: 10 };
+    this.search = "";
+    this.sorted = false;
+    this.paginatedList(1);
   }
 
 }  
