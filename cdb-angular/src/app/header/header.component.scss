@@ -2,27 +2,42 @@
 .toolbar {
   align-items: center;
   color: white;
+  padding-top: 25px;
   display: flex;
   justify-content: space-between;
-  padding-top: 25px;
+  
+  
+}
+
+@font-face {
+  font-family: "DS-DIGI";
+    src: url('../../assets/fonts/omegaflightexpand.ttf') format("opentype");
 }
 
 h1 a{ 
-    font-size: 250%;
+
+ 
+  
+  font-family: 'DS-DIGI';
+    font-size: 220%;
     text-decoration: none;
     color: inherit;
-font-family:Georgia, 'Times New Roman', Times, serif ;
-text-shadow: whitesmoke 1px 3px 5px;}
-h1{ padding-top: 70px;}
+    text-shadow: whitesmoke 1px 3px 5px;}
+
+h1{ 
+  padding-top: 70px;
+  position: fixed;
+  left: 20%;
+}
 
 
 h1:hover{
-  display: block;
+
    color: rgb(214, 232, 243);
 }
 
 #img1 {
-    float: left;
+    
     width: 8%;
     margin-left: 3%;
     margin-top: 1%;
@@ -30,11 +45,15 @@ h1:hover{
 }
 
 .logout{ 
-  float: right;
+  
   color: white;
   background-color: #055279;
   border: 1px solid white;
 }
+
 .logoutBox{
+
   margin-right: 120px;;
+  
+  
 }
