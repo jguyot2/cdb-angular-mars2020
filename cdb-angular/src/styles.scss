@@ -4,6 +4,7 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
      background-image: url("/assets/banner.png");
      background-repeat: no-repeat;
+     background-size: 100% auto ;
 }
 
 /* Importing Bootstrap SCSS file. */
