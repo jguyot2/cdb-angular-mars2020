@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
 })
 export class Urls {
-    static readonly baseUrl: string = 'http://localhost:8080/webapp/';
+    static readonly baseUrl: string = 'http://10.0.1.220:8080/webapp/';
     static readonly authUrl: string = Urls.baseUrl + 'authenticate/';
     static readonly computersUrl: string = Urls.baseUrl + 'computers/';
     static readonly registerUrl: string = Urls.baseUrl + 'register/';
