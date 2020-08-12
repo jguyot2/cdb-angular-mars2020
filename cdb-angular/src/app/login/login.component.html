@@ -1,0 +1,25 @@
+<mat-card class="card">
+    <mat-card-content>
+        <mat-card-title>Sign in</mat-card-title>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <input type="hidden" formControlName="hidden"/>
+            <div class="error" *ngIf="hidden.hasError('loginerror')">
+                Wrong login/password
+            </div>
+            <mat-form-field class="example-full-width">
+                <mat-label>Username: </mat-label>
+                <input matInput type="text" formControlName="username" required/>
+                <mat-error *ngIf="username.invalid">{{getErrorMessageUsername()}}</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password: </mat-label>
+                <input matInput type="password" formControlName="password" required/>
+                <mat-error *ngIf="password.invalid">{{getErrorMessagePassword()}}</mat-error>
+            </mat-form-field>
+            <br/>
+            <button mat-raised-button class="loginBtn" type="submit" [disabled]="!formGroup.valid">Login</button>
+        </form>
+        <a class="registerBtn" [routerLink]="['/register']">Create an account</a>
+    </mat-card-content>
+</mat-card>

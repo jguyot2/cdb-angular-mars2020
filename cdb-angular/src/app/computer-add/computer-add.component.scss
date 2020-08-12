@@ -1,0 +1,37 @@
+.modal-title{
+    font-size: 200%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    color: white;
+}
+
+.submitBtn{
+    transition-duration: 0.2s;
+    border-radius: 3px;
+    background-color: seagreen;
+    color: black;
+    border: 1px solid #ffffff;
+    font-size: 20px;
+    padding: 5px;
+}
+.submitBtn:hover {
+    background-color: rgb(14, 59, 34);
+    color: white;
+}
+.cancelBtn{
+    float: right;
+    color:white;
+    background-color: red;
+    transition-duration: 0.2s;
+    border-radius: 3px;
+    color: black;
+    border: 1px solid #ffffff;
+    font-size: 20px;
+    padding: 5px;
+}
+.cancelBtn:hover {
+    background-color: rgb(88, 5, 5);
+    color: white;
+}
+
