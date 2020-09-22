@@ -46,7 +46,7 @@ export class ComputerAddComponent implements OnInit {
         this.companies = [];
       });
     this.computerForm = new FormGroup({
-      'name': new FormControl(this.createdComputer.computerName || '', [
+      'name': new FormControl(this.createdComputer.name || '', [
         Validators.maxLength(200),
         Validators.required,
         (control: AbstractControl) => {
@@ -58,7 +58,7 @@ export class ComputerAddComponent implements OnInit {
             return null;
         }
       ]),
-      'introduced': new FormControl(this.createdComputer.introducedDate, [
+      'introduced': new FormControl(this.createdComputer.introduced, [
         (control: AbstractControl) => {
           const introducedStr = control.value;
           if (!introducedStr || introducedStr === "")
@@ -72,7 +72,7 @@ export class ComputerAddComponent implements OnInit {
           return null;
         }]
       ),
-      'discontinued': new FormControl(this.createdComputer.discontinuedDate, [
+      'discontinued': new FormControl(this.createdComputer.discontinued, [
         (control: AbstractControl) => {
           const strDiscontinued = control.value;
           if (!strDiscontinued)
@@ -116,25 +116,27 @@ export class ComputerAddComponent implements OnInit {
     if (this.computerForm.invalid) // Affichage de message ? 
       return;
     const computer: Computer = new Computer();
-    computer.computerName = this.computerForm.get('name').value;
-    console.log(computer.computerName);
+    computer.name = this.computerForm.get('name').value;
+    console.log(computer.name);
 
-    computer.introducedDate = this.computerForm.get('introduced').value;
-    computer.discontinuedDate = this.computerForm.get('discontinued').value;
+    computer.introduced = this.computerForm.get('introduced').value;
+    computer.discontinued = this.computerForm.get('discontinued').value;
 
-    computer.companyDTO = this.computerForm.get('company').value;
+    computer.company = this.computerForm.get('company').value;
     this.computerService.addComputer(computer).subscribe(
       (result) => {
+        console.log("added");
         console.log(result);
       },
       (error) => {
+        console.log("not added");
         console.log(error);
       });
 
     this.dialogRef.close();
   }
 
-  close(){
+  close() {
     this.dialogRef.close();
   }
 }

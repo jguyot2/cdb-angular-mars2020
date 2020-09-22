@@ -57,7 +57,7 @@ export class AuthenticationService{
     }
 
     public isLoggedInAsAdmin() : boolean{
-        return this.isLoggedIn() && this.getRole() === 'ROLE_ADMIN'
+        return this.isLoggedIn() && this.getRole() === 'ADMIN'
     }
 
     public getToken() : string{

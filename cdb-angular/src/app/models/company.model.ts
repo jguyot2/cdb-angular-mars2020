@@ -1,5 +1,5 @@
 
 export class Company {
-    idCompany?:number;
-    companyName:string;
+    id?:number;
+    name:string;
 }

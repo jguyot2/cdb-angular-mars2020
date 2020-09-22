@@ -2,9 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { ComputerComponent } from './computer/computer.component';
-import { CompanyComponent } from './company/company.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComputerAddComponent } from './computer-add/computer-add.component';
 import { FormsModule } from '@angular/forms';
@@ -27,8 +24,6 @@ import { ComputerDeleteDialogComponent } from './computer-delete-dialog/computer
   declarations: [
     AppComponent,
     ComputerAddComponent,
-    ComputerComponent,
-    CompanyComponent,
     HeaderComponent,
     UnderbodyComponent,
     FooterComponent,
@@ -37,16 +32,9 @@ import { ComputerDeleteDialogComponent } from './computer-delete-dialog/computer
     LoginComponent,
     RegisterComponent,
     ComputerEditComponent,
-    ComputerDeleteDialogComponent,
-   
-    
-    
-  
-
+    ComputerDeleteDialogComponent
   ],
-
   imports: [
-
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -57,7 +45,7 @@ import { ComputerDeleteDialogComponent } from './computer-delete-dialog/computer
     ReactiveFormsModule,
     MatDialogModule
   ],
-
+ 
   providers: [],
 
   bootstrap: [AppComponent]

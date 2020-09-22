@@ -1,81 +1,91 @@
 <div>
-    <div id ="tableHeader">
+    <div id="tableHeader">
         <div class="boxSearch">
             <mat-form-field class="form-field">
-            <mat-label>Search</mat-label>
-            <input matInput type="text" [(ngModel)]="search"
-            (keydown.enter)="paginatedList(1)"/>
+                <mat-label>Search</mat-label>
+                <input matInput type="text" [(ngModel)]="dashboardParameters.search" (keydown.enter)="updatePage(0)" />
 
-            <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="refreshPage();"> <mat-icon>close</mat-icon> </button>
+                <button mat-button *ngIf="searching" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="refreshPage();">
+                    <mat-icon>close</mat-icon>
+                </button>
 
 
             </mat-form-field>
-            <a [routerLink]="" (click)="paginatedList(1)"><mat-icon id ="searchIcon">search</mat-icon></a>
+            <a [routerLink]="" (click)="updatePage(0)">
+                <mat-icon id="searchIcon">search</mat-icon>
+            </a>
         </div>
-        
-        <div *ngIf="adminRole" class="boxAdd"> 
+
+        <div *ngIf="adminRole" class="boxAdd">
             <button id="addIcon" mat-icon-button (click)='openPopupAdd()'>
-            <mat-icon id="addBtn">add_circle_outline</mat-icon>
-            </button> 
-        </div> 
+                <mat-icon id="addBtn">add_circle_outline</mat-icon>
+            </button>
+        </div>
     </div>
+
     <div id="tableDiv">
-    <table mat-table [dataSource]="computerList" matSort (matSortChange)="dataSort($event)" class="responsTable">
-        <!-- CheckBox Column -->
-        <ng-container matColumnDef="idComputer"><input type="number" id="pageNumber" name="pageNumber" placeholder="page number"
-            (keydown.enter)="paginatedList($event.target.value)" />
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell class ="deleteBtn" *matCellDef="let computer; let i = index">
-                <button *ngIf="adminRole" mat-icon-button (click)="openDeleteDialog(computer)">
-                    <mat-icon>delete</mat-icon>
-                </button> </mat-cell>
-        </ng-container>
-        <!-- Name Column -->
-        <ng-container matColumnDef="computerName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> <a [routerLink]="" (click)="openEditForm(computer)" [ngClass]="adminRole ? 'modifyicon' : 'disabled'">{{computer.computerName}}  <mat-icon id="id">create</mat-icon></a></mat-cell>
-        </ng-container>
-    
-        <!-- Introduced date Column -->
-        <ng-container matColumnDef="introducedDate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Introduced date </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> {{computer.introducedDate}} </mat-cell>
-        </ng-container>
-    
-        <!-- Discontinued date Column -->
-        <ng-container matColumnDef="discontinuedDate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Discontinued date </mat-header-cell>
-        <mat-cell *matCellDef="let computer"> {{computer.discontinuedDate}} </mat-cell>
-        </ng-container>
-  
-        <!-- Company Column -->
-        <ng-container matColumnDef="companyDTO">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
-            <mat-cell *matCellDef="let computer" > 
-                <app-company  *ngIf="!!computer.companyDTO" [company]="computer.companyDTO" >
-                </app-company>
-            </mat-cell>
-        </ng-container>
-        
-         <mat-header-row id="tableHead" *matHeaderRowDef="displayedColumns"></mat-header-row>
-        
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </table>
-</div>
- 
+        <!-- dataSort legit ? -->
+        <table mat-table [dataSource]="computerList" matSort (matSortChange)="dataSort($event)" class="responsTable">
+            <!-- keydown.enter =?  -->
+            <ng-container matColumnDef="id"><input type="number" id="pageNumber" name="pageNumber"
+                    placeholder="page number" (keydown.enter)="updatePage($event.target.value)" />
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell class="deleteBtn" *matCellDef="let computer; let i = index">
+                    <button *ngIf="adminRole" mat-icon-button (click)="openDeleteDialog(computer)">
+                        <mat-icon>delete</mat-icon>
+                    </button> </mat-cell>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let computer"> <a [routerLink]="" (click)="openEditForm(computer)"
+                        [ngClass]="adminRole ? 'modifyicon' : 'disabled'">{{computer.name}} <mat-icon id="id">
+                            create</mat-icon></a></mat-cell>
+            </ng-container>
 
-  <div class="pagination">
+            <!-- Introduced date Column -->
+            <ng-container matColumnDef="introduced">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Introduced date </mat-header-cell>
+                <mat-cell *matCellDef="let computer"> {{computer.introduced}} </mat-cell>
+            </ng-container>
 
-      <button (click)="paginatedList(1)">&#60;&#60;</button>
-      <button (click)="getPreviousPage()">&#60;</button>
-      <button [ngClass]="pageNumber == page.currentPage ? 'butt': ''" *ngFor='let pageNumber of listPages' (click)="paginatedList(pageNumber)">{{pageNumber}}</button>
-      <button (click)="getNextPage()">&#62;</button>
-      <button (click)="paginatedList(nbPage)">&#62;&#62;</button>
-   </div>
-   <div id="rowNb">
-    <select [(ngModel)]="page.pageSize" (change)="paginatedList(1)">
-        <option *ngFor="let opt of listPageSize" [value]="opt" [selected]="opt == page.pageSize">{{opt}}</option>
-    </select>
+            <!-- Discontinued date Column -->
+            <ng-container matColumnDef="discontinued">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Discontinuation date </mat-header-cell>
+                <mat-cell *matCellDef="let computer"> {{computer.Discontinued}} </mat-cell>
+            </ng-container>
+
+            <!-- Company Column -->
+            <ng-container matColumnDef="company">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
+                <mat-cell *matCellDef="let computer">
+                    <div *ngIf="computer.company"> {{computer.company.name}}
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row id="tableHead" *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </table>
+    </div>
+
+
+    <div class="pagination">
+        <button (click)="updatePage(0)">&#60;&#60;</button>
+        <button (click)="gotoPreviousPage()">&#60;</button>
+        <button *ngFor='let pageNumber of listPages'
+            [ngClass]="pageNumber == dashboardParameters.page.pageNumber ? 'butt': ''"
+            (click)="updatePage(pageNumber)">{{pageNumber}}</button>
+        <button (click)="gotoNextPage()">&#62;</button>
+        <button (click)="updatePage(dashboardParameters.page.getNumberOfPages() - 1)">&#62;&#62;</button>
+    </div>
+    <div id="rowNb">
+        <select [(ngModel)]="dashboardParameters.page.pageLength" (change)="updatePage(0)">
+            <option *ngFor="let opt of listPageSize" [value]="opt"
+                [selected]="opt == dashboardParameters.page.pageLength">
+                {{opt}}</option>
+        </select>
     </div>
 
 </div>

@@ -46,14 +46,14 @@ export class ComputerEditComponent implements OnInit {
     this.companyService.getCompanyList().subscribe(
       (result: Company[]) => {
         this.companies = result.filter((company) => {
-          return (!this.editedComputer.companyDTO) || (company.idCompany !== this.editedComputer.companyDTO.idCompany);
+          return (!this.editedComputer.company) || (company.id !== this.editedComputer.company.id);
         });
       },
       (error) => {
         this.companies = [];
       });
     this.computerForm = new FormGroup({
-      'name': new FormControl(this.editedComputer.computerName, [
+      'name': new FormControl(this.editedComputer.name, [
         Validators.maxLength(200),
         Validators.required,
         (control: AbstractControl) => {
@@ -65,8 +65,8 @@ export class ComputerEditComponent implements OnInit {
             return null;
         }
       ]),
-      'id': new FormControl(this.editedComputer.idComputer),
-      'introduced': new FormControl(this.editedComputer.introducedDate, [
+      'id': new FormControl(this.editedComputer.id),
+      'introduced': new FormControl(this.editedComputer.introduced, [
         (control: AbstractControl) => {
           const introducedStr = control.value;
           if (!introducedStr || introducedStr === "")
@@ -83,7 +83,7 @@ export class ComputerEditComponent implements OnInit {
           return null;
         }]
       ),
-      'discontinued': new FormControl(this.editedComputer.discontinuedDate, [
+      'discontinued': new FormControl(this.editedComputer.discontinued, [
         (control: AbstractControl) => {
           const strDiscontinued = control.value;
           if (!strDiscontinued)
@@ -98,7 +98,7 @@ export class ComputerEditComponent implements OnInit {
           return null;
         }]
       ),
-      'company': new FormControl(this.editedComputer.companyDTO),
+      'company': new FormControl(this.editedComputer.company),
     }, {
       validators: [
         // Vérification de la cohérence des dates entre elles 
@@ -127,12 +127,12 @@ export class ComputerEditComponent implements OnInit {
     if (this.computerForm.invalid) // Affichage de message ? 
       return;
     const computer: Computer = new Computer();
-    computer.computerName = this.computerForm.get('name').value;
+    computer.name = this.computerForm.get('name').value;
 
-    computer.introducedDate = this.computerForm.get('introduced').value;
-    computer.discontinuedDate = this.computerForm.get('discontinued').value;
-    computer.idComputer = this.computerForm.get('id').value;
-    computer.companyDTO = this.computerForm.get('company').value;
+    computer.introduced = this.computerForm.get('introduced').value;
+    computer.discontinued = this.computerForm.get('discontinued').value;
+    computer.id = this.computerForm.get('id').value;
+    computer.company = this.computerForm.get('company').value;
     this.computerService.editComputer(computer).subscribe(
       (result) => {
         console.log(result);
